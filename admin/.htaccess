@@ -1,0 +1,80 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteBase /bwajesplus-app/admin/
+
+    # SEO friendly urls
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^posts/([0-9]+)$ posts.php?p=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^admin/([0-9]+)$ admin.php?a=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^admin-statistics/([0-9]+)$ admin-statistics.php?a=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^admin-email/([0-9]+)$ admin-email.php?aes=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^mails-recieved/([0-9]+)$ mails-recieved.php?u=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^mail-opened-users/([0-9]+)$ mail-opened-users.php?aes=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^user-email/([0-9]+)$ user-email.php?ues=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-report/([0-9]+)$ edit-report.php?r=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-affiliate/([0-9]+)$ edit-affiliate.php?af=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^each-category/([0-9]+)$ each-category.php?c=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-category/([0-9]+)$ edit-category.php?c=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^each-type/([0-9]+)$ each-type.php?t=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-type/([0-9]+)$ edit-type.php?t=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^each-legal/([0-9]+)$ each-legal.php?l=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-legal/([0-9]+)$ edit-legal.php?l=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^each-faqs/([0-9]+)$ each-faqs.php?f=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-faqs/([0-9]+)$ edit-faqs.php?f=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^user/([0-9]+)$ user.php?u=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^user-post/([0-9]+)$ user-post.php?p=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^user-posts/([0-9]+)$ user-posts.php?u=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^user-statistics/([0-9]+)$ user-statistics.php?u=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^issue-details/([0-9]+)$ issue-details.php?id=$1 [NC,L]
+
+    # removing the php extension
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+    # Redirect the .php extension to the non .php extension
+    RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+    RewriteRule ^ /%1 [L,R=301,NE]
+</IfModule>
