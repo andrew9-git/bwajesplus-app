@@ -42,11 +42,13 @@ function bwajes_plus_header($active, $page_name)
         </li>
         <li>
           <div class="icon-links">
-            <a href="#" class="no-action">
+            <div class="div-arrow">
               <i class="bx bxs-report arrow"></i>
-              <span class="links_name arrow">Reports</span>
+              <a href="#" class="no-action">
+                <span class="links_name arrow">Reports</span>
+              </a>
               <i class="bx bxs-chevron-down rotate arrow"></i>
-            </a>
+            </div>
           </div>
           <ul class="sub-menu">
             <li>
@@ -88,11 +90,13 @@ function bwajes_plus_header($active, $page_name)
         </li>
         <li>
           <div class="icon-links">
-            <a href="#" class="no-action">
+            <div class="div-arrow">
               <i class="bx bx-support arrow"></i>
-              <span class="links_name arrow">Messages</span>
+              <a href="#" class="no-action">
+                <span class="links_name arrow">Messages</span>
+              </a>
               <i class="bx bxs-chevron-down rotate arrow"></i>
-            </a>
+            </div>
           </div>
           <ul class="sub-menu">
             <li>
@@ -121,11 +125,13 @@ function bwajes_plus_header($active, $page_name)
         </li>
         <li>
           <div class="icon-links">
-            <a href="#" class="no-action">
+            <div class="div-arrow">
               <i class="bx bx-paper-plane arrow"></i>
-              <span class="links_name arrow">Post</span>
+              <a href="#" class="no-action">
+                <span class="links_name arrow">Post</span>
+              </a>
               <i class="bx bxs-chevron-down rotate arrow"></i>
-            </a>
+            </div>
           </div>
           <ul class="sub-menu">
             <li>
@@ -180,11 +186,13 @@ function bwajes_plus_header($active, $page_name)
       </li>
         <li>
           <div class="icon-links">
-            <a href="#" class="no-action">
+            <div class="div-arrow">
               <i class="bx bx-stats arrow"></i>
-              <span class="links_name arrow">Statistics</span>
+              <a href="#" class="no-action">
+                <span class="links_name arrow">Statistics</span>
+              </a>
               <i class="bx bxs-chevron-down rotate arrow"></i>
-            </a>
+            </div>
           </div>
           <ul class="sub-menu">
             <li>

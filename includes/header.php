@@ -40,11 +40,13 @@ function bwajes_plus_header($active, $page_name)
         </li>
         <li>
           <div class="icon-links">
-            <a href="#" class="no-action">
+            <div class="div-arrow">
               <i class="bx bx-book arrow"></i>
-              <span class="links_name arrow">Post</span>
+              <a href="#" class="no-action">
+                <span class="links_name arrow">Post</span>
+              </a>
               <i class="bx bxs-chevron-down rotate arrow"></i>
-            </a>
+            </div>
           </div>
           <ul class="sub-menu">
             <li>

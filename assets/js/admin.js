@@ -53,6 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
       {
         rateModal.style.display = 'none';
       }
+      else if(e.target != bell && bell.style.display != 'block')
+      {
+        notification.classList.toggle("block", false);
+      }
       else
       {
         return false;
