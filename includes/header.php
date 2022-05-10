@@ -2,6 +2,7 @@
 ob_start();
 session_start();
 include_once('includes/functions.php');
+$csrf = csrf_token();
 function bwajes_plus_header($active, $page_name)
 {
 
