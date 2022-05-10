@@ -1,9 +1,11 @@
 <?php
-
+ob_start();
+session_start();
+include_once('includes/functions.php');
 function bwajes_plus_header($active, $page_name)
 {
 
-  $host='http://localhost:9090/bwajesplus-app/';
+  $host = url();
 
 ?>
 
