@@ -6,8 +6,12 @@ $csrf = csrf_token();
 function bwajes_plus_header($active, $page_name)
 {
 
+  $id = $_SESSION['user_data']['id'];
+  $first_name = $_SESSION['user_data']['first_name'];
+  $last_name = $_SESSION['user_data']['last_name'];
+  $email = $_SESSION['user_data']['email'];
   $host = url();
-
+  $duration = 3600; // 1 hour 
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +59,7 @@ function bwajes_plus_header($active, $page_name)
             <li>
               <a <?php if($active === 'create-post')
                 {
+                    $duration = 7200; // 2 hours
                     echo 'class="active" href="#"';
                 }else{
                     echo 'href="' . $host . 'create-post"';
@@ -121,6 +126,18 @@ function bwajes_plus_header($active, $page_name)
       </ul>
   </div>
   <section class="home-section">
+    <?php
+    if(user_is_logged_in() === false)
+    {
+      redirect_to('http://localhost:9090/bwajes/login');
+    }
+    else
+    {
+      $last_login_timestamp = $_SESSION['user_data']['time'];
+      
+      check_inactive_user($last_login_timestamp, $duration);
+    }
+    ?>
     <nav>
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
@@ -132,16 +149,12 @@ function bwajes_plus_header($active, $page_name)
         <a href="<?php echo $host .'create-post'; ?>" class="btn btn-primary create-post nav">create post</a>
       <?php } ?>
       <div class="profile-details">
-        <img src="<?php echo $host .'images/profile.jpg'; ?>" alt="">
-        <span class="admin_name">Andrew Adelodun</span>
-        <i class='bx bx-bell'></i>
-        <span class="notify-number">3</span>
+        <span id="user-profile-image"></span>
+        <span class="admin_name"><?php echo ucfirst(strtolower($first_name)) . ' ' . ucfirst(strtolower($last_name)); ?></span>
+        <i id="notify_bell" class='bx bx-bell'></i>
+        <span id="notify_number" class="notify-number"></span>
         <div class="notification">
-          <ul class="notification-items">
-            <li><a href="#">comment comment comment</a></li>
-            <li><a href="#">comment</a></li>
-            <li><a href="#">comment</a></li>
-            <li><a href="#">comment</a></li>
+          <ul id="notify_ul" class="notification-items">
           </ul>
         </div>
       </div>

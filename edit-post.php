@@ -1,46 +1,62 @@
 <?php
 
 include('includes/header.php');
-bwajes_plus_header('create-post', 'Create post');
+bwajes_plus_header('create-post', 'Edit post');
 
+$host='http://localhost:9090/bwajesplus-app/';
 ?>
     <?php 
-      $id = $_SESSION['user_data']['id'];
+      if(isset($_GET['p']))
+      {
+        $post_id = $_GET['p'];
+
+        $post = fetch_single_row($post_id, 'posts');
+      }
+      else
+      {
+        redirect_to('logout');
+      }
+
+      $user_id = $_SESSION['user_data']['id'];
+
       $post_categories = post_category();
       $post_types = post_type();
     ?>
-    <div class="home-content">
+<div class="home-content">
       <div class="post-area">
         <div class="card">
           <div class="card-header flex">
+            <div class="info-container">
+                <span class="btn btn-success back" id="back">back</span>
+              </div>
           </div>
           <div class="card-body">
-            <form id="create_post_form" enctype="multipart/form-data">
-              <div id="create_post_messages">
+            <form id="edit_post_form" enctype="multipart/form-data">
+              <div id="edit_post_messages">
               </div>
-                <!-- <div class="form-group">
-                    <input type="hidden" class="form-control form_data_post" name="csrf" value="" id="csrf">
-                </div> -->
                 <div class="form-group">
-                    <input type="hidden" class="form-control form_data_post" name="id" value="<?php echo $id; ?>" id="id">
+                    <input type="hidden" class="form-control form_data_edit" name="user-id" value="<?php echo $user_id; ?>" id="user-id">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_edit" name="post-id" value="<?php echo $post['id']; ?>" id="post-id">
                 </div>
                 <div class="form-group">
                   <label for="title">Title*</label>
-                  <input type="text" class="form-control form_data_post" name="title" id="title">
+                  <input type="text" name="post-title" value="<?php echo $post['title']; ?>" class="form-control form_data_edit" id="title">
                 </div>
                 <div class="form-group">
                   <label for="description">Description*</label>
-                  <input type="text" name="description" class="form-control form_data_post" id="description">
+                  <input type="text" name="description" value="<?php echo $post['description']; ?>" class="form-control form_data_edit" id="description">
                 </div>
                 <div class="form-group">
                   <label for="category">Category*</label>
-                  <select class="form-control form_data_post" name="category" id="category">
+                  <select class="form-control form_data_edit" name="category" id="category">
                   <option value="S">Select post category</option>
                     <?php 
                      foreach($post_categories as $post_category)
                      {
                     ?>
-                    <option value="<?php echo $post_category['id']; ?>"><?php echo $post_category['category']; ?></option>
+                    <option value="<?php echo $post_category['id']; ?>" <?php if($post_category['id'] == $post['category_id']){echo 'selected';} ?>><?php echo $post_category['category']; ?></option>
                     <?php 
                      }
                     ?>
@@ -48,13 +64,13 @@ bwajes_plus_header('create-post', 'Create post');
                 </div>
                 <div class="form-group">
                     <label for="type">Type*</label>
-                    <select class="form-control form_data_post" name="type" id="type">
+                    <select class="form-control form_data_edit" name="type" id="type">
                     <option value="S">Select post type</option>
                     <?php 
                      foreach($post_types as $post_type)
                      {
                     ?>
-                    <option value="<?php echo $post_type['id']; ?>"><?php echo $post_type['type']; ?></option>
+                    <option value="<?php echo $post_type['id']; ?>" <?php if($post_type['id'] == $post['type_id']){echo 'selected';} ?>><?php echo $post_type['type']; ?></option>
                     <?php 
                      }
                     ?>
@@ -65,6 +81,7 @@ bwajes_plus_header('create-post', 'Create post');
                         <div><span>Cover photo for post*</span> <i class='bx bx-help-circle tooltip'></i></div>
                         <div class="tooltip">This is the photo that would be displayed if this post is shared on social media</div>
                     </div>
+                    <span>Current cover photo: <?php echo $post['cover_photo'] ?></span>
                   <input type="file" name="cover-photo" class="form-control" id="upload-photo" accept="image/*">
                 </div>
                 <div class="form-group">
@@ -74,20 +91,20 @@ bwajes_plus_header('create-post', 'Create post');
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input form_data_post" value="1" name="publish" checked> Yes
+                            <input type="radio" class="form-check-input form_data_edit" value="1" name="publish" checked> Yes
                         </label>
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label">
-                            <input type="radio" class="form-check-input form_data_post" value="0" name="publish"> No
+                            <input type="radio" class="form-check-input form_data_edit" value="0" name="publish"> No
                         </label>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="post">Your post*</label>
-                    <textarea class="form-control form_data_post" name="post" rows="5" id="post"></textarea>
+                    <textarea class="form-control form_data_edit" name="post" rows="5" id="post"><?php echo $post['post']; ?></textarea>
                 </div>
-                <button type="submit" id="create_post" name="create-post" class="btn btn-primary">Create post</button>
+                <button type="submit" id="edit_post" name="edit-post" class="btn btn-primary">Edit post</button>
             </form>
           </div>
           <div class="card-footer">
@@ -98,28 +115,33 @@ bwajes_plus_header('create-post', 'Create post');
     <script>
       document.addEventListener('DOMContentLoaded', () => {
 
-        let form = document.getElementById('create_post_form');
-        let create_post_button = document.getElementById('create_post');
-        let create_post_messages = document.getElementById('create_post_messages');
-        form.addEventListener('submit', create_post);
+        document.getElementById('back').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.history.back();
+        });
 
-        function create_post(e)
+        let form = document.getElementById('edit_post_form');
+        let edit_post_button = document.getElementById('edit_post');
+        let edit_post_messages = document.getElementById('edit_post_messages');
+        form.addEventListener('submit', edit_post);
+
+        function edit_post(e)
         {
             e.preventDefault();
-            create_post_button.disabled = true;
+            edit_post_button.disabled = true;
 
-            let crt_post_btn_bg_col = create_post_button.style.backgroundColor;
-            let crt_post_btn_border = create_post_button.style.border;
-            let crt_post_btn_cursor = create_post_button.style.cursor;
+            let edit_post_btn_bg_col = edit_post_button.style.backgroundColor;
+            let edit_post_btn_border = edit_post_button.style.border;
+            let edit_post_btn_cursor = edit_post_button.style.cursor;
 
-            if(create_post_button.disabled == true)
+            if(edit_post_button.disabled == true)
             {
-                create_post_button.style.backgroundColor = 'grey';
-                create_post_button.style.border = 'grey';
-                create_post_button.style.cursor = 'not-allowed';
+                edit_post_button.style.backgroundColor = 'grey';
+                edit_post_button.style.border = 'grey';
+                edit_post_button.style.cursor = 'not-allowed';
             }
 
-            let form_element = document.getElementsByClassName('form_data_post');
+            let form_element = document.getElementsByClassName('form_data_edit');
             let form_data = new FormData();
 
             for(let i = 0; i < form_element.length; i++)
@@ -132,10 +154,14 @@ bwajes_plus_header('create-post', 'Create post');
                   form_data.append(form_element[i].name, form_element[i].value);
                 }
             }
-            form_data.append('cover-photo', document.querySelector('#upload-photo').files[0]);
+            if(document.querySelector('#upload-photo').files[0])
+            {
+              form_data.append('cover-photo', document.querySelector('#upload-photo').files[0]);
+            }
+            // console.log(document.querySelector('.form-check-input:checked').value);
             let xhr = new XMLHttpRequest();
             
-            xhr.open('POST', 'process-create-ajax');
+            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-edit-ajax');
             // const boundary = '---------------------------' + Date.now().toString(16);
             // xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary=' + boundary);
 
@@ -143,13 +169,13 @@ bwajes_plus_header('create-post', 'Create post');
             {
                 if(this.status == 200)
                 {
-                    create_post_button.disabled = false;
+                    edit_post_button.disabled = false;
 
-                    if(create_post_button.disabled == false)
+                    if(edit_post_button.disabled == false)
                     {
-                        create_post_button.style.backgroundColor = crt_post_btn_bg_col;
-                        create_post_button.style.border = crt_post_btn_border;
-                        create_post_button.style.cursor = crt_post_btn_cursor;
+                        edit_post_button.style.backgroundColor = edit_post_btn_bg_col;
+                        edit_post_button.style.border = edit_post_btn_border;
+                        edit_post_button.style.cursor = edit_post_btn_cursor;
                     }
 
                     let response = xhr.responseText;
@@ -158,8 +184,10 @@ bwajes_plus_header('create-post', 'Create post');
                     if(regex === true)
                     {
                       form.reset();
+                      setInterval(() => {window.history.back();}, 3000);
+                      
                     }
-                    create_post_messages.innerHTML = response;
+                    edit_post_messages.innerHTML = response;
                   
                 }
             }
@@ -180,7 +208,7 @@ bwajes_plus_header('create-post', 'Create post');
     </script>
 <?php
 
-  include('includes/footer.php');
-  ckeditor();
+    include('includes/footer.php');
+    ckeditor();
 
 ?>

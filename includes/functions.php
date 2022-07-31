@@ -49,20 +49,46 @@ function csrf_token()
     $csrf = hash_hmac('sha256', 'this is some string: index.php', $_SESSION['key']);
     return $csrf;
 }
+
+//checking if the user has already logged in or not
+function user_is_logged_in()
+{
+    if(isset($_SESSION['is_user_logged_in']))
+    {
+        return true;
+    }
+    return false;
+}
+
+function check_inactive_user($last_login_timestamp, $duration, $url='http://localhost:9090/bwajesplus-app/logout')
+{
+    // global $last_login_timestamp;
+
+    if((time() - $last_login_timestamp) > $duration)
+    {
+        // $msg = 'Session time out. Please login';
+        // set_msg($msg);
+        header("Location: {$url}");
+    }
+    else
+    {
+        // global $last_login_timestamp;
+        $last_login_timestamp = time();
+    }
+}
+
 // End miscellenious functions
 
 // Form validation functions
 
-//error array
-$error = array();
-
 //presence
-function has_presence($value, $msg = "No value provided")
+function has_presence($value)
 {
+    
     // $value = trim($value);
-    if(!isset($value) || $value === "")
+    if(!isset($value) || $value === "" || empty($value))
     {
-       $errors[] = $msg; 
+       return false;
     }
     else
     {
@@ -73,13 +99,10 @@ function has_presence($value, $msg = "No value provided")
 //string length
 function accepted_field_length($value, $min, $max)
 {
-    if(strlen($value) < $min)
+    
+    if(strlen($value) < $min  && strlen($value) > $max)
     {
-        $errors[] = 'The characters should not be less than' . $min;
-    }
-    elseif(strlen($value) > $max)
-    {
-        $errors[] = 'The characters should not be greater than' . $max;
+        return false; 
     }
     else
     {
@@ -90,12 +113,14 @@ function accepted_field_length($value, $min, $max)
 //type
 function accepted_data_type($value, $field_type)
 {
+    
+
     switch($field_type)
     {
         case 'int': 
             if(!filter_var($value, FILTER_VALIDATE_INT))
             {
-                $errors[] = 'Only numbers are allowed'; 
+                return false;  
             }
             else
             {
@@ -105,7 +130,7 @@ function accepted_data_type($value, $field_type)
         case 'email':
             if(!filter_var($value, FILTER_VALIDATE_EMAIL))
             {
-                $errors[] = 'The email provided is not valid'; 
+                return false;  
             }
             else
             {
@@ -115,7 +140,27 @@ function accepted_data_type($value, $field_type)
         case 'url': 
             if(!filter_var($value, FILTER_VALIDATE_URL))
             {
-                $errors[] = $value . 'is not a valid url'; 
+                return false;  
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'phone': 
+            if(!preg_match('/\+?[0-9]{1,3}[0-9]{3,12}/', $value))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'address': 
+            if(preg_match('/[^A-Za-z0-9 \*,\'"\.:;@\(\)&\-]/', $value))
+            {
+                return false;  
             }
             else
             {
@@ -123,23 +168,46 @@ function accepted_data_type($value, $field_type)
             }
         break;
         case 'str': 
-            if(preg_match('/[^A-Za-Z0-9\-_ ]/', $value))
+            if(preg_match('/[^A-Za-z\-]/', $value))
             {
-                $errors[] = $value . 'is not a valid character'; 
+                return false; 
             }
             else
             {
                 return true;
             }
         break;
+        case 'str1': 
+            if(preg_match('/[^A-Za-z0-9\-_ ]/', $value))
+            {
+                return false; 
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'str2': 
+            if(preg_match('/[^A-Za-z0-9&\?\|\[\]\(\)\{\}\-_ ]/', $value))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        default: return false;
+        break;
     }
 }
 //inclusion in a set
-function found_in($value, array $set)
+function found_in($value, array $set, $msg='This is file type is not valid')
 {
+    
     if(!in_array($value, $set))
     {
-        $errors[] = 'This is file type is not valid'; 
+        return false;  
     }
     else
     {
@@ -150,9 +218,38 @@ function found_in($value, array $set)
 //format
 function matches_format($regex, $value)
 {
+    
     if(!preg_match($regex, $value))
     {
-        $errors[] = 'A match was not found'; 
+        return false;  
+    }
+    else
+    {
+        return true;
+    }
+}
+
+//validate gender field
+function accepted_option($option)
+{
+    
+    if($option === 'S')
+    {
+        return false;  
+    }
+    else
+    {
+        return true;
+    }
+}
+
+//validate checkbox field
+function is_checked($value)
+{
+    
+    if(empty($value))
+    {
+        return false; 
     }
     else
     {
@@ -161,11 +258,12 @@ function matches_format($regex, $value)
 }
 
 //validate token
-function csrf_is_valid($csrf)
+function csrf_is_valid($session_csrf, $post_csrf)
 {
-    if (hash_equals($csrf, $_POST['csrf']) === false)
+    
+    if (hash_equals($_SESSION['csrf'], $post_csrf) === false)
     {
-        $errors[] = 'Oops something went wrong. Please try again later';
+        return false;
     }
     else
     {
@@ -180,11 +278,8 @@ function form_errors(array $errors)
     $output = "";
     if(!empty($errors))
     {
-        $output .= "<div class=\"card error\">";
-        $output .= "<div class=\"card-header\">";
-        $output .= "Please fix the folllowing errors";
-        $output .= "</div>";
-        $output .= "<div class=\"card-body\">";
+        $output .= "<div class='card error'>";
+        $output .= "<div>";
         $output .= "<ul>";
         foreach($errors as $key => $error)
         {
@@ -194,27 +289,445 @@ function form_errors(array $errors)
         $output .= "</div>";
         $output .= "</div>";
     }
-    echo $output;
-    $output = null;
+    return $output;
 }
 
 // End form validation functions
 
 // Database queries
 
-//uniqueness
-function db_row_count($value, $column_name, $table_name, $dbname)
+//uniqueness and row count
+function db_row_count($value, $column_name, $table_name, $type='str')
 {
-    $db = db($dbname);
+    $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM $table_name WHERE $column_name = $value";
+    $query = "SELECT COUNT(*) FROM $table_name WHERE $column_name = :value";
     $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
     $count = $db->fetchCol();
+    return $count;
+}
 
+//getting a single row in a table
+function fetch_single_row($value, $table_name, $column_name = 'id', $type='int')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM $table_name WHERE $column_name = :value";
+    $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
+    $row = $db->fetchSingle();
+    return $row;
+}
+
+function update_last_logout($id)
+{
+    
+
+    $db = new dbase();
+
+    $query = "";
+    $query .= "UPDATE user_statistics SET";
+    $query .= " last_logout = NOW(), updated_at = NOW() WHERE user_id = :user_id";
+
+    $db->prep($query);
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//update user table by setting active to 0
+function set_active_to_0($id)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET active = :active WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':active', 0, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//getting all posts to display in dashboard
+function posts_to_show_in_dashboard($id, $dashboard=1, $limit=10, $by='updated_at')
+{
+    $db = new dbase();
+
+    $query = "";
+
+    $query .= "SELECT * FROM posts WHERE user_id = :id";
+    if($dashboard == 1)
+    {
+        $query .= " ORDER BY $by DESC LIMIT $limit";
+    }
+    $db->prep($query);
+    $db->bindvalue(':id', $id, 'int');
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//getting all post categories
+function post_category()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_category";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//getting all post types
+function post_type()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_type";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//insert into posts table
+function insert_into_posts(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO posts(title, description, post, cover_photo, user_id, category_id, type_id, published) VALUES(:title, :description, :post, :cover_photo, :user_id, :category_id, :type_id, :published)";
+    $db->prep($query);
+
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':post', $value['post'], 'str');
+    $db->bindvalue(':cover_photo', $value['cover_photo'], 'str');
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':category_id', $value['category_id'], 'int');
+    $db->bindvalue(':type_id', $value['type_id'], 'int');
+    $db->bindvalue(':published', $value['published'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function update_posts($value, $update_cover_photo)
+{
+    
+
+    $db = new dbase();
+
+    $query = "";
+    $query .= "UPDATE posts SET title = :title, description = :description, post = :post,";
+    if($update_cover_photo == 1)
+    {
+        $query .= " cover_photo = :cover_photo,";
+    }
+    $query .= " category_id = :category_id, type_id = :type_id, published = :published,";
+    $query .= " updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':post', $value['post'], 'str');
+    if($update_cover_photo == 1)
+    {
+        $db->bindvalue(':cover_photo', $value['cover_photo'], 'str');
+    }
+    $db->bindvalue(':category_id', $value['category_id'], 'int');
+    $db->bindvalue(':type_id', $value['type_id'], 'int');
+    $db->bindvalue(':published', $value['published'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function delete_single_row($value, $table_name, $column_name = 'id', $type='int')
+{
+    
+
+    $db = new dbase();
+
+    $query = "DELETE FROM $table_name WHERE $column_name = :value";
+
+    $db->prep($query);
+
+    $db->bindvalue(':value', $value, $type);
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_post_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM posts WHERE (title LIKE :title 
+    OR description LIKE :description) AND user_id = :user_id ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT id, title, description 
+    FROM posts WHERE (title LIKE :title 
+    OR description LIKE :description) AND user_id = :user_id ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+
+function count_post_b($id, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) description FROM posts WHERE user_id = :user_id ORDER BY $by DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post($id, $offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT id, title, description FROM posts WHERE user_id = :user_id ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//insert into user sent emails table
+function user_sent_emails(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO user_sent_emails(user_id, email, department, title, message) VALUES(:user_id, :email, :department, :title, :message)";
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':department', $value['department'], 'str');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':message', $value['message'], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//insert into ratings table
+function ratings(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO ratings(user_id, rating, reason, suggestion) VALUES(:user_id, :rating, :reason, :suggestion)";
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':rating', $value['rating'], 'str');
+    $db->bindvalue(':reason', $value['reason'], 'str');
+    $db->bindvalue(':suggestion', $value['suggestion'], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//update user table
+function update_user($value)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET first_name = :first_name, last_name = :last_name, business_name = :business_name, gender = :gender, phone = :phone, bio = :bio, public = :public, website = :website, birthdate = :birthdate, address = :address, city = :city, state = :state, country = :country, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':business_name', $value['business_name'], 'str');
+    $db->bindvalue(':gender', $value['gender'], 'str');
+    $db->bindvalue(':phone', $value['phone'], 'str');
+    $db->bindvalue(':bio', $value['bio'], 'str');
+    $db->bindvalue(':public', $value['public'], 'int');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':birthdate', $value['birthdate'], 'str');
+    $db->bindvalue(':address', $value['address'], 'str');
+    $db->bindvalue(':city', $value['city'], 'str');
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':country', $value['country'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//update user's profile image
+function update_user_profile_image($value)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET profile_image = :profile_image, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':profile_image', $value['profile_image'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//getting all rows of a specific user in passwords table
+function fetch_rows_in_passwords($email)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM user_passwords WHERE email = :email";
+    $db->prep($query);
+    $db->bindvalue(':email', $email, 'str');
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//update user's password
+function update_user_password($value)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET password = :password, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':password', $value['password'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+function insert_into_user_passwords(array $value)
+{
+    
+
+    $db = new dbase();
+
+    $query = "INSERT INTO user_passwords(email, password) VALUES(:email, :password)";
+    $db->prep($query);
+
+    $db->bindvalue(':email', $value[0], 'str');
+    $db->bindvalue(':password', $value[1], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//insert into deleted users table
+function deleted_users(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO deleted_users(first_name, last_name, email, gender, phone, website, birthdate, address, city, state, country) VALUES(:first_name, :last_name, :email, :gender, :phone, :website, :birthdate, :address, :city, :state, :country)";
+    $db->prep($query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':gender', $value['gender'], 'str');
+    $db->bindvalue(':phone', $value['phone'], 'str');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':birthdate', $value['birthdate'], 'str');
+    $db->bindvalue(':address', $value['address'], 'str');
+    $db->bindvalue(':city', $value['city'], 'str');
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':country', $value['country'], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//update unseen comment to 1
+function update_unseen_comment($id)
+{
+    $db = new dbase();
+    $query = "UPDATE comments SET status = 1 WHERE user_id = :user_id AND status = 0";
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//fetch comments to be displayed in notification
+function comments_in_notification($id, $limit=5, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM comments WHERE user_id = :user_id ORDER BY $by DESC LIMIT $limit";
+    $db->prep($query);
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//count unseen comments
+function count_unseen_comments($id)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM comments WHERE status = 0 AND user_id = :user_id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $id, 'int');
+
+    $count = $db->fetchCol();
+    
     return $count;
 }
 
 // End database queries
-
-
 ?>

@@ -11,6 +11,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^post/([0-9]+)$ post.php?p=$1 [NC,L]
 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-post/([0-9]+)$ edit-post.php?p=$1 [NC,L]
+
     # removing the php extension
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([^\.]+)$ $1.php [NC,L]

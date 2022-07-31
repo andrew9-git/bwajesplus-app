@@ -2,18 +2,23 @@
 
     class dbase
     {
-        private $host = "localhost";
-        private $user = "root";
-        private $pwd = "";
-        // private $dbname = "bincom";
+        private $host;
+        private $user;
+        private $pwd;
+        private $dbname;
 
 
         private $dbh;
         private $error;
         private $stmt;
 
-        public function __construct($dbname)
+        public function __construct($host='localhost', $user='root', $pwd='', $dbname='bwajes+')
         {
+            $this->host = $host;
+            $this->user = $user;
+            $this->pwd = $pwd;
+            $this->dbname = $dbname;
+
             $dsn = "mysql:host=".$this->host.";dbname=".$dbname;
             $options = array(
                 PDO::ATTR_PERSISTENT => true,

@@ -5,6 +5,9 @@ bwajes_plus_header('all-posts', 'All posts');
 
 ?>
 
+<?php 
+    $id = $_SESSION['user_data']['id'];
+?>
     <div class="home-content">
       <div class="post-area">
         <div class="card">
@@ -12,27 +15,14 @@ bwajes_plus_header('all-posts', 'All posts');
             <form action="">
                 <div class="form-wrapper">
                     <div class="form-group">
-                        <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
-                    </div>
-                    <div class="form-group">
-                        <span>see published post?</span>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" value="" name="publish"> Yes
-                            </label>
-                        </div>
-                        <div class="form-check-inline">
-                            <label class="form-check-label">
-                                <input type="radio" class="form-check-input" value="" name="publish"> No
-                            </label>
-                        </div>
+                        <span><b>Total posts - <span id="total_posts"></span></b></span>
                     </div>
                     <div class="search-button-wrapper">
                         <div class="form-group">
-                            <input type="search" class="form-control" placeholder="search for post here..." name="search" id="search">
+                            <input type="search" class="form-control" placeholder="search for post here..." name="search" id="search" onkeyup="load_data(this.value);">
                         </div>
                         <div class="form-group">
-                            <button name="filter" type="submit" class="btn btn-primary">filter</button>
+                            <input type="hidden" value="<?php echo $id; ?>" class="form-control" id="search_user_id">
                         </div>
                     </div>
                 </div>
@@ -44,36 +34,75 @@ bwajes_plus_header('all-posts', 'All posts');
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>See post</th>
+                        <th width="5%">S/N</th>
+                        <th width="35%">Title</th>
+                        <th width="55%">Description</th>
+                        <th width="5%">See post</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td><a href="post/4"><i class="bx bx-link-external"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td><a href="post/4"><i class="bx bx-link-external"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>July</td>
-                        <td>Dooley</td>
-                        <td><a href="post/4"><i class="bx bx-link-external"></i></a></td>
-                    </tr>
-                    </tbody>
+                    <tbody id="post_data"></tbody>
                 </table>
+                <div id="pagination_link" style="width: 100%;display:flex;justify-content:center;align-items:center;"></div><br>
           </div>
           <div class="card-footer">
           </div>
         </div>
       </div>
     </div>
+<script>
 
+load_data();
+
+function load_data(query='', page_number = 1)
+{
+    let user_id = document.getElementById('search_user_id').value;
+
+    let form_data = new FormData();
+
+    form_data.append('query', query);
+    form_data.append('page', page_number);
+    form_data.append('user_id', user_id);
+
+    let xhr = new XMLHttpRequest();
+            
+    xhr.open('POST', 'process-ajax');
+
+    xhr.onload = function()
+    {
+        if(this.status == 200)
+        {
+            let response = JSON.parse(xhr.responseText);
+            let html = '';
+            let serial_no = 1;
+
+            if(response.data.length > 0)
+            {
+                for(let count = 0; count < response.data.length; count++)
+                {
+                    html += '<tr>';
+                    html += '<td>' + serial_no + '</td>';
+                    html += '<td>' + response.data[count].post_title + '</td>';
+                    html += '<td>' + response.data[count].post_description + '</td>';
+                    html += '<td><a href="post/'+ response.data[count].post_id +'"><i class="bx bx-link-external"></i></a></td>';
+                    html += '</tr>';
+                    serial_no++;
+                }
+                
+            }
+            else
+            {
+                html += '</tr><td colspan="4" style="text-align: center;">No Data Found</td></tr>';
+            }
+            document.getElementById('post_data').innerHTML = html;
+            document.getElementById('total_posts').innerHTML = response.total_data;
+            document.getElementById('pagination_link').innerHTML = response.pagination;
+        }
+    }
+        
+    xhr.send(form_data);
+}
+
+</script>
 <?php
 
     include('includes/footer.php');

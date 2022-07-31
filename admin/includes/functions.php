@@ -203,15 +203,15 @@ function form_errors(array $errors)
 
 // Database queries
 
-//uniqueness
-function db_row_count($value, $column_name, $table_name, $dbname)
+//uniqueness and row count
+function db_row_count($value, $column_name, $table_name, $type='str')
 {
-    $db = db($dbname);
+    $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM $table_name WHERE $column_name = $value";
+    $query = "SELECT COUNT(*) FROM $table_name WHERE $column_name = :value";
     $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
     $count = $db->fetchCol();
-
     return $count;
 }
 
