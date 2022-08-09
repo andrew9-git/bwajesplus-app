@@ -329,6 +329,19 @@ function ckeditor($page = '')
           });
       });
 
+      //closable div
+      let bar = document.getElementById('Bar');
+
+      if(bar)
+      {
+          let hide_times = document.getElementById('hide-times');
+
+          hide_times.addEventListener('click', () => {
+              // bar.style.display = "none";
+              bar.remove();
+          });
+      }
+
       //ajax request for sending mail to bwajes+
 
       let form = document.getElementById('message_support_form');
@@ -497,7 +510,7 @@ function ckeditor($page = '')
         
         let xhr = new XMLHttpRequest();
         
-        xhr.open('POST', 'process-ajax');
+        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
 
         xhr.onload = function()
         {
@@ -533,7 +546,7 @@ function ckeditor($page = '')
         
         let xhr = new XMLHttpRequest();
         
-        xhr.open('POST', 'process-ajax');
+        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
 
         xhr.onload = function()
         {

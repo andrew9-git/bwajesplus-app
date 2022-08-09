@@ -10,8 +10,30 @@ bwajes_plus_header('dashboard', 'Dashboard');
     ?>
     <div class="home-content">
       <div class="post-area">
+      <?php
+            $last_logout = $user_statistics['last_logout'];
+            if($last_logout == NULL || $last_logout === "" || empty($last_logout))
+            {
+              echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
+              <div id="left"><div style="margin-top:4%;"><h4>
+              Welcome '.$_SESSION['user_data']['first_name'].'! Thanks for joining the bwajes+ family</h4></div>
+              </div>
+              <div id="right">
+                <a href="#" id="hide-times">X</a>
+              </div>
+            </div>';  
+            }
+
+            afiliate_programme_codes_wrapper($id);
+
+          ?>
             <!-- suspended user should not see content on this page
             add a tooltip with a message of why they've been suspended -->
+          <?php 
+          $user = fetch_single_row($id, 'users');
+          if($user['suspended'] != 1)
+          {
+          ?>
         <?php 
           $posts_count = db_row_count($id, 'user_id', 'posts', 'int');
           if($posts_count > 0)
@@ -21,6 +43,15 @@ bwajes_plus_header('dashboard', 'Dashboard');
           <div class="card-header flex">
             <a href="all-posts" class="btn btn-success all-post">See all posts</a>
           </div>
+          <?php
+
+            $count = profile_progress($id)[0];
+            if($count != 100)
+            {
+              echo profile_progress($id)[1];
+            }
+
+          ?>
           <div class="card-body">
             <table class="table table-striped table-hover">
               <thead>
@@ -57,6 +88,15 @@ bwajes_plus_header('dashboard', 'Dashboard');
             <a href="create-post" class="btn btn-primary create-post">create post</a>
             <span class="btn btn-warning no-post">no posts yet</span>
           </div>
+          <?php
+
+            $count = profile_progress($id)[0];
+            if($count != 100)
+            {
+              echo profile_progress($id)[1];
+            }
+
+          ?>
           <div class="card-body">
             <img src="images/no-post.gif" class="loading-post-gif" />
           </div>
@@ -66,7 +106,23 @@ bwajes_plus_header('dashboard', 'Dashboard');
         </div>
         <?php 
           }
-        ?> 
+        ?>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
 

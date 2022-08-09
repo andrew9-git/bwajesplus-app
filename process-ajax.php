@@ -667,6 +667,7 @@ if(isset($_POST['delete-user-id']))
     if($executed)
     {
         $values = array(
+            'user_id'    => $delete_id,
             'first_name' => $delete_first_name,
             'last_name'  => $delete_last_name,
             'email'      => $delete_email,

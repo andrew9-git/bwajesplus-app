@@ -24,6 +24,12 @@ $host='http://localhost:9090/bwajesplus-app/';
     ?>
 <div class="home-content">
       <div class="post-area">
+      <?php afiliate_programme_codes_wrapper($user_id); ?>
+      <?php 
+        $user = fetch_single_row($user_id, 'users');
+        if($user['suspended'] != 1)
+        {
+      ?>
         <div class="card">
           <div class="card-header flex">
             <div class="info-container">
@@ -102,7 +108,7 @@ $host='http://localhost:9090/bwajesplus-app/';
                 </div>
                 <div class="form-group">
                     <label for="post">Your post*</label>
-                    <textarea class="form-control form_data_edit" name="post" rows="5" id="post"><?php echo $post['post']; ?></textarea>
+                    <textarea class="form-control" name="post" rows="5" id="post"><?php echo $post['post']; ?></textarea>
                 </div>
                 <button type="submit" id="edit_post" name="edit-post" class="btn btn-primary">Edit post</button>
             </form>
@@ -110,6 +116,22 @@ $host='http://localhost:9090/bwajesplus-app/';
           <div class="card-footer">
           </div>
         </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
     <script>
@@ -154,6 +176,9 @@ $host='http://localhost:9090/bwajesplus-app/';
                   form_data.append(form_element[i].name, form_element[i].value);
                 }
             }
+            let post = CKEDITOR.instances['post'].getData();
+            
+            form_data.append('post', post);
             if(document.querySelector('#upload-photo').files[0])
             {
               form_data.append('cover-photo', document.querySelector('#upload-photo').files[0]);

@@ -1,10 +1,10 @@
 <?php
-include_once('functions.php');
+// include_once('functions.php');
 
 
 function email_template_1($message='', $website=1, $id=1)
 {  
-    $host = url()[0];
+    $host = 'http://localhost:9090/bwajesplus-app/';
     
 ?>
 
@@ -389,7 +389,7 @@ p.footer {
 <?php 
 function email_template($message='', $website=1, $id=1)
 {  
-    $host = url()[0];
+    $host = 'http://localhost:9090/bwajesplus-app/';
 
     $output = '';
 

@@ -10,7 +10,7 @@ if(isset($_POST['post-id']))
 {
     $user_id     = trim($_POST['user-id']); 
     $post_id     = trim($_POST['post-id']);
-    $post_title       = trim($_POST['post-title']);
+    $post_title  = trim($_POST['post-title']);
     $description = trim($_POST['description']);
     $category_id = trim($_POST['category']);
     $type_id     = trim($_POST['type']);
@@ -139,7 +139,7 @@ if(isset($_POST['post-id']))
 
         $values = array(
             'id'          => $post_id,
-            'title'       => $title,
+            'title'       => $post_title,
             'description' => $description,
             'post'        => $post,
             'cover_photo' => $new_cover_photo_name,

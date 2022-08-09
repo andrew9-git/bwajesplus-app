@@ -11,6 +11,12 @@ bwajes_plus_header('create-post', 'Create post');
     ?>
     <div class="home-content">
       <div class="post-area">
+      <?php afiliate_programme_codes_wrapper($id); ?>
+      <?php 
+        $user = fetch_single_row($id, 'users');
+        if($user['suspended'] != 1)
+        {
+      ?>
         <div class="card">
           <div class="card-header flex">
           </div>
@@ -85,7 +91,7 @@ bwajes_plus_header('create-post', 'Create post');
                 </div>
                 <div class="form-group">
                     <label for="post">Your post*</label>
-                    <textarea class="form-control form_data_post" name="post" rows="5" id="post"></textarea>
+                    <textarea class="form-control" name="post" rows="5" id="post"></textarea>
                 </div>
                 <button type="submit" id="create_post" name="create-post" class="btn btn-primary">Create post</button>
             </form>
@@ -93,6 +99,22 @@ bwajes_plus_header('create-post', 'Create post');
           <div class="card-footer">
           </div>
         </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
     <script>
@@ -132,6 +154,9 @@ bwajes_plus_header('create-post', 'Create post');
                   form_data.append(form_element[i].name, form_element[i].value);
                 }
             }
+            let post = CKEDITOR.instances['post'].getData();
+            
+            form_data.append('post', post);
             form_data.append('cover-photo', document.querySelector('#upload-photo').files[0]);
             let xhr = new XMLHttpRequest();
             

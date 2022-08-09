@@ -21,7 +21,18 @@ $host='http://localhost:9090/bwajesplus-app/';
 ?>
     <div class="home-content">
       <div class="post-area">
+      <?php afiliate_programme_codes_wrapper($id); ?>
+      <?php 
+        $user = fetch_single_row($id, 'users');
+        if($user['suspended'] != 1)
+        {
+      ?>
         <div class="card">
+        <?php 
+        $post = fetch_single_row($post_id, 'posts');
+        if($post['suspended'] != 1)
+        {
+        ?>
             <div class="card-header">
                 <div class="info-container">
                     <span class="btn btn-success back" id="back">back</span>
@@ -103,9 +114,41 @@ $host='http://localhost:9090/bwajesplus-app/';
               </div>
             </div>
             <div class="card-footer">
-            <a href="http://localhost:9090/bwajes/post/<?php echo $post['id'] . '/' . urlencode($post['title']) . '/'; ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
+              <a href="http://localhost:9090/bwajes/post/<?php echo $post['id'] . '/' . urlencode($post['title']) . '/'; ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
             </div>
+            <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your post has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your post was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
         </div>
+        <?php } ?>
+        </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
     <script>

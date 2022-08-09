@@ -445,6 +445,100 @@ nav .profile-details i{
 .card .loading-post-gif{
   width: 100%;
 }
+.ShowHide {
+  font-family: Arial, Helvetica, sans-serif;
+  /* background-color: #1963D1; */
+  background-color: #ffc107;
+  color: #FFFFFF;
+  padding:4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  height: 100px;
+}
+#left {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+#left img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+#right {
+  width: 5%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#right a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+#right a:hover {
+   text-decoration:underline;
+}
+progress{
+  vertical-align:baseline
+}
+.progress{
+  display:-ms-flexbox;
+  display:flex;
+  height:1rem;
+  overflow:hidden;
+  line-height:0;
+  font-size:.75rem;
+  background-color:#e9ecef;
+  border-radius:.25rem
+}
+.progress-bar{
+  display:-ms-flexbox;display:flex;-ms-flex-direction:column;flex-direction:column;-ms-flex-pack:center;justify-content:center;overflow:hidden;color:#fff;text-align:center;white-space:nowrap;background-color:#007bff;transition:width .6s ease
+}
+@media (prefers-reduced-motion:reduce){
+  .progress-bar{
+    transition:none
+  }
+}
+.profile-progress
+{
+  text-align: center;
+  color: #dc3545;
+}
+.card-body.ads
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ad-removal{
+  width: 50%;
+  /* border: 2px solid #e3433a; */
+  border: 2px solid #4b3ae3;
+  margin: 5% 0;
+  padding: 2%;
+}
+.ad-removal .support{
+  font-weight: 700;
+  color: #dc3545;
+}
+.ad-removal .plan form{
+  width: 100%;
+}
+#price-tag
+{
+  width: 50%;
+  margin: auto;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
 .page-item.active .page-link{
   z-index:3;
   color:#fff;
@@ -902,6 +996,9 @@ td .times{
     width: calc(100% - 220px);
     left: 220px;
   }
+  .ad-removal{
+    width: 60%;
+  }
 }
 @media (max-width: 768px){
   .home-content .post-area{
@@ -924,6 +1021,9 @@ td .times{
     display: flex;
     flex-direction: column;
   }
+  .ad-removal{
+    width: 70%;
+  }
 }
 @media (max-width: 700px) {
   nav .sidebar-button .dashboard,
@@ -933,6 +1033,9 @@ td .times{
   .home-section nav .profile-details{
     height: 50px;
     min-width: 60px;
+  }
+  .ad-removal{
+    width: 80%;
   }
 }
 @media (max-width: 576px){
@@ -954,9 +1057,15 @@ td .times{
   .modal .card{
     width: 80%;
   }
+  .ad-removal{
+    width: 85%;
+  }
 }
 @media (max-width: 550px) {
   .sidebar.active ~ .home-section nav .profile-details{
     display: none;
+  }
+  .ad-removal{
+    width: 90%;
   }
 }

@@ -10,6 +10,12 @@ bwajes_plus_header('all-posts', 'All posts');
 ?>
     <div class="home-content">
       <div class="post-area">
+      <?php afiliate_programme_codes_wrapper($id); ?>
+      <?php 
+        $user = fetch_single_row($id, 'users');
+        if($user['suspended'] != 1)
+        {
+      ?>
         <div class="card">
           <div class="card-header">
             <form action="">
@@ -47,6 +53,22 @@ bwajes_plus_header('all-posts', 'All posts');
           <div class="card-footer">
           </div>
         </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please message admin
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
 <script>

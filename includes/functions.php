@@ -77,6 +77,150 @@ function check_inactive_user($last_login_timestamp, $duration, $url='http://loca
     }
 }
 
+//afiliate programmes rotation for registered and non-registered users
+function afiliate_programmes_rotation()
+{
+    $display = '';
+
+    $db = new dbase();
+
+    //if user wants to advertise product to other users
+
+    // $query = "SELECT * FROM afiliate_programmes WHERE NOW() < expires AND shown = 0 ORDER BY id ASC LIMIT 1";
+
+    $query = "SELECT * FROM afiliate_programmes WHERE shown = :shown ORDER BY id ASC LIMIT 1";
+
+    $db->prep($query);
+    $db->bindvalue(':shown', 0, 'int');
+    $afiliate_programme = $db->fetchSingle();
+
+    if($afiliate_programme)
+    {
+        $id    = $afiliate_programme['id'];
+        $url   = $afiliate_programme['url'];
+        $image = $afiliate_programme['image'];
+
+        //the url can first be a php page with query string to check the number of times an affiliate link has been clicked
+
+        $display .= '<a href="'. $url .'" target="_blank"><img src="http://localhost:9090/bwajesplus-app/images/'. $image .'"></a>';
+
+        //if you want to track impressions
+
+        // $query = "UPDATE afiliate_programmes SET shown = :shown, impression = impression + 1 WHERE id = :id";
+
+        $query = "UPDATE afiliate_programmes SET shown = :shown WHERE id = :id";
+
+        $db->prep($query);
+        $db->bindvalue(':shown', 1, 'int');
+        $db->bindvalue(':id', $id, 'int');
+        $executed = $db->execute();
+
+        if($executed)
+        {
+            $count = db_row_count(0, 'shown', 'afiliate_programmes', 'int');
+
+            if($count == 0)
+            {
+                $query = "UPDATE afiliate_programmes SET shown = :shown";
+
+                $db->prep($query);
+                $db->bindvalue(':shown', 0, 'int');
+                $executed = $db->execute();
+            }
+        }
+    }
+
+    return $display;
+
+}
+
+function afiliate_programme_codes_wrapper($id)
+{
+  $row = fetch_single_row_in_payment($id, 'user_id');
+  $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
+  $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
+  //if there is no payment history or subcription has expired
+  if($count <= 0 || date('Y-m-d H:i:s') >= $end_date)
+  {
+    $display = afiliate_programmes_rotation();
+    echo '<div class="ShowHide" id="Bar">
+    <div id="left">'.$display.'</div>
+    <div id="right">
+      <a href="#" id="hide-times">X</a>
+    </div>
+    </div>';
+  }
+}
+
+//progess bar for tracking user's profile
+function profile_progress($id)
+{
+  $count = 0;
+  $user = fetch_single_row($id, 'users');
+
+  $profile_image = $user['profile_image'];
+  $phone         = $user['phone'];
+  $bio           = $user['bio'];
+  $website       = $user['website'];
+  $birthdate     = $user['birthdate'];
+  $address       = $user['address'];
+  $city          = $user['city'];
+  $state         = $user['state'];
+  $country       = $user['country'];
+
+  if(!empty($profile_image) || $profile_image != NULL || $profile_image != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($phone) || $phone != NULL || $phone != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($bio) || $bio != NULL || $bio != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($website) || $website != NULL || $website != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($birthdate) || $birthdate != NULL || $birthdate != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($address) || $address != NULL || $address != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($city) || $city != NULL || $city != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($state) || $state != NULL || $state != '')
+  {
+    $count += 1;
+  }
+
+  if(!empty($country) || $country != NULL || $country != '')
+  {
+    $count += 1;
+  }
+
+  $count = round((($count+7)/16)*100);
+
+  $progress = '<div class="profile-progress">Your profile is '.$count.'% completed<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: '.$count.'%" aria-valuenow="'.$count.'" aria-valuemin="0" aria-valuemax="100"></div>
+  </div></div>';
+  return array($count, $progress);
+}
+
 // End miscellenious functions
 
 // Form validation functions
@@ -665,9 +809,10 @@ function deleted_users(array $value)
 {
     $db = new dbase();
 
-    $query = "INSERT INTO deleted_users(first_name, last_name, email, gender, phone, website, birthdate, address, city, state, country) VALUES(:first_name, :last_name, :email, :gender, :phone, :website, :birthdate, :address, :city, :state, :country)";
+    $query = "INSERT INTO deleted_users(user_id, first_name, last_name, email, gender, phone, website, birthdate, address, city, state, country) VALUES(:user_id, :first_name, :last_name, :email, :gender, :phone, :website, :birthdate, :address, :city, :state, :country)";
     $db->prep($query);
 
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
     $db->bindvalue(':first_name', $value['first_name'], 'str');
     $db->bindvalue(':last_name', $value['last_name'], 'str');
     $db->bindvalue(':email', $value['email'], 'str');
@@ -727,6 +872,18 @@ function count_unseen_comments($id)
     $count = $db->fetchCol();
     
     return $count;
+}
+
+//getting a single row in payment table
+function fetch_single_row_in_payment($value, $column_name = 'id', $type='int', $by='id', $order='DESC', $limit=1)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM payment_subscriptions WHERE $column_name = :value ORDER BY $by $order LIMIT $limit";
+    $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
+    $row = $db->fetchSingle();
+    return $row;
 }
 
 // End database queries

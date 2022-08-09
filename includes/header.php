@@ -89,6 +89,16 @@ function bwajes_plus_header($active, $page_name)
             </a>
           </div>
         </li>
+        <?php 
+        $user = fetch_single_row($id, 'users');
+        if($user['suspended'] != 1)
+        {
+        ?>
+        <?php 
+        $count = db_row_count($id, 'user_id', 'ratings', 'int');
+        if($count < 5)
+        {
+        ?>
         <li>
           <div class="icon-links">
             <a href="#" id="rate">
@@ -97,6 +107,24 @@ function bwajes_plus_header($active, $page_name)
             </a>
           </div>
         </li>
+        <?php } ?>
+        <?php } ?>
+        <?php 
+        $count = db_row_count($id, 'user_id', 'posts', 'int');
+        if($count > 0)
+        {
+        ?>
+        <li><a <?php if($active === 'remove-ads')
+                {
+                    echo 'class="active" href="#"';
+                }else{
+                    echo 'href="' . $host . 'remove-ads"';
+                } ?>>
+                <i class='bx bx-money'></i>
+                <span class="links_name">Remove ads</span>
+            </a>
+        </li>
+        <?php } ?>
         <li>
           <div class="icon-links">
             <a <?php if($active === 'settings')
@@ -143,7 +171,7 @@ function bwajes_plus_header($active, $page_name)
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard"><?php echo $page_name; ?></span>
       </div>
-      <?php if(basename($_SERVER['PHP_SELF']) !== 'create-post.php')
+      <?php if(basename($_SERVER['PHP_SELF']) !== 'create-post.php' && basename($_SERVER['PHP_SELF']) !== 'remove-ads.php')
       { ?>
 
         <a href="<?php echo $host .'create-post'; ?>" class="btn btn-primary create-post nav">create post</a>

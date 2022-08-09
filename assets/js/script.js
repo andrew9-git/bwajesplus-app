@@ -33,13 +33,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const rateModal = document.querySelector("#rate-modal");
   const closeRate = document.querySelector("#rate-close");
 
-  rate.addEventListener('click', (e) => {
-    e.preventDefault();
-    rateModal.style.display = 'block';
-  });
-  closeRate.addEventListener('click', () => {
-    rateModal.style.display = 'none';
-  });
+  if(rate)
+  {
+    rate.addEventListener('click', (e) => {
+      e.preventDefault();
+      rateModal.style.display = 'block';
+    });
+  }
+  if(closeRate)
+  {
+    closeRate.addEventListener('click', () => {
+      rateModal.style.display = 'none';
+    });
+  }
 
   window.addEventListener('click', (e) => {
     if(e.target == messageModal)
