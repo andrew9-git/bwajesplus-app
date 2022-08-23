@@ -8,8 +8,8 @@ session_start();
 if(isset($_POST['bio']))
 {
     $user_id       = trim($_POST['user-id']);
-    $first_name    = trim($_POST['first-name']);
-    $last_name     = trim($_POST['last-name']); 
+    $first_name    = trim($_POST['settings-first-name']);
+    $last_name     = trim($_POST['settings-last-name']); 
     $business_name = trim($_POST['brand-name']);
     $gender        = trim($_POST['gender']);
     $phone         = trim($_POST['phone']); 

@@ -39,11 +39,11 @@ bwajes_plus_header('settings', 'Settings');
                 </div>
                 <div class="form-group">
                   <label for="first-name">First name*</label>
-                  <input type="text" class="form-control form_data" name="first-name" id="first-name" value="<?php echo $first_name; ?>">
+                  <input type="text" class="form-control form_data" name="settings-first-name" id="first-name" value="<?php echo $user['first_name']; ?>">
                 </div>
                 <div class="form-group">
                     <label for="last-name">Last name*</label>
-                    <input type="text" class="form-control form_data" name="last-name" id="last-name" value="<?php echo $last_name; ?>">
+                    <input type="text" class="form-control form_data" name="settings-last-name" id="last-name" value="<?php echo $user['last_name']; ?>">
                 </div>
                 <div class="form-group">
                 <label for="brand-name">Business/Brand name*</label>
@@ -60,7 +60,7 @@ bwajes_plus_header('settings', 'Settings');
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="tel" class="form-control form_data" name="phone" id="phone" value="<?php if($user['phone'] != NULL){ echo $user['phone']; } ?>">
+                    <input type="tel" class="form-control form_data" name="phone" id="phone" placeholder="+1" value="<?php if($user['phone'] != NULL){ echo $user['phone']; } ?>">
                 </div>
                 <div class="form-group">
                   <label for="bio">Bio</label>
@@ -257,6 +257,7 @@ bwajes_plus_header('settings', 'Settings');
             if(regex === true)
             {
               form.reset();
+              location.reload();
             }
             settings_messages.innerHTML = response;
           

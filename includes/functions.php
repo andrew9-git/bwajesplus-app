@@ -292,7 +292,7 @@ function accepted_data_type($value, $field_type)
             }
         break;
         case 'phone': 
-            if(!preg_match('/\+?[0-9]{1,3}[0-9]{3,12}/', $value))
+            if(!preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/', $value))
             {
                 return false;
             }
