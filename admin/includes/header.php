@@ -8,6 +8,14 @@ function bwajes_plus_header($active, $page_name)
 
   $host  = url()[0];
   $host1 = url()[1];
+
+  $id = $_SESSION['admin_data']['id'];
+  $first_name = $_SESSION['admin_data']['first_name'];
+  $last_name = $_SESSION['admin_data']['last_name'];
+  $username = $_SESSION['admin_data']['username'];
+  $duration = 3600; // 1 hour 
+
+  $row = fetch_single_row($id, 'admin');
   
 ?>
 
@@ -322,6 +330,18 @@ function bwajes_plus_header($active, $page_name)
       </ul>
   </div>
   <section class="home-section">
+  <?php
+    if(admin_is_logged_in() === false)
+    {
+      redirect_to('http://localhost:9090/bwajes/admin/login');
+    }
+    else
+    {
+      $last_login_timestamp = $_SESSION['admin_data']['time'];
+      
+      check_inactive_admin($last_login_timestamp, $duration);
+    }
+    ?>
   <!-- suspended admin should not see content on this page
    a tooltip with a message of why they've been suspended -->
     <nav>
@@ -330,7 +350,7 @@ function bwajes_plus_header($active, $page_name)
         <span class="dashboard"><?php echo $page_name; ?></span>
       </div>
       <div class="profile-details">
-        <img src="<?php echo $host1 .'images/profile.jpg'; ?>" alt="">
+        <img src="<?php echo $host .'profile_images/' . $row['profile_image']; ?>" alt="">
         <span class="admin_name">Andrew Adelodun</span>
         <i class='bx bx-bell'></i>
         <span class="notify-number">3</span>

@@ -75,5 +75,11 @@
             $this->execute();
             return $this->stmt->fetchColumn();
         }
+
+        public function lastId()
+        {
+            $this->execute();
+            return $this->dbh->lastInsertId();
+        }
     }
 ?>

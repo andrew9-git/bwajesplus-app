@@ -50,20 +50,69 @@ function csrf_token()
     $csrf = hash_hmac('sha256', 'this is some string: index.php', $_SESSION['key']);
     return $csrf;
 }
+
+//checking if the user has already logged in or not
+function admin_is_logged_in()
+{
+    if(isset($_SESSION['is_admin_logged_in']))
+    {
+        return true;
+    }
+    return false;
+}
+
+function check_inactive_admin($last_login_timestamp, $duration, $url='http://localhost:9090/bwajesplus-app/admin/logout')
+{
+    
+
+    if((time() - $last_login_timestamp) > $duration)
+    {
+        header("Location: {$url}");
+    }
+    else
+    {   
+        $last_login_timestamp = time();
+    }
+}
+
+//generating username for admin
+function username($first_name)
+{
+    $name = $first_name;
+    $username = 'abcdefghijklmnopqrstuvwxyz';
+    $username = str_shuffle($username);
+    if(strlen($name) == 2)
+    {
+        $username = 'B+'. substr(strtolower($name), 0, 2) . substr($username, 0, 6);
+    }
+    elseif(strlen($name) > 2)
+    {
+        $username = 'B+'. substr(strtolower($name), 0, 3) . substr($username, 0, 5);
+    }
+
+    $count = db_row_count($username, 'username', 'admin', 'str');
+
+    if($count > 0)
+    {
+        username($name);
+    }
+    else
+    {
+        return $username;
+    }
+}
 // End miscellenious functions
 
 // Form validation functions
 
-//error array
-$error = array();
-
 //presence
-function has_presence($value, $msg = "No value provided")
+function has_presence($value)
 {
+    
     // $value = trim($value);
-    if(!isset($value) || $value === "")
+    if(!isset($value) || $value === "" || empty($value))
     {
-       $errors[] = $msg; 
+       return false;
     }
     else
     {
@@ -96,7 +145,7 @@ function accepted_data_type($value, $field_type)
         case 'int': 
             if(!filter_var($value, FILTER_VALIDATE_INT))
             {
-                $errors[] = 'Only numbers are allowed'; 
+                return false;  
             }
             else
             {
@@ -106,7 +155,17 @@ function accepted_data_type($value, $field_type)
         case 'email':
             if(!filter_var($value, FILTER_VALIDATE_EMAIL))
             {
-                $errors[] = 'The email provided is not valid'; 
+                return false;  
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'name': 
+            if(preg_match('/[\'^£$%&*()}{@#~?><>,|=+¬!]/', $value))
+            {
+                return false;  
             }
             else
             {
@@ -116,7 +175,27 @@ function accepted_data_type($value, $field_type)
         case 'url': 
             if(!filter_var($value, FILTER_VALIDATE_URL))
             {
-                $errors[] = $value . 'is not a valid url'; 
+                return false;  
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'phone': 
+            if(!preg_match('/^\+(?:[0-9] ?){6,14}[0-9]$/', $value))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'address': 
+            if(preg_match('/[^A-Za-z0-9 \*,\'"\.:;@\(\)&\-]/', $value))
+            {
+                return false;  
             }
             else
             {
@@ -124,17 +203,54 @@ function accepted_data_type($value, $field_type)
             }
         break;
         case 'str': 
-            if(preg_match('/[^A-Za-Z0-9\-_ ]/', $value))
+            if(preg_match('/[^A-Za-z\-]/', $value))
             {
-                $errors[] = $value . 'is not a valid character'; 
+                return false; 
             }
             else
             {
                 return true;
             }
         break;
+        case 'str1': 
+            if(preg_match('/[^A-Za-z0-9\-_ ]/', $value))
+            {
+                return false; 
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        case 'str2': 
+            if(preg_match('/[^A-Za-z0-9&\?\|\[\]\(\)\{\}\-_ ]/', $value))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        break;
+        default: return false;
+        break;
     }
 }
+
+//validate gender field
+function accepted_option($option)
+{
+    
+    if($option === 'S')
+    {
+        return false;  
+    }
+    else
+    {
+        return true;
+    }
+}
+
 //inclusion in a set
 function found_in($value, array $set)
 {
@@ -181,11 +297,8 @@ function form_errors(array $errors)
     $output = "";
     if(!empty($errors))
     {
-        $output .= "<div class=\"card error\">";
-        $output .= "<div class=\"card-header\">";
-        $output .= "Please fix the folllowing errors";
-        $output .= "</div>";
-        $output .= "<div class=\"card-body\">";
+        $output .= "<div class='card error'>";
+        $output .= "<div>";
         $output .= "<ul>";
         foreach($errors as $key => $error)
         {
@@ -195,8 +308,7 @@ function form_errors(array $errors)
         $output .= "</div>";
         $output .= "</div>";
     }
-    echo $output;
-    $output = null;
+    return $output;
 }
 
 // End form validation functions
@@ -204,7 +316,7 @@ function form_errors(array $errors)
 // Database queries
 
 //uniqueness and row count
-function db_row_count($value, $column_name, $table_name, $type='str')
+function db_row_count($value, $column_name, $table_name, $type='int')
 {
     $db = new dbase();
 
@@ -215,6 +327,125 @@ function db_row_count($value, $column_name, $table_name, $type='str')
     return $count;
 }
 
+//getting all admin types
+function admin_type()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin_type";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//inserting values into admin table
+function insert_into_admin(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO admin(first_name, last_name, email, username, admin_type, gender, password, profile_image, phone, bio, website, birthdate, address, city, state, country, registered_by) VALUES(:first_name, :last_name, :email, :username, :admin_type, :gender, :password, :profile_image, :phone, :bio, :website, :birthdate, :address, :city, :state, :country, :registered_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':username', $value['username'], 'str');
+    $db->bindvalue(':admin_type', $value['admin_type'], 'int');
+    $db->bindvalue(':gender', $value['gender'], 'str');
+    $db->bindvalue(':password', $value['password'], 'str');
+    $db->bindvalue(':profile_image', $value['profile_image'], 'str');
+    $db->bindvalue(':phone', $value['phone'], 'str');
+    $db->bindvalue(':bio', $value['bio'], 'str');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':birthdate', $value['birthdate'], 'str');
+    $db->bindvalue(':address', $value['address'], 'str');
+    $db->bindvalue(':city', $value['city'], 'str');
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':registered_by', $value['registered_by'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function insert_into_admin_passwords(array $value)
+{
+    
+
+    $db = new dbase();
+
+    $query = "INSERT INTO admin_passwords(email, password) VALUES(:email, :password)";
+    $db->prep($query);
+
+    $db->bindvalue(':email', $value[0], 'str');
+    $db->bindvalue(':password', $value[1], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//getting a single row in a table
+function fetch_single_row($value, $table_name, $column_name = 'id', $type='int')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM $table_name WHERE $column_name = :value";
+    $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
+    $row = $db->fetchSingle();
+    return $row;
+}
+
+//update admin's password
+function update_admin_password($value)
+{
+    $db = new dbase();
+    $query = "UPDATE admin SET password = :password, updated_by = :updated_by,updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['generate_id'], 'int');
+    $db->bindvalue(':password', $value['password'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//update user table by setting active to 0
+function set_active_to_0($id)
+{
+    $db = new dbase();
+    $query = "UPDATE admin SET active = :active WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':active', 0, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+function update_last_logout($id)
+{
+    
+
+    $db = new dbase();
+
+    $query = "";
+    $query .= "UPDATE admin_statistics SET";
+    $query .= " last_logout = NOW(), updated_at = NOW() WHERE admin_id = :admin_id";
+
+    $db->prep($query);
+    $db->bindvalue(':admin_id', $id, 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
 // End database queries
 
 

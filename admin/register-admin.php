@@ -4,7 +4,10 @@ include('includes/header.php');
 bwajes_plus_header('all-admins', 'Register admin');
 
 ?>
-
+<?php 
+    // $id = $_SESSION['admin_data']['id'];
+    $admin_types = admin_type();
+?>
 <div class="home-content">
       <div class="post-area">
         <div class="card">
@@ -14,74 +17,84 @@ bwajes_plus_header('all-admins', 'Register admin');
               </div>
           </div>
           <div class="card-body">
-            <form action="">
+            <form id="register_admin_form" enctype="multipart/form-data">
+                <div id="register_admin_messages">
+                </div>
                 <div class="form-group">
-                    <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
+                  <input type="hidden" class="form-control form_data_reg" name="registered-by" value="<?php echo 1;//to be changed later! ?>">
                 </div>
                 <div class="form-group">
                   <label for="first-name">First name*</label>
-                  <input type="text" class="form-control" name="first-name" id="first-name">
+                  <input type="text" class="form-control form_data_reg" name="first-name" id="first-name">
                 </div>
                 <div class="form-group">
                     <label for="last-name">Last name*</label>
-                    <input type="text" class="form-control" name="last-name" id="last-name">
+                    <input type="text" class="form-control form_data_reg" name="last-name" id="last-name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email*</label>
-                    <input type="email" class="form-control" name="email" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="username">Username*</label>
-                    <div class="tooltip-container">
-                        <div><i class='bx bx-help-circle tooltip'></i></div>
-                        <div class="tooltip">The last id is <?php echo '4'; ?>
-                    </div>
-                    </div>
-                    <input type="text" class="form-control" name="username" id="username">
+                    <input type="email" class="form-control form_data_reg" name="email" id="email">
                 </div>
                 <div class="form-group">
                     <label for="admin-type">Admin type*</label>
-                    <select class="form-control" name="admin-type" id="admin-type">
+                    <select class="form-control form_data_reg" name="admin-type" id="admin-type">
                       <option value="null">Select type</option>
-                      <option value="">Basic</option>
-                      <option value="">Super</option>
+                      <?php 
+                     foreach($admin_types as $admin_type)
+                     {
+                        ?>
+                        <option value="<?php echo $admin_type['id']; ?>"><?php echo ucfirst($admin_type['type']); ?></option>
+                        <?php 
+                        }
+                    ?>
                     </select>
                 </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" value="" name="gender"> Male
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label">
-                        <input type="radio" class="form-check-input" value="" name="gender"> Female
-                    </label>
-                </div><br><br>
                 <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="tel" value="+234 " class="form-control" name="phone" id="phone">
+                    <label for="gender">Gender*</label>
+                    <select class="form-control form_data_reg" name="gender" id="gender">
+                      <option value="S">Select gender</option>
+                      <option value="M">Male</option>
+                      <option value="F">Female</option>
+                      <option value="N">Choose not to say</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="website">Website</label>
-                    <input type="url" class="form-control" name="website" id="website">
+                    <label for="upload-photo">Admin photo*</label>
+                  <input type="file" name="admin-photo" class="form-control" id="upload-photo" accept="image/*">
                 </div>
                 <div class="form-group">
-                    <label for="birth-date">Birth date</label>
-                    <input type="date" class="form-control" name="birth-date" id="birth-date">
+                    <label for="phone">Phone*</label>
+                    <input type="tel" placeholder="+1" class="form-control form_data_reg" name="phone" id="phone">
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <input type="text" class="form-control" name="address" id="address">
+                    <label for="bio">Bio*</label>
+                    <textarea class="form-control" name="bio" rows="5" id="bio"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="city">City</label>
-                    <input type="text" class="form-control" name="city" id="city">
+                    <label for="website">Website*</label>
+                    <input type="url" class="form-control form_data_reg" name="website" id="website">
                 </div>
                 <div class="form-group">
-                    <label for="state">State</label>
-                    <input type="text" class="form-control" name="state" id="state">
+                    <label for="birth-date">Birth date*</label>
+                    <input type="date" class="form-control form_data_reg" name="birth-date" id="birth-date">
                 </div>
-                <button name="update-profile" class="btn btn-primary">Register</button>
+                <div class="form-group">
+                    <label for="address">Address*</label>
+                    <input type="text" class="form-control form_data_reg" name="address" id="address">
+                </div>
+                <div class="form-group">
+                    <label for="city">City*</label>
+                    <input type="text" class="form-control form_data_reg" name="city" id="city">
+                </div>
+                <div class="form-group">
+                    <label for="state">State*</label>
+                    <input type="text" class="form-control form_data_reg" name="state" id="state">
+                </div>
+                <div class="form-group">
+                    <label for="country">Country*</label>
+                    <input type="text" class="form-control form_data_reg" name="country" id="country">
+                </div>
+                <button name="register-admin" class="btn btn-primary" id="register_admin">Register</button>
               </form>
           </div>
           <div class="card-footer">
@@ -89,7 +102,84 @@ bwajes_plus_header('all-admins', 'Register admin');
         </div>
       </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
+            let form = document.getElementById('register_admin_form');
+            let register_admin_button = document.getElementById('register_admin');
+            let register_admin_messages = document.getElementById('register_admin_messages');
+            form.addEventListener('submit', register_admin);
+
+            function register_admin(e)
+            {
+                e.preventDefault();
+                register_admin_button.disabled = true;
+
+                let reg_admin_btn_bg_col = register_admin_button.style.backgroundColor;
+                let reg_admin_btn_border = register_admin_button.style.border;
+                let reg_admin_btn_cursor = register_admin_button.style.cursor;
+
+                if(register_admin_button.disabled == true)
+                {
+                    register_admin_button.style.backgroundColor = 'grey';
+                    register_admin_button.style.border = 'grey';
+                    register_admin_button.style.cursor = 'not-allowed';
+                }
+
+                let form_element = document.getElementsByClassName('form_data_reg');
+                let form_data = new FormData();
+
+                for(let i = 0; i < form_element.length; i++)
+                {
+                    form_data.append(form_element[i].name, form_element[i].value);
+                }
+                let bio = CKEDITOR.instances['bio'].getData();
+                form_data.append('bio', bio);
+                form_data.append('admin-photo', document.querySelector('#upload-photo').files[0]);
+                
+                let xhr = new XMLHttpRequest();
+                
+                xhr.open('POST', 'process-ajax');
+
+                xhr.onload = function()
+                {
+                    if(this.status == 200)
+                    {
+                        register_admin_button.disabled = false;
+
+                        if(register_admin_button.disabled == false)
+                        {
+                            register_admin_button.style.backgroundColor = reg_admin_btn_bg_col;
+                            register_admin_button.style.border = reg_admin_btn_border;
+                            register_admin_button.style.cursor = reg_admin_btn_cursor;
+                        }
+
+                        let response = xhr.responseText;
+                        const pattern = /Success!/;
+                        let regex = pattern.test(response);
+                        if(regex === true)
+                        {
+                        form.reset();
+                        }
+                        register_admin_messages.innerHTML = response;
+                    
+                    }
+                }
+                
+                xhr.send(form_data);
+            }
+
+        });
+    </script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        CKEDITOR.replace('bio',
+        {
+            // Remove the redundant buttons from toolbar groups defined above.
+            removeButtons: 'About,Source,Anchor'
+        });
+      });
+    </script>
 <?php
 
     include('includes/footer.php');
