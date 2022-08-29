@@ -820,7 +820,7 @@ if(isset($_POST["view_notification"]))
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">
-                '.$result["comment"].'
+                '.substr($result["comment"], 0, 20).'...
                 </a>
             </li>
             ';

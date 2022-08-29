@@ -6,7 +6,12 @@ function ckeditor($page = '')
   $hostname='http://localhost:9090/bwajesplus-app/';
   
 ?>
-
+<?php 
+    $id = $_SESSION['admin_data']['id'];
+    $username = $_SESSION['admin_data']['username'];
+    $first_name = $_SESSION['admin_data']['first_name'];
+    $last_name = $_SESSION['admin_data']['last_name'];
+?>
 </section>
 <?php
     if($page === 'settings')
@@ -160,6 +165,59 @@ function ckeditor($page = '')
                 });
             });
         });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+      //ajax request to load unseen notification
+
+      function load_unseen_notification(view_notification = '')
+      {
+
+        let form_data = new FormData();
+
+        form_data.append('view_notification', view_notification);
+        
+        let xhr = new XMLHttpRequest();
+        
+        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+
+        xhr.onload = function()
+        {
+          if(this.status == 200)
+          {
+            let response = JSON.parse(xhr.responseText);
+            document.getElementById('notify_ul').innerHTML = response.notification;
+
+            if(response.unseen_notification > 0)
+            {
+              document.getElementById('notify_number').innerHTML = response.unseen_notification;
+            }
+            else if(response.unseen_notification == 0)
+            {
+              document.getElementById('notify_number').style.display = 'none';
+            }
+          }
+        }
+        
+        xhr.send(form_data);
+      }
+
+ 
+      load_unseen_notification();
+
+      let bell_notify = document.getElementById('notify_bell');
+
+      bell_notify.addEventListener('click', () => {
+        document.getElementById('notify_number').innerHTML = '';
+        load_unseen_notification('yes');
+      });
+
+      setInterval(function(){ 
+        load_unseen_notification();
+      }, 5000);
+
+    });
   </script>
 </body>
 </html>

@@ -15,7 +15,7 @@ function bwajes_plus_header($active, $page_name)
   $username = $_SESSION['admin_data']['username'];
   $duration = 3600; // 1 hour 
 
-  $row = fetch_single_row($id, 'admin');
+  $admin = fetch_single_row($id, 'admin');
   
 ?>
 
@@ -169,6 +169,7 @@ function bwajes_plus_header($active, $page_name)
             </li>
           </ul>
         </li>
+        <?php if($admin['admin_type'] == 1){ ?>
         <li>
             <div class="icon-links">
                 <a <?php if($active === 'legal')
@@ -182,6 +183,7 @@ function bwajes_plus_header($active, $page_name)
                 </a>
             </div>
         </li>
+        <?php } ?>
         <li>
           <div class="icon-links">
                 <a <?php if($active === 'post-master')
@@ -228,6 +230,7 @@ function bwajes_plus_header($active, $page_name)
                 <span class="links_name">Users statistics</span>
                 </a>
             </li>
+            <?php if($admin['admin_type'] == 1){ ?>
             <li>
                 <a <?php if($active === 'admins-statistics')
                 {
@@ -239,7 +242,21 @@ function bwajes_plus_header($active, $page_name)
                 <span class="links_name">Admins statistics</span>
                 </a>
             </li>
+            <?php } ?>
           </ul>
+        </li>
+        <li>
+          <div class="icon-links">
+                <a <?php if($active === 'ratings')
+                {
+                    echo 'class="active" href="#"';
+                }else{
+                    echo 'href="' . $host . 'ratings"';
+                } ?>>
+                <i class='bx bx-star'></i>
+                <span class="links_name">Ratings</span>
+                </a>
+          </div>
         </li>
         <li>
           <div class="icon-links">
@@ -275,6 +292,7 @@ function bwajes_plus_header($active, $page_name)
             </a>
           </div>
         </li>
+        <?php if($admin['admin_type'] == 1){ ?>
         <li>
           <div class="icon-links">
                 <a <?php if($active === 'all-admins')
@@ -288,6 +306,7 @@ function bwajes_plus_header($active, $page_name)
                 </a>
           </div>
         </li>
+        <?php } ?>
         <li>
           <div class="icon-links">
                 <a <?php if($active === 'all-users')
@@ -301,6 +320,21 @@ function bwajes_plus_header($active, $page_name)
                 </a>
           </div>
         </li>
+        <?php if($admin['admin_type'] == 1){ ?>
+        <li>
+          <div class="icon-links">
+                <a <?php if($active === 'payments')
+                {
+                    echo 'class="active" href="#"';
+                }else{
+                    echo 'href="' . $host . 'payments"';
+                } ?>>
+                <i class='bx bx-money'></i>
+                <span class="links_name">Payments</span>
+                </a>
+          </div>
+        </li>
+        <?php } ?>
         <li>
           <div class="icon-links">
                 <a <?php if($active === 'settings')
@@ -350,16 +384,12 @@ function bwajes_plus_header($active, $page_name)
         <span class="dashboard"><?php echo $page_name; ?></span>
       </div>
       <div class="profile-details">
-        <img src="<?php echo $host .'profile_images/' . $row['profile_image']; ?>" alt="">
-        <span class="admin_name">Andrew Adelodun</span>
-        <i class='bx bx-bell'></i>
-        <span class="notify-number">3</span>
+        <img src="<?php echo $host .'profile_images/' . $admin['profile_image']; ?>" alt="">
+        <span class="admin_name"><?php echo ucfirst(strtolower($first_name)) . ' ' . ucfirst(strtolower($last_name)); ?></span>
+        <i id="notify_bell" class='bx bx-bell'></i>
+        <span id="notify_number" class="notify-number"></span>
         <div class="notification admin">
-          <ul class="notification-items">
-            <li><a href="#">comment comment comment</a></li>
-            <li><a href="#">comment</a></li>
-            <li><a href="#">comment</a></li>
-            <li><a href="#">comment</a></li>
+          <ul id="notify_ul" class="notification-items">
           </ul>
         </div>
       </div>

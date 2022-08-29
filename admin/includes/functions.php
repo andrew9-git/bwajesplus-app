@@ -446,6 +446,46 @@ function update_last_logout($id)
 
     return $execute;
 }
+
+//update unseen user sent email to 1
+function update_unseen_user_sent_email()
+{
+    $db = new dbase();
+    $query = "UPDATE user_sent_emails SET status = 1 WHERE status = 0";
+    $db->prep($query);
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//fetch user sent emails to be displayed in notification
+function user_sent_emails_in_notification($limit=5, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM user_sent_emails ORDER BY $by DESC LIMIT $limit";
+    $db->prep($query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//count unseen user sent emails
+function count_unseen_user_sent_emails()
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM user_sent_emails WHERE status = 0";
+
+    $db->prep($query);
+
+
+    $count = $db->fetchCol();
+    
+    return $count;
+}
 // End database queries
 
 

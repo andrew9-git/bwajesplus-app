@@ -70,6 +70,12 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^issue-details/([0-9]+)$ issue-details.php?id=$1 [NC,L]
 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^payment-statistics/([0-9]+)$ payment-statistics.php?ps=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^each-user-ratings/([0-9]+)$ each-user-ratings.php?r=$1 [NC,L]
+
     # removing the php extension
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([^\.]+)$ $1.php [NC,L]

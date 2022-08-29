@@ -286,4 +286,46 @@ if(isset($_POST['generate-id']))
     }
 }
 
+if(isset($_POST["view_notification"]))
+{
+
+    if($_POST["view_notification"] != '')
+    {
+        update_unseen_user_sent_email();
+    }
+    
+    $results = user_sent_emails_in_notification();
+    $output = '';
+
+    if($results)
+    {
+        foreach($results as $result)
+        {
+
+            $url  = 'http://localhost:9090/bwajesplus-app/admin/user-email/'.$result['id'];
+            $output .= '
+            <li>
+                <a target="_blank" href="'.$url.'">
+                '.substr($result["title"], 0, 20).'...
+                </a>
+            </li>
+            ';
+        }
+    }
+    else
+    {
+        $output .= '<li><a href="#">No Notification</a></li>';
+    }
+
+    //count unseen comments
+    $count = count_unseen_user_sent_emails();
+
+    $data = array(
+    'notification'   => $output,
+    'unseen_notification' => $count
+    );
+    
+    echo json_encode($data);
+}
+
 ?>
