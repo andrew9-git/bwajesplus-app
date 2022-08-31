@@ -5,7 +5,10 @@
 
     # SEO friendly urls
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^posts/([0-9]+)$ posts.php?p=$1 [NC,L]
+    RewriteRule ^posts/([0-9]+)$ posts.php?u=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^post/([0-9]+)$ post.php?p=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^admin/([0-9]+)$ admin.php?a=$1 [NC,L]
@@ -54,6 +57,9 @@
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^edit-faqs/([0-9]+)$ edit-faqs.php?f=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^reports-about-post/([0-9]+)$ reports-about-post.php?p=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^user/([0-9]+)$ user.php?u=$1 [NC,L]

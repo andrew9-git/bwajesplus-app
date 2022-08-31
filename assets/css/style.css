@@ -768,11 +768,17 @@ td a.title{
 td a .bx.bx-trash{
   color: #dc3545;
 }
+td span .bx.bx-trash{
+  color: #dc3545;
+}
 td a .bx.bx-edit{
   color: #ffc107;
 }
 td a:hover{
   font-size: 1.5rem;
+}
+td span:hover{
+  transform: scale(1.5);
 }
 .table-hover tbody tr:nth-of-type(even):hover{
   color:#212529;

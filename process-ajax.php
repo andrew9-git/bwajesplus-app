@@ -136,6 +136,8 @@ if(isset($_POST['query']))
 
 	$page_link = '';
 
+	$page_array = array();
+
 	if($total_links > 4)
 	{
 		if($page < 5)

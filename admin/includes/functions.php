@@ -316,13 +316,21 @@ function form_errors(array $errors)
 // Database queries
 
 //uniqueness and row count
-function db_row_count($value, $column_name, $table_name, $type='int')
+function db_row_count($value, $column_name, $table_name, $type='int', $where=1)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM $table_name WHERE $column_name = :value";
+    $query = "";
+    $query .= "SELECT COUNT(*) FROM $table_name";
+    if($where == 1)
+    {
+        $query .= " WHERE $column_name = :value";
+    }
     $db->prep($query);
-    $db->bindvalue(':value', $value, $type);
+    if($where == 1)
+    {
+        $db->bindvalue(':value', $value, $type);
+    }
     $count = $db->fetchCol();
     return $count;
 }
@@ -485,6 +493,292 @@ function count_unseen_user_sent_emails()
     $count = $db->fetchCol();
     
     return $count;
+}
+
+//getting all users to display in dashboard
+function values_to_show_in_dashboard($table_name='users',$dashboard=1, $limit=10, $by='id')
+{
+    $db = new dbase();
+
+    $query = "";
+
+    $query .= "SELECT * FROM $table_name";
+    if($dashboard == 1)
+    {
+        $query .= " ORDER BY $by DESC LIMIT $limit";
+    }
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//insert into reports table
+function insert_into_reports(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO reports(report, created_by, updated_by) VALUES(:report, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_report_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM reports WHERE report LIKE :report ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_report_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM reports WHERE report LIKE :report ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_report_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM reports ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_report($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM reports ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function delete_single_row($value, $table_name, $column_name = 'id', $type='int')
+{
+    
+
+    $db = new dbase();
+
+    $query = "DELETE FROM $table_name WHERE $column_name = :value";
+
+    $db->prep($query);
+
+    $db->bindvalue(':value', $value, $type);
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//update report
+function update_report($value)
+{
+    $db = new dbase();
+    $query = "UPDATE reports SET report = :report, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':updated_by', $value['admin_id'], 'int');
+    $db->bindvalue(':report', $value['report'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+function count_reported_posts_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(post_id)) FROM reported_posts WHERE report_id IN (SELECT id FROM reports WHERE report LIKE :report) ORDER BY created_at DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_reported_posts_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT DISTINCT post_id FROM reported_posts WHERE report_id IN (SELECT id FROM reports WHERE report LIKE :report) ORDER BY created_at DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_reported_posts_b($by='created_at')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(post_id)) FROM reported_posts ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_reported_posts($offset, $limit, $by='created_at')
+{
+    $db = new dbase();
+
+    $query = "SELECT DISTINCT post_id FROM reported_posts ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_rpt_abt_post_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM reported_posts WHERE report_id IN (SELECT id FROM reports WHERE report LIKE :report) AND post_id = :post_id ORDER BY created_at DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+    $db->bindvalue(':post_id', $value['post_id'], 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_rpt_abt_post_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM reported_posts WHERE report_id IN (SELECT id FROM reports WHERE report LIKE :report) AND post_id = :post_id ORDER BY created_at DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':report', $value['report'], 'str');
+    $db->bindvalue(':post_id', $value['post_id'], 'int');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_rpt_abt_post_b($value, $by='created_at')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM reported_posts WHERE post_id = :post_id ORDER BY $by DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':post_id', $value['post_id'], 'int');
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_rpt_abt_post($value, $offset, $limit, $by='created_at')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM reported_posts WHERE post_id = :post_id ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':post_id', $value['post_id'], 'int');
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//suspend a user's post
+function suspend_user_post($id)
+{
+    $db = new dbase();
+    $query = "UPDATE posts SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 1, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//suspend a user's post
+function activate_user_post($id)
+{
+    $db = new dbase();
+    $query = "UPDATE posts SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 0, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
 }
 // End database queries
 

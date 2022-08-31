@@ -43,14 +43,15 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                             <td>Title</td>
                             <td>Description</td>
                             <td>Description</td>
-                            <td><a href="#" class="btn btn-danger" onclick="event.preventDefault();if(confirm('Do you really want to delete this rating?')){document.getElementById('form-delete-rid').submit();}"><i class="bx bxs-trash"></i></a></td>
+                            <td><a href="#" onclick="event.preventDefault();if(confirm('Do you really want to delete this rating?')){document.getElementById('form-delete-rid').submit();}"><i class="bx bx-trash"></i></a>
+                            <form method="post" action="" style="display: none;" id="form-delete-rid">
+                                <input type="hidden" value="" name="csrf">
+                                <input type="hidden" value="rid" name="delete-post">
+                            </form>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <form method="post" action="" style="display: none;" id="form-delete-rid">
-                    <input type="hidden" value="" name="csrf">
-                    <input type="hidden" value="rid" name="delete-post">
-                </form>
                 <div id="pagination_link" style="width: 100%;display:flex;justify-content:center;align-items:center;"></div><br>
           </div>
           <div class="card-footer">
