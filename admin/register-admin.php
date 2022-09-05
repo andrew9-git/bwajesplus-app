@@ -5,8 +5,9 @@ bwajes_plus_header('all-admins', 'Register admin');
 
 ?>
 <?php 
-    // $id = $_SESSION['admin_data']['id'];
+    $id = $_SESSION['admin_data']['id'];
     $admin_types = admin_type();
+    $admin = fetch_single_row($id, 'admin');
 ?>
 <div class="home-content">
       <div class="post-area">
@@ -92,7 +93,14 @@ bwajes_plus_header('all-admins', 'Register admin');
                 </div>
                 <div class="form-group">
                     <label for="country">Country*</label>
-                    <input type="text" class="form-control form_data_reg" name="country" id="country">
+                    <select class="form-control form_data_reg" name="country" id="country">
+                      <option value="S">Select country</option>
+                      <?php $countries = fetch_countries();
+                      foreach($countries as $country) {
+                      ?>
+                      <option value="<?php echo $country['id']; ?>" <?php //if($admin['country'] == $country['id']){echo 'selected';} ?>><?php echo $country['country']; ?></option>
+                      <?php } ?>
+                    </select>
                 </div>
                 <button name="register-admin" class="btn btn-primary" id="register_admin">Register</button>
               </form>

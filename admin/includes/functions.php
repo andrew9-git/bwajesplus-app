@@ -780,6 +780,362 @@ function activate_user_post($id)
     
     return $execute;
 }
+
+function count_affiliate_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM affiliate_programmes WHERE url LIKE :url OR name LIKE :name OR image LIKE :image ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':url', $value['url'], 'str');
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':image', $value['image'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_affiliate_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM affiliate_programmes WHERE url LIKE :url OR name LIKE :name OR image LIKE :image ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':url', $value['url'], 'str');
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':image', $value['image'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_affiliate_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM affiliate_programmes ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_affiliate($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM affiliate_programmes ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//insert into affiliate programmes table
+function insert_into_affiliate(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO affiliate_programmes(url, name, image, created_by, updated_by) VALUES(:url, :name, :image, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':url', $value['url'], 'str');
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':image', $value['image'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function update_affiliate($value, $update_company_photo)
+{
+    
+
+    $db = new dbase();
+
+    $query = "";
+    $query .= "UPDATE affiliate_programmes SET url = :url, name = :name,";
+    if($update_company_photo == 1)
+    {
+        $query .= " image = :image,";
+    }
+    $query .= " updated_by = :updated_by,";
+    $query .= " updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':url', $value['url'], 'str');
+    $db->bindvalue(':name', $value['name'], 'str');
+    if($update_company_photo == 1)
+    {
+        $db->bindvalue(':image', $value['image'], 'str');
+    }
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $db->bindvalue(':id', $value['affiliate_id'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_country_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM countries WHERE country LIKE :country ORDER BY country ASC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':country', $value['country'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_country_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM countries WHERE country LIKE :country ORDER BY country ASC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':country', $value['country'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_country_b($by='country')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM countries ORDER BY $by ASC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_country($offset, $limit, $by='country')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM countries ORDER BY $by ASC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//insert into countries table
+function insert_into_country(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO countries(country, created_by, updated_by) VALUES(:country, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function update_country($value)
+{    
+
+    $db = new dbase();
+
+    $query = "UPDATE countries SET country = :country, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $db->bindvalue(':id', $value['country_id'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function fetch_countries($by='country')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM countries ORDER BY $by ASC";
+
+    $db->prep($query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_user_emails_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM user_sent_emails WHERE email LIKE :email OR department LIKE :department OR title LIKE :title OR message LIKE :message ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':department', $value['department'], 'str');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':message', $value['message'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_user_emails_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM user_sent_emails WHERE email LIKE :email OR department LIKE :department OR title LIKE :title OR message LIKE :message ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':department', $value['department'], 'str');
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':message', $value['message'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_user_emails_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM user_sent_emails ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_user_emails($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM user_sent_emails ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_admin_emails_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM admin_sent_emails WHERE set_from_name LIKE :set_from_name OR set_from_email LIKE :set_from_email OR subject LIKE :subject OR body LIKE :body ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':set_from_name', $value['set_from_name'], 'str');
+    $db->bindvalue(':set_from_email', $value['set_from_email'], 'str');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':body', $value['body'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_admin_emails_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin_sent_emails WHERE set_from_name LIKE :set_from_name OR set_from_email LIKE :set_from_email OR subject LIKE :subject OR body LIKE :body ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':set_from_name', $value['set_from_name'], 'str');
+    $db->bindvalue(':set_from_email', $value['set_from_email'], 'str');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':body', $value['body'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_admin_emails_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM admin_sent_emails ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_admin_emails($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin_sent_emails ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
 // End database queries
 
 

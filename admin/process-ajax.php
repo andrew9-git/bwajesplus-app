@@ -197,21 +197,9 @@ if(isset($_POST['admin-type']))
         $errors[] = 'State should not be greater than 255 characters';
     }
 
-    if(has_presence($country) == false)
+    if(accepted_option($country) == false)
     {
-        $errors[] = 'Country cannot be empty';
-    }
-    if(accepted_data_type($country, 'address') == false)
-    {
-        $errors[] = 'Invalid country';
-    }
-    elseif(strlen($country) < 5)
-    {
-        $errors[] = 'Country should not be lesser than 5 characters';
-    }
-    elseif(strlen($country) > 255)
-    {
-        $errors[] = 'Country should not be greater than 255 characters';
+        $errors[] = 'Please select a country';
     }
 
 
@@ -1086,4 +1074,1222 @@ if(isset($_POST['query_reports_about_post']))
 	echo json_encode($output);
 }
 
+if(isset($_POST['affiliate_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['affiliate_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["affiliate_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'url'	=>	'%' . $condition . '%',
+			'name'	=>	'%' . $condition . '%',
+			'image'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_affiliate_a($values);
+        $affiliates = search_affiliate_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($affiliates as $affiliate)
+		{
+			$data[] = array(
+				'affiliate_id'	=>	$affiliate["id"],
+				'url'	=>	str_ireplace($replace_array_1, $replace_array_2, $affiliate["url"]),
+				'company_name'	=>	str_ireplace($replace_array_1, $replace_array_2, $affiliate["name"]),
+                'date_created'	=>	$affiliate["created_at"],
+				'last_updated'	=>	$affiliate["updated_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_affiliate_b();
+        $affiliates = search_affiliate($offset, $limit);
+
+		foreach($affiliates as $affiliate)
+		{
+			$data[] = array(
+                'affiliate_id'  =>	$affiliate["id"],
+				'url'	        =>	$affiliate["url"],
+				'company_name'	=>	$affiliate["name"],
+				'date_created'	=>	$affiliate["created_at"],
+				'last_updated'	=>	$affiliate["updated_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["affiliate_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["affiliate_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["affiliate_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+//to create affiliate
+if(isset($_POST['affiliate-url']))
+{
+    $id            = trim($_POST['id']);
+    $affiliate_url = trim($_POST['affiliate-url']);
+    $company_name  = trim($_POST['company-name']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($affiliate_url) == false)
+    {
+        $errors[] = 'Url cannot be empty';
+    }
+    elseif(accepted_data_type($affiliate_url, 'url') == false)
+    {
+        $errors[] = $affiliate_url . ' is not valid';
+    }
+
+    if(has_presence($company_name) == false)
+    {
+        $errors[] = 'Company name cannot be empty';
+    }
+    elseif(accepted_data_type($company_name, 'name') == false)
+    {
+        $errors[] = $company_name . ' is not valid';
+    }
+    elseif(strlen($company_name) < 2)
+    {
+        $errors[] = 'The company name field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($company_name) > 255)
+    {
+        $errors[] = 'The company name field cannot be more than 255 characters';
+    }
+
+
+	if(isset($_FILES['company-photo']['name']))
+	{
+		$company_photo_name = $_FILES['company-photo']['name'];
+		$company_photo_size = $_FILES['company-photo']['size'];
+	
+		$allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+		$image_ext = pathinfo($company_photo_name, PATHINFO_EXTENSION);
+	
+		if(!in_array($image_ext, $allowed_images))
+		{
+			$errors[] = 'The accepted company photo types are png and jpg/jpeg only';
+		}
+		elseif($company_photo_size > 1000000)
+		{
+			$errors[] = 'The accepted company photo size should not be more than 1Mb';
+		}
+		else
+		{
+			$new_company_photo_name = time() .'_' . $company_photo_name;
+			$company_photo_folder = '../images/';
+			$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
+		
+			move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);
+		}
+	}
+	else
+	{
+		$errors[] = 'You must upload a company photo';
+	}
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'url'        => $affiliate_url,
+            'name'       => $company_name,
+            'image'      => $new_company_photo_name,
+            'created_by' => $id,
+            'updated_by' => $id
+        );
+
+        //insert into posts table
+        $executed = insert_into_affiliate($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> An affiliate program has been created</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+//to edit affiliate
+if(isset($_POST['edit-affiliate-url']))
+{
+    $id            = trim($_POST['id']);
+    $affiliate_id  = trim($_POST['affiliate-id']);
+    $affiliate_url = trim($_POST['edit-affiliate-url']);
+    $company_name  = trim($_POST['company-name']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($affiliate_url) == false)
+    {
+        $errors[] = 'Url cannot be empty';
+    }
+    elseif(accepted_data_type($affiliate_url, 'url') == false)
+    {
+        $errors[] = $affiliate_url . ' is not valid';
+    }
+
+    if(has_presence($company_name) == false)
+    {
+        $errors[] = 'Company name cannot be empty';
+    }
+    elseif(accepted_data_type($company_name, 'name') == false)
+    {
+        $errors[] = $company_name . ' is not valid';
+    }
+    elseif(strlen($company_name) < 2)
+    {
+        $errors[] = 'The company name field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($company_name) > 255)
+    {
+        $errors[] = 'The company name field cannot be more than 255 characters';
+    }
+
+
+	if(isset($_FILES['company-photo']['name']))
+	{
+		$update_company_photo = 1;
+
+		$company_photo_name = $_FILES['company-photo']['name'];
+		$company_photo_size = $_FILES['company-photo']['size'];
+	
+		$allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+		$image_ext = pathinfo($company_photo_name, PATHINFO_EXTENSION);
+	
+		if(!in_array($image_ext, $allowed_images))
+		{
+			$errors[] = 'The accepted company photo types are png and jpg/jpeg only';
+		}
+		elseif($company_photo_size > 1000000)
+		{
+			$errors[] = 'The accepted company photo size should not be more than 1Mb';
+		}
+		else
+		{
+			$affiliate_programme = fetch_single_row($affiliate_id, 'affiliate_programmes');
+
+            $filename = '../images/' . $affiliate_programme['image'];
+            if (file_exists($filename) && !is_dir($filename))
+            {
+                $deleted = unlink($filename);
+                if (!$deleted)
+                {
+                    $errors[] = 'Something went wrong. Please try again';
+                }
+                else
+                {
+					$new_company_photo_name = time() .'_' . $company_photo_name;
+					$company_photo_folder = '../images/';
+					$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
+				
+					move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);
+                }
+            }
+            else
+            {
+				$new_company_photo_name = time() .'_' . $company_photo_name;
+				$company_photo_folder = '../images/';
+				$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
+			
+				move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);
+            }
+		}
+	}
+	else
+	{
+		$update_company_photo = 0;
+	}
+    
+    if(empty($errors))
+    {
+		if(isset($new_company_photo_name))
+        {
+            $new_company_photo_name = $new_company_photo_name;
+        }
+        else
+        {
+            $new_company_photo_name = '';
+        }
+
+        $values = array(
+			'url'          => $affiliate_url,
+            'name'         => $company_name,
+            'image'        => $new_company_photo_name,
+            'updated_by'   => $id,
+            'affiliate_id' => $affiliate_id
+        );
+
+        //insert into posts table
+        $executed = update_affiliate($values, $update_company_photo);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> Affiliate program has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['country_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['country_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["country_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			// 'name'	=>	'%' . $condition . '%',
+			'country'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_country_a($values);
+        $countries = search_country_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($countries as $country)
+		{
+			$data[] = array(
+				'country_id'	=>	$country["id"],
+				'country'	=>	str_ireplace($replace_array_1, $replace_array_2, $country["country"]),
+                'date_created'	=>	$country["created_at"],
+				'last_updated'	=>	$country["updated_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_country_b();
+        $countries = search_country($offset, $limit);
+
+		foreach($countries as $country)
+		{
+			$data[] = array(
+				'country_id'	=>	$country["id"],
+				'country'	    =>	$country["country"],
+                'date_created'	=>	$country["created_at"],
+				'last_updated'	=>	$country["updated_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["country_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["country_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["country_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+//to add country
+if(isset($_POST['add-country']))
+{
+    $id      = trim($_POST['id']);
+    $country = trim($_POST['add-country']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($country) == false)
+    {
+        $errors[] = 'Country cannot be empty';
+    }
+    elseif(accepted_data_type($country, 'address') == false)
+    {
+        $errors[] = $country . ' is not valid';
+    }
+    elseif(strlen($country) < 2)
+    {
+        $errors[] = 'The country field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($country) > 255)
+    {
+        $errors[] = 'The country field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'country'    => $country,
+            'created_by' => $id,
+            'updated_by' => $id
+        );
+
+        //insert into posts table
+        $executed = insert_into_country($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A country has been added</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+//to update country
+if(isset($_POST['edit-country']))
+{
+    $id      = trim($_POST['id']);
+    $country_id      = trim($_POST['country-id']);
+    $country = trim($_POST['edit-country']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($country) == false)
+    {
+        $errors[] = 'Country cannot be empty';
+    }
+    elseif(accepted_data_type($country, 'address') == false)
+    {
+        $errors[] = $country . ' is not valid';
+    }
+    elseif(strlen($country) < 2)
+    {
+        $errors[] = 'The country field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($country) > 255)
+    {
+        $errors[] = 'The country field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'country'    => $country,
+            'country_id'    => $country_id,
+            'updated_by' => $id
+        );
+
+        //insert into posts table
+        $executed = update_country($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A country has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['user_emails_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['user_emails_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["user_emails_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'email'	     =>	'%' . $condition . '%',
+			'department' =>	'%' . $condition . '%',
+			'title'	     =>	'%' . $condition . '%',
+			'message'	 =>	'%' . $condition . '%'
+		);
+
+        $total_data = count_user_emails_a($values);
+        $user_emails = search_user_emails_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($user_emails as $user_email)
+		{
+			$data[] = array(
+				'user_email_id'	=>	$user_email["id"],
+				'user_email'	=>	str_ireplace($replace_array_1, $replace_array_2, $user_email["email"]),
+				'department'	=>	str_ireplace($replace_array_1, $replace_array_2, $user_email["department"]),
+				'title'	        =>	str_ireplace($replace_array_1, $replace_array_2, $user_email["title"]),
+                'date_created'	=>	$user_email["created_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_user_emails_b();
+        $user_emails = search_user_emails($offset, $limit);
+
+		foreach($user_emails as $user_email)
+		{
+			$data[] = array(
+				'user_email_id'	=>	$user_email["id"],
+				'user_email'	=>	$user_email["email"],
+				'department'	=>	$user_email["department"],
+				'title'	        =>	$user_email["title"],
+                'date_created'	=>	$user_email["created_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["user_emails_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["user_emails_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["user_emails_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['admin_emails_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['admin_emails_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["admin_emails_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'set_from_name'	 =>	'%' . $condition . '%',
+			'set_from_email' =>	'%' . $condition . '%',
+			'subject'	     =>	'%' . $condition . '%',
+			'body'	         =>	'%' . $condition . '%'
+		);
+
+        $total_data = count_admin_emails_a($values);
+        $admin_emails = search_admin_emails_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($admin_emails as $admin_email)
+		{
+			$admin = fetch_single_row($admin_email['admin_id'], 'admin');
+
+			$admin_type = $admin['admin_type'];
+
+			if($admin_type == 1)
+			{
+				$admin_type = "super";
+			}
+			elseif($admin_type == 2)
+			{
+				$admin_type = "basic";
+			}
+
+			$data[] = array(
+				'admin_email_id' =>	$admin_email["id"],
+				'admin_name'	 =>	$admin["first_name"],
+				'admin_type'	 =>	$admin_type,
+				'subject'	     =>	str_ireplace($replace_array_1, $replace_array_2, $admin_email["subject"]),
+                'date_created'	 =>	$admin_email["created_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_admin_emails_b();
+        $admin_emails = search_admin_emails($offset, $limit);
+
+		foreach($admin_emails as $admin_email)
+		{
+			$admin = fetch_single_row($admin_email['admin_id'], 'admin');
+
+			$admin_type = $admin['admin_type'];
+
+			if($admin_type == 1)
+			{
+				$admin_type = "super";
+			}
+			elseif($admin_type == 2)
+			{
+				$admin_type = "basic";
+			}
+
+			$data[] = array(
+				'admin_email_id' =>	$admin_email["id"],
+				'admin_name'	 =>	$admin["first_name"],
+				'admin_type'	 =>	$admin_type,
+				'subject'	     =>	$admin_email["subject"],
+                'date_created'	 =>	$admin_email["created_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["admin_emails_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["admin_emails_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["admin_emails_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
 ?>

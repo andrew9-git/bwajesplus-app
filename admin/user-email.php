@@ -2,7 +2,20 @@
 
 include('includes/header.php');
 bwajes_plus_header('user-sent-emails', 'User sent email');
+
+$id = $_SESSION['admin_data']['id'];
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+if(isset($_GET['ues']))
+{
+  $user_email_id = $_GET['ues'];
+
+  $user_email = fetch_single_row($user_email_id, 'user_sent_emails');
+}
+else
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -17,11 +30,11 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             <div style="line-height: 1.625rem; margin: 10px;">
                 <h4>Subject:</h4>
                 <div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, sint?
+                  <?php if(isset($user_email['title'])){echo $user_email['title'];} ?>
                 </div>
                 <h4>Body:</h4>
                 <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore, illo maxime deserunt esse itaque doloribus ducimus dolor consequuntur in reprehenderit voluptatem. Exercitationem nostrum ipsa, ratione et aut ullam minus dolore.
+                  <?php if(isset($user_email['message'])){echo $user_email['message'];} ?>
                 </div>
             </div>
           </div>

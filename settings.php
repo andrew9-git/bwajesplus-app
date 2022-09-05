@@ -103,8 +103,15 @@ bwajes_plus_header('settings', 'Settings');
                     <input type="text" class="form-control form_data" name="state" id="state" value="<?php if($user['state'] != NULL){ echo $user['state']; } ?>">
                 </div>
                 <div class="form-group">
-                    <label for="country">country</label>
-                    <input type="text" class="form-control form_data" name="country" id="country" value="<?php if($user['country'] != NULL){ echo $user['country']; } ?>">
+                    <label for="country">Country*</label>
+                    <select class="form-control form_data" name="country" id="country">
+                      <option value="S">Select country</option>
+                      <?php $countries = fetch_countries();
+                      foreach($countries as $country) {
+                      ?>
+                      <option value="<?php echo $country['id']; ?>" <?php if($user['country'] == $country['id']){echo 'selected';} ?>><?php echo $country['country']; ?></option>
+                      <?php } ?>
+                    </select>
                 </div>
                 <button name="update-profile" class="btn btn-primary" id="settings">Save</button>
               </form>

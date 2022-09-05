@@ -35,6 +35,9 @@
     RewriteRule ^edit-affiliate/([0-9]+)$ edit-affiliate.php?af=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-country/([0-9]+)$ edit-country.php?ctr=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^each-category/([0-9]+)$ each-category.php?c=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f

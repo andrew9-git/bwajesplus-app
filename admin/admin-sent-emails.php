@@ -3,6 +3,10 @@
 include('includes/header.php');
 bwajes_plus_header('admin-sent-emails', 'All emails sent by admin');
 
+$id = $_SESSION['admin_data']['id'];
+$admin = fetch_single_row($id, 'admin');
+
+$host='http://localhost:9090/bwajesplus-app/admin/';
 ?>
 
 <div class="home-content">
@@ -10,94 +14,118 @@ bwajes_plus_header('admin-sent-emails', 'All emails sent by admin');
         <div class="card">
           <div class="card-header">
             <div style="display: flex;align-items:center;justify-content:space-between">
+            <div>
               <a href="all-users-open-rates" class="btn btn-success">see open rates</a>
+            </div>
               <form action="">
-                  <div class="form-wrapper">
-                      <div class="form-group">
-                          <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
-                      </div>
-                      <div class="search-button-wrapper">
-                          <div class="form-group">
-                              <input type="search" class="form-control" placeholder="search here..." name="search" id="search">
-                          </div>
-                          <div class="form-group">
-                              <button name="filter" class="btn btn-primary">filter</button>
-                          </div>
-                      </div>
-                  </div>
-              </form>
+                <div class="form-wrapper">
+                    <div class="form-group">
+                        <span><b>Total admin emails - <span id="total_admin_sent_emails"></span></b></span>
+                    </div>
+                    <div class="search-button-wrapper">
+                        <div class="form-group">
+                            <input type="search" class="form-control" placeholder="search for admin emails here..." name="search" id="search" onkeyup="load_data(this.value);">
+                        </div>
+                        <!-- <div class="form-group">
+                            <input type="hidden" value="<?php //echo $id; ?>" class="form-control" id="search_admin_id">
+                        </div> -->
+                    </div>
+                </div>
+            </form>
             </div>
           </div>
           <div class="card-body">
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th>Admin name</th>
-                  <th>Admin type</th>
-                  <th>Subject</th>
-                  <th>Date created</th>
-                  <th>Check email</th>
-                  <th>Delete</th>
+                  <th width="5%">S/N</th>
+                  <th width="5%">Admin name</th>
+                  <th width="5%">Admin type</th>
+                  <th width="5%">Subject</th>
+                  <th width="5%">Date created</th>
+                  <th width="5%">Check email</th>
+                  <th width="5%">Delete</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Joe</td>
-                  <td>basic</td>
-                  <td>No money? No problem</td>
-                  <td>sep., 5, 2021 10:00:00</td>
-                  <td><a href="admin-email/4"><i class="bx bx-link-external"></i></a></td>
-                  <td><a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this sent email?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-sent-email">
-                    </form>
-                </tr>
-                <tr>
-                    <td>Joe</td>
-                    <td>basic</td>
-                    <td>No money? No problem</td>
-                    <td>sep., 5, 2021 10:00:00</td>
-                    <td><a href="admin-email/4"><i class="bx bx-link-external"></i></a></td>
-                    <td><a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this sent email?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-sent-email">
-                    </form>
-                </tr>
-                <tr>
-                    <td>Joe</td>
-                    <td>basic</td>
-                    <td>No money? No problem</td>
-                    <td>sep., 5, 2021 10:00:00</td>
-                    <td><a href="admin-email/4"><i class="bx bx-link-external"></i></a></td>
-                    <td><a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this sent email?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-sent-email">
-                    </form>
-                </tr>
-              </tbody>
+              <tbody id="admin_emails_data"></tbody>
             </table>
+            <div id="pagination_link" style="width: 100%;display:flex;justify-content:center;align-items:center;"></div><br>
           </div>
           <div class="card-footer">
           </div>
         </div>
       </div>
     </div>
+    <script>
 
+      load_data();
+
+      function load_data(query='', page_number = 1)
+      {
+        // let admin_id = document.getElementById('search_admin_id').value;
+
+        let form_data = new FormData();
+
+        form_data.append('admin_emails_query', query);
+        form_data.append('page', page_number);
+        // form_data.append('admin_id', admin_id);
+
+        let xhr = new XMLHttpRequest();
+                
+        xhr.open('POST', 'process-ajax');
+
+        xhr.onload = function()
+        {
+          if(this.status == 200)
+          {
+              let response = JSON.parse(xhr.responseText);
+              let html = '';
+              let serial_no = 1;
+
+              if(response.data.length > 0)
+              {
+                  for(let count = 0; count < response.data.length; count++)
+                  {
+                    html += '<tr>';
+                    html += '<td>' + serial_no + '</td>';
+                    html += '<td>' + response.data[count].admin_name + '</td>';
+                    html += '<td>' + response.data[count].admin_type + '</td>';
+                    html += '<td>' + response.data[count].subject + '</td>';
+                    html += '<td>' + response.data[count].date_created + '</td>';
+                    html += '<td><a href="admin-email/'+ response.data[count].admin_email_id +'"><i class="bx bx-link-external"></i></a></td>';<?php if($admin['admin_type'] == 1){ ?>
+                    html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this admin email?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].admin_email_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="admin-sent-emails" style="display: none;" id="form-delete-'+ response.data[count].admin_email_id +'"><input type="hidden" value="'+ response.data[count].admin_email_id +'" name="delete-admin-email" class="form_data_use"></form></td>';<?php } ?>
+                    html += '</tr>';
+                    serial_no++;
+
+                  }
+                  
+              }
+              else
+              {
+                html += '</tr><td colspan="7" style="text-align: center;">No Data Found</td></tr>';
+              }
+              document.getElementById('admin_emails_data').innerHTML = html;
+              document.getElementById('total_admin_sent_emails').innerHTML = response.total_data;
+              document.getElementById('pagination_link').innerHTML = response.pagination;
+          }
+        }
+            
+        xhr.send(form_data);
+      }
+
+    </script>
+    <?php
+      if(isset($_POST['delete-admin-email']))
+      {
+        $admin_email_id = $_POST['delete-admin-email'];
+        $executed = delete_single_row($admin_email_id, 'admin_sent_emails');
+        if($executed)
+        {
+          $url = $host . 'admin-sent-emails';
+          redirect_to($url);
+        }
+      }
+    ?>
 <?php
 
     include('includes/footer.php');

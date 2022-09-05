@@ -86,9 +86,9 @@ function afiliate_programmes_rotation()
 
     //if user wants to advertise product to other users
 
-    // $query = "SELECT * FROM afiliate_programmes WHERE NOW() < expires AND shown = 0 ORDER BY id ASC LIMIT 1";
+    // $query = "SELECT * FROM affiliate_programmes WHERE NOW() < expires AND shown = 0 ORDER BY id ASC LIMIT 1";
 
-    $query = "SELECT * FROM afiliate_programmes WHERE shown = :shown ORDER BY id ASC LIMIT 1";
+    $query = "SELECT * FROM affiliate_programmes WHERE shown = :shown ORDER BY id ASC LIMIT 1";
 
     $db->prep($query);
     $db->bindvalue(':shown', 0, 'int');
@@ -106,9 +106,9 @@ function afiliate_programmes_rotation()
 
         //if you want to track impressions
 
-        // $query = "UPDATE afiliate_programmes SET shown = :shown, impression = impression + 1 WHERE id = :id";
+        // $query = "UPDATE affiliate_programmes SET shown = :shown, impression = impression + 1 WHERE id = :id";
 
-        $query = "UPDATE afiliate_programmes SET shown = :shown WHERE id = :id";
+        $query = "UPDATE affiliate_programmes SET shown = :shown WHERE id = :id";
 
         $db->prep($query);
         $db->bindvalue(':shown', 1, 'int');
@@ -117,11 +117,11 @@ function afiliate_programmes_rotation()
 
         if($executed)
         {
-            $count = db_row_count(0, 'shown', 'afiliate_programmes', 'int');
+            $count = db_row_count(0, 'shown', 'affiliate_programmes', 'int');
 
             if($count == 0)
             {
-                $query = "UPDATE afiliate_programmes SET shown = :shown";
+                $query = "UPDATE affiliate_programmes SET shown = :shown";
 
                 $db->prep($query);
                 $db->bindvalue(':shown', 0, 'int');
@@ -884,6 +884,19 @@ function fetch_single_row_in_payment($value, $column_name = 'id', $type='int', $
     $db->bindvalue(':value', $value, $type);
     $row = $db->fetchSingle();
     return $row;
+}
+
+function fetch_countries($by='country')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM countries ORDER BY $by ASC";
+
+    $db->prep($query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
 }
 
 // End database queries

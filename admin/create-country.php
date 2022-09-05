@@ -1,0 +1,107 @@
+<?php
+
+include('includes/header.php');
+bwajes_plus_header('all-countries', 'Add country');
+
+$id = $_SESSION['admin_data']['id'];
+?>
+
+<div class="home-content">
+      <div class="post-area">
+        <div class="card">
+          <div class="card-header">
+            <div class="info-container">
+                <a href="all-countries" class="btn btn-success">back</a>
+            </div>
+          </div>
+          <div class="card-body">
+            <form id="create_country_form">
+              <div id="create_country_messages">
+              </div>
+              <div class="form-group">
+                    <input type="hidden" class="form-control form_data_cc" name="id" value="<?php echo $id; ?>" id="id">
+                </div>
+                <div class="form-group">
+                  <label for="country">Country*</label>
+                  <input type="text" class="form-control form_data_cc" name="add-country" id="country">
+                </div>
+                <button id="create_country" name="create-country" class="btn btn-primary">Add country</button>
+            </form>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+        let form = document.getElementById('create_country_form');
+        let create_country_button = document.getElementById('create_country');
+        let create_country_messages = document.getElementById('create_country_messages');
+        form.addEventListener('submit', create_country);
+
+        function create_country(e)
+        {
+            e.preventDefault();
+            create_country_button.disabled = true;
+
+            let crt_ctr_btn_bg_col = create_country_button.style.backgroundColor;
+            let crt_ctr_btn_border = create_country_button.style.border;
+            let crt_ctr_btn_cursor = create_country_button.style.cursor;
+
+            if(create_country_button.disabled == true)
+            {
+                create_country_button.style.backgroundColor = 'grey';
+                create_country_button.style.border = 'grey';
+                create_country_button.style.cursor = 'not-allowed';
+            }
+
+            let form_element = document.getElementsByClassName('form_data_cc');
+            let form_data = new FormData();
+
+            for(let i = 0; i < form_element.length; i++)
+            {
+             
+              form_data.append(form_element[i].name, form_element[i].value);
+            }
+
+            let xhr = new XMLHttpRequest();
+            
+            xhr.open('POST', 'process-ajax');
+
+            xhr.onload = function()
+            {
+                if(this.status == 200)
+                {
+                    create_country_button.disabled = false;
+
+                    if(create_country_button.disabled == false)
+                    {
+                        create_country_button.style.backgroundColor = crt_ctr_btn_bg_col;
+                        create_country_button.style.border = crt_ctr_btn_border;
+                        create_country_button.style.cursor = crt_ctr_btn_cursor;
+                    }
+
+                    let response = xhr.responseText;
+                    const pattern = /Success!/;
+                    let regex = pattern.test(response);
+                    if(regex === true)
+                    {
+                      form.reset();
+                    }
+                    create_country_messages.innerHTML = response;
+                  
+                }
+            }
+            
+            xhr.send(form_data);
+        }
+      });
+    </script>
+<?php
+
+    include('includes/footer.php');
+    ckeditor();
+
+?>

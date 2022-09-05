@@ -202,22 +202,7 @@ if(isset($_POST['bio']))
         $state = null;
     }
 
-    if(!empty($country) || $country != '' || $country != null)
-    {
-        if(accepted_data_type($country, 'address') == false)
-        {
-            $errors[] = 'Please ensure that the country is valid';
-        }
-        elseif(strlen($country) < 5)
-        {
-            $errors[] = 'Please ensure that the country is not lesser than 5 characters';
-        }
-        elseif(strlen($country) > 255)
-        {
-            $errors[] = 'Please ensure that the country is not greater than 255 characters';
-        }
-    }
-    else
+    if($country == 'S')
     {
         $country = null;
     }

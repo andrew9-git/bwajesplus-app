@@ -3,6 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('all-affiliates', 'Create affiliate programme');
 
+$id = $_SESSION['admin_data']['id'];
 ?>
 
 <div class="home-content">
@@ -14,19 +15,25 @@ bwajes_plus_header('all-affiliates', 'Create affiliate programme');
             </div>
           </div>
           <div class="card-body">
-            <form action="">
-                <div class="form-group">
-                    <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
+            <form id="create_affiliate_form" enctype="multipart/form-data">
+              <div id="create_affiliate_messages">
+              </div>
+              <div class="form-group">
+                    <input type="hidden" class="form-control form_data_ca" name="id" value="<?php echo $id; ?>" id="id">
                 </div>
                 <div class="form-group">
                   <label for="affiliate-url">Affiliate url*</label>
-                  <input type="text" class="form-control" name="affiliate-url" id="affiliate-url">
+                  <input type="text" class="form-control form_data_ca" name="affiliate-url" id="affiliate-url">
                 </div>
                 <div class="form-group">
                     <label for="company-name">Company's name*</label>
-                    <input type="text" class="form-control" name="company-name" id="company-name">
-                  </div>
-                <button type="submit" name="create-affiliate" class="btn btn-primary">Create affiliate programme</button>
+                    <input type="text" class="form-control form_data_ca" name="company-name" id="company-name">
+                </div>
+                <div class="form-group">
+                    <label for="upload-photo">Company's photo*</label>
+                    <input type="file" name="company-photo" class="form-control" id="upload-photo" accept="image/*">
+                </div>
+                <button id="create_affiliate" name="create-affiliate" class="btn btn-primary">Create affiliate programme</button>
             </form>
           </div>
           <div class="card-footer">
@@ -34,7 +41,74 @@ bwajes_plus_header('all-affiliates', 'Create affiliate programme');
         </div>
       </div>
     </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
 
+        let form = document.getElementById('create_affiliate_form');
+        let create_affiliate_button = document.getElementById('create_affiliate');
+        let create_affiliate_messages = document.getElementById('create_affiliate_messages');
+        form.addEventListener('submit', create_affiliate);
+
+        function create_affiliate(e)
+        {
+            e.preventDefault();
+            create_affiliate_button.disabled = true;
+
+            let crt_aff_btn_bg_col = create_affiliate_button.style.backgroundColor;
+            let crt_aff_btn_border = create_affiliate_button.style.border;
+            let crt_aff_btn_cursor = create_affiliate_button.style.cursor;
+
+            if(create_affiliate_button.disabled == true)
+            {
+                create_affiliate_button.style.backgroundColor = 'grey';
+                create_affiliate_button.style.border = 'grey';
+                create_affiliate_button.style.cursor = 'not-allowed';
+            }
+
+            let form_element = document.getElementsByClassName('form_data_ca');
+            let form_data = new FormData();
+
+            for(let i = 0; i < form_element.length; i++)
+            {
+             
+              form_data.append(form_element[i].name, form_element[i].value);
+            }
+
+            form_data.append('company-photo', document.querySelector('#upload-photo').files[0]);
+
+            let xhr = new XMLHttpRequest();
+            
+            xhr.open('POST', 'process-ajax');
+
+            xhr.onload = function()
+            {
+                if(this.status == 200)
+                {
+                    create_affiliate_button.disabled = false;
+
+                    if(create_affiliate_button.disabled == false)
+                    {
+                        create_affiliate_button.style.backgroundColor = crt_aff_btn_bg_col;
+                        create_affiliate_button.style.border = crt_aff_btn_border;
+                        create_affiliate_button.style.cursor = crt_aff_btn_cursor;
+                    }
+
+                    let response = xhr.responseText;
+                    const pattern = /Success!/;
+                    let regex = pattern.test(response);
+                    if(regex === true)
+                    {
+                      form.reset();
+                    }
+                    create_affiliate_messages.innerHTML = response;
+                  
+                }
+            }
+            
+            xhr.send(form_data);
+        }
+      });
+    </script>
 <?php
 
     include('includes/footer.php');

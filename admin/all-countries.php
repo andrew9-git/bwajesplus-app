@@ -1,7 +1,7 @@
 <?php
 
 include('includes/header.php');
-bwajes_plus_header('user-sent-emails', 'All emails sent by users');
+bwajes_plus_header('all-countries', 'All countries');
 
 $id = $_SESSION['admin_data']['id'];
 $admin = fetch_single_row($id, 'admin');
@@ -13,14 +13,17 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
       <div class="post-area">
         <div class="card">
           <div class="card-header">
-          <form action="">
+            <div class="info-container">
+              <a href="create-country" class="btn btn-success">Add country</a>
+            </div><br>
+            <form action="">
                 <div class="form-wrapper">
                     <div class="form-group">
-                        <span><b>Total user emails - <span id="total_user_sent_emails"></span></b></span>
+                        <span><b>Total countries - <span id="total_countries"></span></b></span>
                     </div>
                     <div class="search-button-wrapper">
                         <div class="form-group">
-                            <input type="search" class="form-control" placeholder="search for user emails here..." name="search" id="search" onkeyup="load_data(this.value);">
+                            <input type="search" class="form-control" placeholder="search for country here..." name="search" id="search" onkeyup="load_data(this.value);">
                         </div>
                         <!-- <div class="form-group">
                             <input type="hidden" value="<?php //echo $id; ?>" class="form-control" id="search_admin_id">
@@ -33,18 +36,14 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th width="5%">S/N</th>
-                  <th width="15%">User email</th>
-                  <th width="25%">Department</th>
-                  <th width="30%">Subject</th>
-                  <th width="15%">Date created</th>
-                  <th width="5%">Check email</th>
-                  <?php if($admin['admin_type'] == 1){ ?>
-                  <th width="5%">Delete</th>
-                  <?php } ?>
+                  <th>S/N</th>
+                  <th>Country</th>
+                  <th>Date created</th>
+                  <th>Last updated</th>
+                  <th>Modify</th>
                 </tr>
               </thead>
-              <tbody id="user_emails_data"></tbody>
+              <tbody id="country_data"></tbody>
             </table>
             <div id="pagination_link" style="width: 100%;display:flex;justify-content:center;align-items:center;"></div><br>
           </div>
@@ -63,7 +62,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
 
         let form_data = new FormData();
 
-        form_data.append('user_emails_query', query);
+        form_data.append('country_query', query);
         form_data.append('page', page_number);
         // form_data.append('admin_id', admin_id);
 
@@ -85,12 +84,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                   {
                     html += '<tr>';
                     html += '<td>' + serial_no + '</td>';
-                    html += '<td>' + response.data[count].user_email + '</td>';
-                    html += '<td>' + response.data[count].department + '</td>';
-                    html += '<td>' + response.data[count].title + '</td>';
+                    html += '<td>' + response.data[count].country + '</td>';
                     html += '<td>' + response.data[count].date_created + '</td>';
-                    html += '<td><a href="user-email/'+ response.data[count].user_email_id +'"><i class="bx bx-link-external"></i></a></td>';<?php if($admin['admin_type'] == 1){ ?>
-                    html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this user email?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].user_email_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="user-sent-emails" style="display: none;" id="form-delete-'+ response.data[count].user_email_id +'"><input type="hidden" value="'+ response.data[count].user_email_id +'" name="delete-user-email" class="form_data_use"></form></td>';<?php } ?>
+                    html += '<td>' + response.data[count].last_updated + '</td>';
+                    html += '<td><a href="edit-country/'+ response.data[count].country_id +'"><i class="bx bx-link-external"></i></a><?php //if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this country?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].country_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="all-countries" style="display: none;" id="form-delete-'+ response.data[count].country_id +'"><input type="hidden" value="'+ response.data[count].country_id +'" name="delete-country" class="form_data_ac"></form></td>';<?php //} ?>
                     html += '</tr>';
                     serial_no++;
 
@@ -101,8 +98,8 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
               {
                 html += '</tr><td colspan="5" style="text-align: center;">No Data Found</td></tr>';
               }
-              document.getElementById('user_emails_data').innerHTML = html;
-              document.getElementById('total_user_sent_emails').innerHTML = response.total_data;
+              document.getElementById('country_data').innerHTML = html;
+              document.getElementById('total_countries').innerHTML = response.total_data;
               document.getElementById('pagination_link').innerHTML = response.pagination;
           }
         }
@@ -112,13 +109,13 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
 
     </script>
     <?php
-      if(isset($_POST['delete-user-email']))
+      if(isset($_POST['delete-country']))
       {
-        $user_email_id = $_POST['delete-user-email'];
-        $executed = delete_single_row($user_email_id, 'user_sent_emails');
+        $country_id = $_POST['delete-country'];
+        $executed = delete_single_row($country_id, 'countries');
         if($executed)
         {
-          $url = $host . 'user-sent-emails';
+          $url = $host . 'all-countries';
           redirect_to($url);
         }
       }

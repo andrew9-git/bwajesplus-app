@@ -101,6 +101,19 @@ function bwajes_plus_header($active, $page_name)
         </li>
         <li>
           <div class="icon-links">
+            <a <?php if($active === 'all-countries')
+                {
+                    echo 'class="active" href="#"';
+                }else{
+                  echo 'href="' . $host . 'all-countries"';
+                } ?>>
+                <i class='bx bx-home'></i>
+                <span class="links_name">Countries</span>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div class="icon-links">
             <div class="div-arrow">
               <i class="bx bx-support arrow"></i>
               <a href="#" class="no-action">
