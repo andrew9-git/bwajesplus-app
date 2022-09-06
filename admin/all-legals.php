@@ -3,6 +3,10 @@
 include('includes/header.php');
 bwajes_plus_header('legal', 'All legals');
 
+$id = $_SESSION['admin_data']['id'];
+$admin = fetch_single_row($id, 'admin');
+
+$host='http://localhost:9090/bwajesplus-app/admin/';
 ?>
 
 <div class="home-content">
@@ -12,65 +16,109 @@ bwajes_plus_header('legal', 'All legals');
             <div class="info-container">
               <a href="legal" class="btn btn-success">back</a>
             </div>
+            <form action="">
+                <div class="form-wrapper">
+                    <div class="form-group">
+                        <span><b>Total legals - <span id="total_legals"></span></b></span>
+                    </div>
+                    <div class="search-button-wrapper">
+                        <div class="form-group">
+                            <input type="search" class="form-control" placeholder="search for legal here..." name="search" id="search" onkeyup="load_data(this.value);">
+                        </div>
+                        <!-- <div class="form-group">
+                            <input type="hidden" value="<?php //echo $id; ?>" class="form-control" id="search_admin_id">
+                        </div> -->
+                    </div>
+                </div>
+            </form>
           </div>
           <div class="card-body">
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
+                  <th>S/N</th>
                   <th>Name</th>
                   <th>See legal</th>
                   <th>Modify</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                    <td>Terms of Service</td>
-                    <td><a href="each-legal/4"><i class="bx bx-link-external"></i></a></td>
-                    <td><a href="edit-legal/4"><i class="bx bx-edit"></i></a> | <a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this legal statement?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-legal">
-                    </form>
-                </tr>
-                <tr>
-                    <td>Privacy Policy</td>
-                    <td><a href="each-legal/4"><i class="bx bx-link-external"></i></a></td>
-                    <td><a href="edit-legal/4"><i class="bx bx-edit"></i></a> | <a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this legal statement?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-legal">
-                    </form>
-                </tr>
-                <tr>
-                    <td>Data Policy</td>
-                    <td><a href="each-legal/4"><i class="bx bx-link-external"></i></a></td>
-                    <td><a href="edit-legal/4"><i class="bx bx-edit"></i></a> | <a href="#"
-                    onclick="event.preventDefault();if(confirm('Do you really want to delete this legal statement?')){
-                        document.getElementById('form-delete-idWithPhp*').submit();
-                    }
-                    "><i class="bx bx-trash"></i></a></td>
-                    <form method="post" action="" style="display: none;" id="form-delete-idWithPhp*">
-                        <input type="hidden" value="" name="csrf">
-                        <input type="hidden" value="idWithPhp*" name="delete-legal">
-                    </form>
-                </tr>
-              </tbody>
+              <tbody id="legal_data"></tbody>
             </table>
+            <div id="pagination_link" style="width: 100%;display:flex;justify-content:center;align-items:center;"></div><br>
           </div>
           <div class="card-footer">
           </div>
         </div>
       </div>
     </div>
+    <script>
 
+      load_data();
+
+      function load_data(query='', page_number = 1)
+      {
+        // let admin_id = document.getElementById('search_admin_id').value;
+
+        let form_data = new FormData();
+
+        form_data.append('legal_query', query);
+        form_data.append('page', page_number);
+        // form_data.append('admin_id', admin_id);
+
+        let xhr = new XMLHttpRequest();
+                
+        xhr.open('POST', 'process-ajax');
+
+        xhr.onload = function()
+        {
+          if(this.status == 200)
+          {
+              let response = JSON.parse(xhr.responseText);
+              let html = '';
+              let serial_no = 1;
+
+              if(response.data.length > 0)
+              {
+                  for(let count = 0; count < response.data.length; count++)
+                  {
+                    html += '<tr>';
+                    html += '<td>' + serial_no + '</td>';
+                    html += '<td>' + response.data[count].legal + '</td>';
+                    html += '<td><a href="each-legal/'+ response.data[count].legal_id +'"><i class="bx bx-link-external"></i></a></td>';
+                    html += '<td><a href="edit-legal/'+ response.data[count].legal_id +'"><i class="bx bx-edit"></i></a><?php //if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this legal?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].legal_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="all-legals" style="display: none;" id="form-delete-'+ response.data[count].legal_id +'"><input type="hidden" value="'+ response.data[count].legal_id +'" name="delete-legal" class="form_data_ac"></form></td>';
+                    <?php //} ?>
+                    html += '</tr>';
+                    serial_no++;
+
+                  }
+                  
+              }
+              else
+              {
+                html += '</tr><td colspan="5" style="text-align: center;">No Data Found</td></tr>';
+              }
+              document.getElementById('legal_data').innerHTML = html;
+              document.getElementById('total_legals').innerHTML = response.total_data;
+              document.getElementById('pagination_link').innerHTML = response.pagination;
+          }
+        }
+            
+        xhr.send(form_data);
+      }
+
+    </script>
+    <?php
+      if(isset($_POST['delete-legal']))
+      {
+        $legal_id = $_POST['delete-legal'];
+        $executed = delete_single_row($legal_id, 'legal');
+        if($executed)
+        {
+          $url = $host . 'all-legals';
+          redirect_to($url);
+        }
+      }
+    ?>
 <?php
 
     include('includes/footer.php');

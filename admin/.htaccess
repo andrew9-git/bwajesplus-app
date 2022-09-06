@@ -85,6 +85,9 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^each-user-ratings/([0-9]+)$ each-user-ratings.php?r=$1 [NC,L]
 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^email_track/([0-9]+)$ email_track.php?code=$1 [NC,L]
+
     # removing the php extension
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^([^\.]+)$ $1.php [NC,L]

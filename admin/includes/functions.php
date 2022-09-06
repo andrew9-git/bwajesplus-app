@@ -1136,6 +1136,372 @@ function search_admin_emails($offset, $limit, $by='id')
 
     return $rows;
 }
+
+//insert into post category table
+function insert_into_post_category(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO post_category(category, created_by, updated_by) VALUES(:category, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':category', $value['post_category'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_post_category_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM post_category WHERE category LIKE :category ORDER BY category ASC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':category', $value['category'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post_category_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_category WHERE category LIKE :category ORDER BY category ASC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':category', $value['category'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_post_category_b($by='category')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM post_category ORDER BY $by ASC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post_category($offset, $limit, $by='category')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_category ORDER BY $by ASC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function update_post_category($value)
+{    
+
+    $db = new dbase();
+
+    $query = "UPDATE post_category SET category = :category, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':category', $value['category'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $db->bindvalue(':id', $value['category_id'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//insert into post type table
+function insert_into_post_type(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO post_type(type, created_by, updated_by) VALUES(:type, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':type', $value['post_type'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_post_type_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM post_type WHERE type LIKE :type ORDER BY type ASC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':type', $value['type'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post_type_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_type WHERE type LIKE :type ORDER BY type ASC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':type', $value['type'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_post_type_b($by='type')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM post_type ORDER BY $by ASC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_post_type($offset, $limit, $by='type')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_type ORDER BY $by ASC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function update_post_type($value)
+{    
+
+    $db = new dbase();
+
+    $query = "UPDATE post_type SET type = :type, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':type', $value['type'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $db->bindvalue(':id', $value['type_id'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//insert into legal table
+function insert_into_legal(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO legal(name, content, created_by, updated_by) VALUES(:name, :content, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':content', $value['content'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_legal_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM legal WHERE name LIKE :name OR content LIKE :content ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':content', $value['content'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_legal_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM legal WHERE name LIKE :name OR content LIKE :content ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':content', $value['content'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_legal_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM legal ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_legal($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM legal ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//update legal table
+function update_legal($value)
+{
+    $db = new dbase();
+    $query = "UPDATE legal SET name = :name, content = :content, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':name', $value['name'], 'str');
+    $db->bindvalue(':content', $value['content'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//generating email track code
+function email_track_code()
+{
+    $code = md5(rand());
+
+    $count = db_row_count($code, 'email_track_code', 'email_tracking', 'str');
+
+    if($count > 0)
+    {
+        email_track_code();
+    }
+    else
+    {
+        return $code;
+    }
+}
+
+//inserting values into admin sent emails table
+function insert_into_admin_sent_emails(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO admin_sent_emails(set_from_name, set_from_email, subject, body, admin_id) VALUES(:set_from_name, :set_from_email, :subject, :body, :admin_id)";
+    $db->prep($query);
+
+    $db->bindvalue(':set_from_name', $value['set_from_name'], 'str');
+    $db->bindvalue(':set_from_email', $value['set_from_email'], 'str');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':body', $value['body'], 'str');
+    $db->bindvalue(':admin_id', $value['admin_id'], 'int');
+
+    $lastId = $db->lastId();
+
+    return $lastId;
+}
+
+//getting all admin types
+function select_distinct_emails($table_name)
+{
+    $db = new dbase();
+
+    $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//inserting values into email tracking table
+function insert_into_email_tracking(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO email_tracking(admin_sent_emails_id, sent_to_email, email_track_code) VALUES(:admin_sent_emails_id, :sent_to_email, :email_track_code)";
+    $db->prep($query);
+
+    $db->bindvalue(':admin_sent_emails_id', $value['admin_sent_emails_id'], 'int');
+    $db->bindvalue(':sent_to_email', $value['sent_to_email'], 'str');
+    $db->bindvalue(':email_track_code', $value['email_track_code'], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//update email tracking
+function update_email_tracking($value)
+{
+    $db = new dbase();
+    $query = "UPDATE email_tracking SET email_status = 1, date_opened = NOW() WHERE email_track_code = :email_track_code";
+    $db->prep($query);
+
+    $db->bindvalue(':email_track_code', $value['email_track_code'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
 // End database queries
 
 

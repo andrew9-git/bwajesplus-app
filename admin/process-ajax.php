@@ -1,5 +1,9 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
+require_once('../includes/email-template.php');
 require_once('includes/functions.php');
 session_start();
 
@@ -2291,5 +2295,1151 @@ if(isset($_POST['admin_emails_query']))
 	);
 
 	echo json_encode($output);
+}
+
+//to create post category
+if(isset($_POST['post-category']))
+{
+    $id      = trim($_POST['id']);
+    $post_category = trim($_POST['post-category']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($post_category) == false)
+    {
+        $errors[] = 'post category cannot be empty';
+    }
+    elseif(accepted_data_type($post_category, 'name') == false)
+    {
+        $errors[] = $post_category . ' is not valid';
+    }
+    elseif(strlen($post_category) < 2)
+    {
+        $errors[] = 'The post category field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($post_category) > 255)
+    {
+        $errors[] = 'The post category field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'post_category' => $post_category,
+            'created_by'    => $id,
+            'updated_by'    => $id
+        );
+
+        //insert into posts table
+        $executed = insert_into_post_category($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A post category has been added</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['post_category_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['post_category_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["post_category_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			// 'name'	=>	'%' . $condition . '%',
+			'category'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_post_category_a($values);
+        $post_categories = search_post_category_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($post_categories as $post_category)
+		{
+			$data[] = array(
+				'post_category_id'	=>	$post_category["id"],
+				'post_category'	=>	str_ireplace($replace_array_1, $replace_array_2, $post_category["category"])
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_post_category_b();
+        $post_categories = search_post_category($offset, $limit);
+
+		foreach($post_categories as $post_category)
+		{
+			$data[] = array(
+				'post_category_id' =>	$post_category["id"],
+				'post_category'	   =>	$post_category["category"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_category_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_category_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["post_category_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+//to update post category
+if(isset($_POST['edit-category']))
+{
+    $id           = trim($_POST['id']);
+    $category_id  = trim($_POST['category-id']);
+    $category     = trim($_POST['edit-category']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($category) == false)
+    {
+        $errors[] = 'category cannot be empty';
+    }
+    elseif(accepted_data_type($category, 'name') == false)
+    {
+        $errors[] = $category . ' is not valid';
+    }
+    elseif(strlen($category) < 2)
+    {
+        $errors[] = 'The category field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($category) > 255)
+    {
+        $errors[] = 'The category field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'category'    => $category,
+            'category_id'    => $category_id,
+            'updated_by' => $id
+        );
+
+        //insert into post category table
+        $executed = update_post_category($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A category has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+//to create post type
+if(isset($_POST['post-type']))
+{
+    $id      = trim($_POST['id']);
+    $post_type = trim($_POST['post-type']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($post_type) == false)
+    {
+        $errors[] = 'post type cannot be empty';
+    }
+    elseif(accepted_data_type($post_type, 'name') == false)
+    {
+        $errors[] = $post_type . ' is not valid';
+    }
+    elseif(strlen($post_type) < 2)
+    {
+        $errors[] = 'The post type field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($post_type) > 255)
+    {
+        $errors[] = 'The post type field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'post_type' => $post_type,
+            'created_by'    => $id,
+            'updated_by'    => $id
+        );
+
+        //insert into posts table
+        $executed = insert_into_post_type($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A post type has been added</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['post_type_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['post_type_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["post_type_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			// 'name'	=>	'%' . $condition . '%',
+			'type'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_post_type_a($values);
+        $post_categories = search_post_type_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($post_categories as $post_type)
+		{
+			$data[] = array(
+				'post_type_id'	=>	$post_type["id"],
+				'post_type'	=>	str_ireplace($replace_array_1, $replace_array_2, $post_type["type"])
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_post_type_b();
+        $post_categories = search_post_type($offset, $limit);
+
+		foreach($post_categories as $post_type)
+		{
+			$data[] = array(
+				'post_type_id' =>	$post_type["id"],
+				'post_type'	   =>	$post_type["type"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_type_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_type_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["post_type_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+//to update post type
+if(isset($_POST['edit-type']))
+{
+    $id           = trim($_POST['id']);
+    $type_id  = trim($_POST['type-id']);
+    $type     = trim($_POST['edit-type']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($type) == false)
+    {
+        $errors[] = 'type cannot be empty';
+    }
+    elseif(accepted_data_type($type, 'name') == false)
+    {
+        $errors[] = $type . ' is not valid';
+    }
+    elseif(strlen($type) < 2)
+    {
+        $errors[] = 'The type field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($type) > 255)
+    {
+        $errors[] = 'The type field cannot be more than 255 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+			'type'       => $type,
+            'type_id'    => $type_id,
+            'updated_by' => $id
+        );
+
+        //insert into post type table
+        $executed = update_post_type($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> A type has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+//to create legal
+if(isset($_POST['content']))
+{
+    $id      = trim($_POST['id']);
+    $name    = trim($_POST['name']);
+    $content = trim($_POST['content']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($name) == false)
+    {
+        $errors[] = 'Name cannot be empty';
+    }
+    elseif(accepted_data_type($name, 'name') == false)
+    {
+        $errors[] = $name . ' is not valid';
+    }
+    elseif(strlen($name) < 2)
+    {
+        $errors[] = 'The name field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($name) > 255)
+    {
+        $errors[] = 'The name field cannot be more than 255 characters';
+    }
+
+    if(has_presence($content) == false)
+    {
+        $errors[] = 'Content cannot be empty';
+    }
+    // elseif(accepted_data_type($content, 'name') == false)
+    // {
+    //     $errors[] = $content . ' is not valid';
+    // }
+    elseif(strlen($content) < 1000)
+    {
+        $errors[] = 'Your content cannot be lesser than 1000 characters';
+    }
+    elseif(strlen($content) > 65535)
+    {
+        $errors[] = 'Your content cannot be more than 65535 characters';
+    }
+    
+    if(empty($errors))
+    {
+        $values = array(
+            'name'       => $name,
+            'content'    => $content,
+            'created_by' => $id,
+            'updated_by' => $id
+        );
+
+        //insert into posts table
+        $executed = insert_into_legal($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> " . ucfirst($name) . " has been added</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['legal_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['legal_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["legal_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			'name'	=>	'%' . $condition . '%',
+			'content'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_legal_a($values);
+        $legals = search_legal_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($legals as $legal)
+		{
+			$data[] = array(
+				'legal_id'	=>	$legal["id"],
+				'legal'	=>	str_ireplace($replace_array_1, $replace_array_2, $legal["name"])
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_legal_b();
+        $legals = search_legal($offset, $limit);
+
+		foreach($legals as $legal)
+		{
+			$data[] = array(
+				'legal_id' =>	$legal["id"],
+				'legal'	   =>	$legal["name"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["legal_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["legal_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["legal_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+//to edit legal
+if(isset($_POST['edit-content']))
+{
+    $admin_id = trim($_POST['admin-id']); 
+    $legal_id = trim($_POST['legal-id']);
+    $name     = trim($_POST['edit-name']);
+    $content  = trim($_POST['edit-content']);
+    
+    //error array
+    $errors = array();
+
+    if(has_presence($name) == false)
+    {
+        $errors[] = 'Name cannot be empty';
+    }
+    elseif(accepted_data_type($name, 'name') == false)
+    {
+        $errors[] = $name . ' is not valid';
+    }
+    elseif(strlen($name) < 2)
+    {
+        $errors[] = 'The name field cannot be lesser than 2 characters';
+    }
+    elseif(strlen($name) > 255)
+    {
+        $errors[] = 'The name field cannot be more than 255 characters';
+    }
+  
+    if(has_presence($content) == false)
+    {
+        $errors[] = 'content cannot be empty';
+    }
+    // elseif(accepted_data_type($content, 'name') == false)
+    // {
+    //     $errors[] = $content . ' is not valid';
+    // }
+    elseif(strlen($content) < 1000)
+    {
+        $errors[] = 'Your content cannot be lesser than 1000 characters';
+    }
+    elseif(strlen($content) > 65535)
+    {
+        $errors[] = 'Your content cannot be more than 65535 characters';
+    }
+    
+    if(empty($errors))
+    {
+
+        $values = array(
+            'id'         => $legal_id,
+            'updated_by' => $admin_id,
+            'name'       => $name,
+            'content'    => $content
+        );
+
+        //update legal table
+        $executed = update_legal($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> ". ucfirst($name) ." has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+//to send messages
+if(isset($_POST['post-master']))
+{
+    $id               = trim($_POST['id']);
+    $set_from_email   = trim($_POST['support']);
+    $set_from_name    = 'bwajes+';
+    $group_to_send_to = trim($_POST['list']);
+    $subject          = trim($_POST['subject']);
+    $message          = trim($_POST['post-master']);
+   
+    //error array
+    $errors = array();
+
+	if(accepted_option($set_from_email) == false)
+    {
+        $errors[] = 'Please select support';
+    }
+
+	if(accepted_option($group_to_send_to) == false)
+    {
+        $errors[] = 'Please select send to';
+    }
+
+    if(has_presence($subject) == false)
+    {
+        $errors[] = 'subject cannot be empty';
+    }
+    // elseif(accepted_data_type($subject, 'name') == false)
+    // {
+    //     $errors[] = $subject . ' is not valid';
+    // }
+    elseif(strlen($subject) < 8)
+    {
+        $errors[] = 'The subject field cannot be lesser than 8 characters';
+    }
+    elseif(strlen($subject) > 60)
+    {
+        $errors[] = 'The subject field cannot be more than 60 characters';
+    }
+
+    if(has_presence($message) == false)
+    {
+        $errors[] = 'message cannot be empty';
+    }
+    // elseif(accepted_data_type($message, 'name') == false)
+    // {
+    //     $errors[] = $message . ' is not valid';
+    // }
+    elseif(strlen($message) < 1000)
+    {
+        $errors[] = 'Your message cannot be lesser than 1000 characters';
+    }
+    elseif(strlen($message) > 65535)
+    {
+        $errors[] = 'Your message cannot be more than 65535 characters';
+    }
+    
+    if(empty($errors))
+    {
+		//email track code
+		$code = email_track_code();
+
+		//insert into admin sent email table
+		//get last insertId from admin sent email table
+		$values = array(
+			'set_from_name'  => $set_from_name,
+			'set_from_email' => $set_from_email,
+			'subject'        => $subject,
+			'body'           => $message,
+			'admin_id'       => $id
+		);
+
+		$lastId = insert_into_admin_sent_emails($values);	
+
+		//get all email(distinct) from a particular group
+		if($lastId)
+		{
+			if($group_to_send_to == "all")
+			{
+				$table_name = "email_list";
+			}
+			elseif($group_to_send_to == "registered-users")
+			{
+				$table_name = "users";
+			}
+			elseif($group_to_send_to == "subscribers")
+			{
+				$table_name = "subscriber_list";
+			}
+			elseif($group_to_send_to == "commenters")
+			{
+				$table_name = "comments";
+			}
+
+			$group_emails = select_distinct_emails($table_name);
+
+			// require('../vendor/autoload.php');
+			require('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+			require('../vendor/phpmailer/phpmailer/src/SMTP.php');
+			require('../vendor/phpmailer/phpmailer/src/Exception.php');
+
+			foreach($group_emails as $group_email)
+			{
+				//send email to group
+				
+				$sent_to_email = $group_email['email'];
+
+				//Create an instance; passing `true` enables exceptions
+				$mail = new PHPMailer(true);
+
+				try {
+					//Server settings
+					$mail->SMTPDebug = SMTP::DEBUG_OFF;
+					$mail->isSMTP();
+					$mail->Host       = 'andadel.com';//'smtp.gmail.com';//andadel.com
+					$mail->SMTPAuth   = true;
+					$mail->Username   = 'developer@andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
+					$mail->Password   = '@Abletechservices9';//'@Deforce9';//@Abletechservices9
+					$mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
+					$mail->Port       = 465;//587;//465
+
+					//Recipients
+					$mail->setFrom($set_from_email, $set_from_name);
+					$mail->addAddress($sent_to_email);
+					// $mail->addAddress($sent_to_email, 'some name here...');
+					$mail->addReplyTo('no-reply@bwajes-plus.andadel.com', 'Do not reply this mail');
+
+					//Content
+					$mail->isHTML(true);
+					$mail->Subject = $subject;
+
+					$base_url = "http://localhost:9090/bwajesplus-app/admin/";
+					$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+
+					$mail->Body    = email_template($message, 1, $lastId, $table_name);
+					$mail->AltBody = 'Please update this app to view mail';
+
+					if($mail->send())
+					{
+						//insert into email tracking table
+						$values = array(
+							'admin_sent_emails_id' => $lastId,
+							'sent_to_email'        => $sent_to_email,
+							'email_track_code'     => $code
+						);
+
+						$executed = insert_into_email_tracking($values);
+						if($executed)
+						{
+							$msg = "<div class='card success'><div><b>Success!</b> Email sent</div></div>";
+							echo $msg;
+						}
+					}
+
+				} catch (Exception $e) 
+				{
+					$error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+					echo $error;
+				}
+			}
+		}
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
 }
 ?>

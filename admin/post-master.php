@@ -3,6 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('post-master', 'Post master');
 
+$id = $_SESSION['admin_data']['id'];
 ?>
 
 <div class="home-content">
@@ -12,35 +13,41 @@ bwajes_plus_header('post-master', 'Post master');
                 <h4 class="message-head">Message Users</h4>
             </div>
             <div class="card-body">
-                <form action="">
-                <div class="form-group">
-                    <label for="support">Choose Support Department*</label>
-                    <select class="form-control" name="support" id="support">
-                    <option value="">General Support</option>
-                    <option value="">IT Support</option>
-                    <option value="">Adminstration Support</option>
-                    <option value="">Billing Support</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="list">Send to*</label>
-                    <select class="form-control" name="list" id="list">
-                    <option value="null">Select recipients</option>
-                    <option value="">All</option>
-                    <option value="">Registered users only</option>
-                    <option value="">Subscribers only</option>
-                    <option value="">Commenters only</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject*</label>
-                    <input type="text" class="form-control" placeholder="Enter subject" id="subject">
-                </div>
-                <div class="form-group">
-                    <label for="message">Message*</label>
-                    <textarea class="form-control" rows="5" id="message"></textarea>
-                </div>
-                <button type="submit" name="send-mail" class="btn btn-primary">Send</button>
+                <form id="create_master_form" enctype="multipart/form-data">
+                    <div id="create_master_messages">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form-control form_data_master" name="id" value="<?php echo $id; ?>" id="id">
+                    </div>
+                    <div class="form-group">
+                        <label for="support">Choose Support Department*</label>
+                        <select class="form-control form_data_master" name="support" id="support">
+                        <option value="S">Choose support</option>
+                        <option value="myphptestemail@gmail.com">General Support</option>
+                        <option value="it-support@bwajes-plus.andadel.com">IT Support</option>
+                        <option value="admin@bwajes-plus.andadel.com">Adminstration Support</option>
+                        <option value="billing@bwajes-plus.andadel.com">Billing Support</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="list">Send to*</label>
+                        <select class="form-control form_data_master" name="list" id="list">
+                        <option value="S">Select recipients</option>
+                        <option value="all">All</option>
+                        <option value="registered-users">Registered users only</option>
+                        <option value="subscribers">Subscribers only</option>
+                        <option value="commenters">Commenters only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject*</label>
+                        <input type="text" class="form-control form_data_master" placeholder="Enter subject" id="subject" name="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message*</label>
+                        <textarea class="form-control" name="post-master" rows="5" id="message"></textarea>
+                    </div>
+                    <button id="create_master" name="send-mail" class="btn btn-primary">Send</button>
                 </form>
             </div>
             <div class="card-footer">
@@ -50,10 +57,79 @@ bwajes_plus_header('post-master', 'Post master');
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+
+        let form = document.getElementById('create_master_form');
+        let create_master_button = document.getElementById('create_master');
+        let create_master_messages = document.getElementById('create_master_messages');
+        form.addEventListener('submit', create_master);
+
+        function create_master(e)
+        {
+            e.preventDefault();
+            create_master_button.disabled = true;
+
+            let crt_master_btn_bg_col = create_master_button.style.backgroundColor;
+            let crt_master_btn_border = create_master_button.style.border;
+            let crt_master_btn_cursor = create_master_button.style.cursor;
+
+            if(create_master_button.disabled == true)
+            {
+                create_master_button.style.backgroundColor = 'grey';
+                create_master_button.style.border = 'grey';
+                create_master_button.style.cursor = 'not-allowed';
+            }
+
+            let form_element = document.getElementsByClassName('form_data_master');
+            let form_data = new FormData();
+
+            for(let i = 0; i < form_element.length; i++)
+            {
+                form_data.append(form_element[i].name, form_element[i].value);               
+            }
+            let message = CKEDITOR.instances['message'].getData();
+            
+            form_data.append('post-master', message);
+            
+            let xhr = new XMLHttpRequest();
+            
+            xhr.open('POST', 'process-ajax');
+
+            xhr.onload = function()
+            {
+                if(this.status == 200)
+                {
+                    create_master_button.disabled = false;
+
+                    if(create_master_button.disabled == false)
+                    {
+                        create_master_button.style.backgroundColor = crt_master_btn_bg_col;
+                        create_master_button.style.border = crt_master_btn_border;
+                        create_master_button.style.cursor = crt_master_btn_cursor;
+                    }
+
+                    let response = xhr.responseText;
+                    const pattern = /Success!/;
+                    let regex = pattern.test(response);
+                    if(regex === true)
+                    {
+                      form.reset();
+                    }
+                    create_master_messages.innerHTML = response;
+                  
+                }
+            }
+            
+            xhr.send(form_data);
+        }
+
         CKEDITOR.replace('message',
         {
             // Remove the redundant buttons from toolbar groups defined above.
-            removeButtons: 'About,Source,Anchor'
+            removeButtons: 'About,Source,Anchor',
+            extraPlugins: 'justify',
+            height: 300,
+            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadMethod: 'form'
         });
       });
     </script>
