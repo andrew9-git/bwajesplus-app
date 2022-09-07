@@ -10,7 +10,7 @@ $id = $_SESSION['admin_data']['id'];
       <div class="post-area">
         <div class="card">
             <div class="card-header">
-                <h4 class="message-head">Message Users</h4>
+                <h4 class="message-head">Message Users and/or Others</h4>
             </div>
             <div class="card-body">
                 <form id="create_master_form" enctype="multipart/form-data">

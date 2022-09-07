@@ -39,15 +39,27 @@ else
                 </div>
                 <h4>Number of users sent to:</h4>
                 <div>
-                    20
+                  <?php $ab = db_row_count($admin_email_id, 'admin_sent_emails_id', 'email_tracking'); echo $ab; ?>
                 </div>
                 <h4>Number of users that opened mail:</h4>
                 <div>
-                    4
+                  <?php 
+                    $no = no_of_users_that_opened_mail($admin_email_id); 
+                    echo $no;
+                   ?>
                 </div>
                 <h4>Open rate:</h4>
                 <div>
-                    20.00%
+                  <?php 
+                  if($ab > 0)
+                  {
+                    echo number_format((($no / $ab) * 100), 2, '.', '') . "%"; 
+                  }
+                  else
+                  {
+                    echo "Not sent to any user/person yet";
+                  }
+                  ?>
                 </div>
             </div>
           </div>

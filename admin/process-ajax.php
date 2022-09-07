@@ -3409,7 +3409,7 @@ if(isset($_POST['post-master']))
 					$base_url = "http://localhost:9090/bwajesplus-app/admin/";
 					$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
 
-					$mail->Body    = email_template($message, 1, $lastId, $table_name);
+					$mail->Body    = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
 					$mail->AltBody = 'Please update this app to view mail';
 
 					if($mail->send())
@@ -3441,5 +3441,533 @@ if(isset($_POST['post-master']))
     {
         echo form_errors($errors);
     }
+}
+
+if(isset($_POST['open_rate_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['open_rate_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["open_rate_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			// 'name'	=>	'%' . $condition . '%',
+			'email'	=>	'%' . $condition . '%'
+		);
+
+        $total_data = count_open_rates_a($values);
+        $open_rates = search_open_rates_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($open_rates as $open_rate)
+		{
+			$rate_open = (float) (($open_rate["no_of_mails_opened"] / $open_rate["no_of_mails_recieved"]) * 100);
+
+			$rate_open = number_format($rate_open, 2, '.', '');
+
+			$data[] = array(
+				'id'	=>	$open_rate["id"],
+				'email'	=>	str_ireplace($replace_array_1, $replace_array_2, $open_rate["email"]),
+				'no_of_mails_recieved'	=>	$open_rate["no_of_mails_recieved"],
+				'no_of_mails_opened'	=>	$open_rate["no_of_mails_opened"],
+				'open_rate'	=>	$rate_open."%"
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_open_rates_b();
+        $open_rates = search_open_rates($offset, $limit);
+
+		foreach($open_rates as $open_rate)
+		{
+			$rate_open = ($open_rate["no_of_mails_opened"] / $open_rate["no_of_mails_recieved"]) * 100;
+
+			$data[] = array(
+				'id'	=>	$open_rate["id"],
+				'email'	=>	$open_rate["email"],
+				'no_of_mails_recieved'	=>	$open_rate["no_of_mails_recieved"],
+				'no_of_mails_opened'	=>	$open_rate["no_of_mails_opened"],
+				'open_rate'	=>	$rate_open
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["open_rate_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["open_rate_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["open_rate_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['mail_recieved_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+    $email = $_POST['email'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['mail_recieved_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["mail_recieved_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'url'	=>	'%' . $condition . '%',
+			'subject'	=>	'%' . $condition . '%',
+			'body'	    =>	'%' . $condition . '%',
+			'email'	    =>	$email
+		);
+
+        $total_data = count_mails_recieved_a($values);
+        $mails_recieved = search_mails_recieved_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($mails_recieved as $mail_recieved)
+		{
+			$admin_sent_email = fetch_single_row($mail_recieved['admin_sent_emails_id'], 'admin_sent_emails');
+
+			if($mail_recieved["email_status"] == 1)
+			{
+				$status = 'Opened';
+			}
+			elseif($mail_recieved["email_status"] == 0)
+			{
+				$status = 'Not opened';
+			}
+
+			if($mail_recieved["date_opened"] != "" || $mail_recieved["date_opened"] != null || !empty($mail_recieved["date_opened"]))
+			{
+				$date_opened =  $mail_recieved["date_opened"]; 
+			}
+			else
+			{
+				$date_opened =  "-";
+			}
+
+			$date1 = new DateTime($mail_recieved['date_recieved']);
+			if($mail_recieved["date_opened"] != "" || $mail_recieved["date_opened"] != null || !empty($mail_recieved["date_opened"]))
+			{
+			$date2 = new DateTime($mail_recieved["date_opened"]);
+			$interval = $date1->diff($date2);
+			$days = $interval->days;
+	
+			if($days > 1)
+			{
+				$how_long = $days . " days";
+			}
+			else
+			{
+				$how_long = $days . " day";
+			}
+			}
+			else
+			{
+				$how_long = "-";
+			}
+
+			$data[] = array(
+				'mail_recieved_id'	=>	$mail_recieved["id"],
+				'status'	=>	$status,
+				'date_recieved'	=>	$mail_recieved["date_recieved"],
+				'date_opened'	=>	$date_opened,
+				'how_long'	=>	$how_long,
+				'title'	=>	str_ireplace($replace_array_1, $replace_array_2, $admin_sent_email['subject'])
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_mails_recieved_b($email);
+        $mails_recieved = search_mails_recieved($email, $offset, $limit);
+
+		foreach($mails_recieved as $mail_recieved)
+		{
+			$admin_sent_email = fetch_single_row($mail_recieved['admin_sent_emails_id'], 'admin_sent_emails');
+
+			if($mail_recieved["email_status"] == 1)
+			{
+				$status = 'Opened';
+			}
+			elseif($mail_recieved["email_status"] == 0)
+			{
+				$status = 'Not opened';
+			}
+
+			if($mail_recieved["date_opened"] != "" || $mail_recieved["date_opened"] != null || !empty($mail_recieved["date_opened"]))
+			{
+				$date_opened =  $mail_recieved["date_opened"]; 
+			}
+			else
+			{
+				$date_opened =  "-";
+			}
+
+			$date1 = new DateTime($mail_recieved['date_recieved']);
+			if($mail_recieved["date_opened"] != "" || $mail_recieved["date_opened"] != null || !empty($mail_recieved["date_opened"]))
+			{
+			$date2 = new DateTime($mail_recieved["date_opened"]);
+			$interval = $date1->diff($date2);
+			$days = $interval->days;
+	
+			if($days > 1)
+			{
+				$how_long = $days . " days";
+			}
+			else
+			{
+				$how_long = $days . " day";
+			}
+			}
+			else
+			{
+				$how_long = "-";
+			}
+
+			$data[] = array(
+				'mail_recieved_id'	=>	$mail_recieved["id"],
+				'status'	=>	$status,
+				'date_recieved'	=>	$mail_recieved["date_recieved"],
+				'date_opened'	=>	$date_opened,
+				'how_long'	=>	$how_long,
+				'title'	=>	$admin_sent_email['subject']
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["mail_recieved_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["mail_recieved_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["mail_recieved_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
 }
 ?>

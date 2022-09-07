@@ -101,6 +101,38 @@ function username($first_name)
         return $username;
     }
 }
+
+function encryption($string)
+{
+    $ciphering = "AES-128-CTR";
+
+    $iv_length = openssl_cipher_iv_length($ciphering);
+
+    $options = 0;
+
+    $encryption_iv = '1234567891011121';
+    
+    $encryption_key = "bwajes-plus-key";
+
+    $encryption = openssl_encrypt($string, $ciphering,$encryption_key, $options,$encryption_iv);
+
+    return $encryption;
+}
+
+function decryption($encryption)
+{
+    $ciphering = "AES-128-CTR";
+
+    $decryption_iv = '1234567891011121';
+    $options = 0;
+
+    $decryption_key = "bwajes-plus-key";
+        
+    // encryption will be gotten from get super global
+    $decryption=openssl_decrypt ($encryption, $ciphering, $decryption_key, $options, $decryption_iv);
+
+    return $decryption;
+}
 // End miscellenious functions
 
 // Form validation functions
@@ -1501,6 +1533,147 @@ function update_email_tracking($value)
     $execute = $db->execute();
     
     return $execute;
+}
+
+function count_open_rates_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(sent_to_email)) FROM email_tracking WHERE sent_to_email LIKE :sent_to_email ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_open_rates_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE sent_to_email = email AND email_status = 1) as no_of_mails_opened FROM email_tracking WHERE sent_to_email LIKE :sent_to_email GROUP BY sent_to_email ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_open_rates_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(sent_to_email)) FROM email_tracking ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_open_rates($offset, $limit, $by='id')
+{
+    $db = new dbase();
+    
+    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE email_status = 1 AND sent_to_email = email) as no_of_mails_opened FROM email_tracking GROUP BY sent_to_email ORDER BY id DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function no_of_users_that_opened_mail($admin_sent_emails_id)
+{
+    $db = new dbase();
+
+  
+    $query = "SELECT COUNT(*) FROM email_tracking WHERE admin_sent_emails_id = :admin_sent_emails_id AND email_status = 1";
+
+    $db->prep($query);
+
+    $db->bindvalue(':admin_sent_emails_id', $admin_sent_emails_id, 'int');
+
+    $count = $db->fetchCol();
+    return $count;
+}
+
+function count_mails_recieved_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(sent_to_email)) FROM email_tracking WHERE admin_sent_emails_id IN (SELECT id FROM admin_sent_emails WHERE subject LIKE :subject OR body LIKE :body) AND sent_to_email = :sent_to_email ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':body', $value['body'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_mails_recieved_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM email_tracking WHERE admin_sent_emails_id IN (SELECT id FROM admin_sent_emails WHERE subject LIKE :subject OR body LIKE :body) AND sent_to_email = :sent_to_email ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':body', $value['body'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_mails_recieved_b($value, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM email_tracking WHERE sent_to_email = :sent_to_email ORDER BY $by DESC";
+
+    $db->prep($query);
+    $db->bindvalue(':sent_to_email', $value, 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_mails_recieved($value, $offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM email_tracking WHERE sent_to_email = :sent_to_email ORDER BY $by DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+    $db->bindvalue(':sent_to_email', $value, 'str');
+    $rows = $db->fetchMultiple();
+
+    return $rows;
 }
 // End database queries
 
