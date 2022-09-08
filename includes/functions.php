@@ -213,7 +213,7 @@ function profile_progress($id)
     $count += 1;
   }
 
-  $count = round((($count+7)/16)*100);
+  $count = round((($count+5)/14)*100);
 
   $progress = '<div class="profile-progress">Your profile is '.$count.'% completed<div class="progress">
   <div class="progress-bar" role="progressbar" style="width: '.$count.'%" aria-valuenow="'.$count.'" aria-valuemin="0" aria-valuemax="100"></div>

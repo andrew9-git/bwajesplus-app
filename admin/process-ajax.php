@@ -4,6 +4,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require_once('../includes/email-template.php');
+require_once('includes/phpmailer.php');
 require_once('includes/functions.php');
 session_start();
 
@@ -3323,9 +3324,9 @@ if(isset($_POST['post-master']))
     // {
     //     $errors[] = $message . ' is not valid';
     // }
-    elseif(strlen($message) < 1000)
+    elseif(strlen($message) < 100)
     {
-        $errors[] = 'Your message cannot be lesser than 1000 characters';
+        $errors[] = 'Your message cannot be lesser than 100 characters';
     }
     elseif(strlen($message) > 65535)
     {
@@ -3371,68 +3372,54 @@ if(isset($_POST['post-master']))
 
 			$group_emails = select_distinct_emails($table_name);
 
-			// require('../vendor/autoload.php');
-			require('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
-			require('../vendor/phpmailer/phpmailer/src/SMTP.php');
-			require('../vendor/phpmailer/phpmailer/src/Exception.php');
-
 			foreach($group_emails as $group_email)
 			{
-				//send email to group
-				
+				$set_from = array(
+					'email' => $set_from_email,
+					'name' => $set_from_name
+				);
+
 				$sent_to_email = $group_email['email'];
 
-				//Create an instance; passing `true` enables exceptions
-				$mail = new PHPMailer(true);
+				$add_address = array(
+					'email' => $sent_to_email,
+					'name' => ''
+				);
+	
+				
+				$altbody = 'Please update this app or use another app to view mail';
 
-				try {
-					//Server settings
-					$mail->SMTPDebug = SMTP::DEBUG_OFF;
-					$mail->isSMTP();
-					$mail->Host       = 'andadel.com';//'smtp.gmail.com';//andadel.com
-					$mail->SMTPAuth   = true;
-					$mail->Username   = 'developer@andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
-					$mail->Password   = '@Abletechservices9';//'@Deforce9';//@Abletechservices9
-					$mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
-					$mail->Port       = 465;//587;//465
+				$base_url = "http://localhost:9090/bwajesplus-app/admin/";
+				$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
 
-					//Recipients
-					$mail->setFrom($set_from_email, $set_from_name);
-					$mail->addAddress($sent_to_email);
-					// $mail->addAddress($sent_to_email, 'some name here...');
-					$mail->addReplyTo('no-reply@bwajes-plus.andadel.com', 'Do not reply this mail');
-
-					//Content
-					$mail->isHTML(true);
-					$mail->Subject = $subject;
-
-					$base_url = "http://localhost:9090/bwajesplus-app/admin/";
-					$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
-
-					$mail->Body    = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
-					$mail->AltBody = 'Please update this app to view mail';
-
-					if($mail->send())
-					{
-						//insert into email tracking table
-						$values = array(
-							'admin_sent_emails_id' => $lastId,
-							'sent_to_email'        => $sent_to_email,
-							'email_track_code'     => $code
-						);
-
-						$executed = insert_into_email_tracking($values);
-						if($executed)
-						{
-							$msg = "<div class='card success'><div><b>Success!</b> Email sent</div></div>";
-							echo $msg;
-						}
-					}
-
-				} catch (Exception $e) 
+				$body = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
+	
+				$data = array(
+					'subject' => $subject,
+					'body' => $body,
+					'altbody' => $altbody
+				);
+	
+				$mail_response = send_mail($set_from, $add_address, $data);
+				if($mail_response !== true)
 				{
-					$error = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-					echo $error;
+					echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+				}
+				else
+				{
+					//insert into email tracking table
+					$values = array(
+						'admin_sent_emails_id' => $lastId,
+						'sent_to_email'        => $sent_to_email,
+						'email_track_code'     => $code
+					);
+
+					$executed = insert_into_email_tracking($values);
+					if($executed)
+					{
+						$msg = "<div class='card success'><div><b>Success!</b> Email sent</div></div>";
+						echo $msg;
+					}
 				}
 			}
 		}
@@ -3948,6 +3935,253 @@ if(isset($_POST['mail_recieved_query']))
 				$page_link .= '
 				<li class="page-item">
 					<a class="page-link" href="javascript:load_data(`'.$_POST["mail_recieved_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['mail_opened_query']))
+{
+    // $admin_id = $_POST['admin_id'];
+    $mail_opened_id = $_POST['mail_opened_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['mail_opened_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["mail_opened_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			// 'body'	     =>	'%' . $condition . '%',
+			'email'	         =>	'%' . $condition . '%',
+			'mail_opened_id' =>	$mail_opened_id
+		);
+
+        $total_data = count_mail_opened_a($values);
+        $mails_opened = search_mail_opened_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($mails_opened as $mail_opened)
+		{
+			$date1 = new DateTime($mail_opened['date_recieved']);
+			$date2 = new DateTime($mail_opened["date_opened"]);
+			$interval = $date1->diff($date2);
+			$days = $interval->days;
+	
+			if($days > 1)
+			{
+				$how_long = $days . " days";
+			}
+			else
+			{
+				$how_long = $days . " day";
+			}	
+
+			$data[] = array(
+				'mail_opened_id' =>	$mail_opened["id"],
+				'date_recieved'	 =>	$mail_opened["date_recieved"],
+				'date_opened'	 =>	$mail_opened["date_opened"],
+				'how_long'	     =>	$how_long,
+				'email'	         =>	str_ireplace($replace_array_1, $replace_array_2, $mail_opened["sent_to_email"])
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_mail_opened_b($mail_opened_id);
+        $mails_opened = search_mail_opened($mail_opened_id, $offset, $limit);
+
+		foreach($mails_opened as $mail_opened)
+		{
+			$date1 = new DateTime($mail_opened['date_recieved']);
+			$date2 = new DateTime($mail_opened["date_opened"]);
+			$interval = $date1->diff($date2);
+			$days = $interval->days;
+	
+			if($days > 1)
+			{
+				$how_long = $days . " days";
+			}
+			else
+			{
+				$how_long = $days . " day";
+			}
+
+			$data[] = array(
+				'mail_opened_id' =>	$mail_opened["id"],
+				'date_recieved'	 =>	$mail_opened["date_recieved"],
+				'date_opened'	 =>	$mail_opened["date_opened"],
+				'how_long'	     =>	$how_long,
+				'email'	         =>	$mail_opened["sent_to_email"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["mail_opened_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["mail_opened_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["mail_opened_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
 				</li>
 				';
 			}

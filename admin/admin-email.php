@@ -64,7 +64,7 @@ else
             </div>
           </div>
           <div class="card-footer">
-            <a href="<?php echo $host .'mail-opened-users/4'; ?>" class="btn btn-primary">see users that opened mail</a>
+            <a href="<?php echo $host .'mail-opened-users/'.$admin_email_id; ?>" class="btn btn-primary">see users that opened mail</a>
           </div>
         </div>
       </div>

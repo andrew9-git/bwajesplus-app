@@ -6,10 +6,10 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-// require('vendor/autoload.php');
-require('vendor/phpmailer/phpmailer/src/PHPMailer.php');
-require('vendor/phpmailer/phpmailer/src/SMTP.php');
-require('vendor/phpmailer/phpmailer/src/Exception.php');
+// require('../vendor/autoload.php');
+require('../vendor/phpmailer/phpmailer/src/PHPMailer.php');
+require('../vendor/phpmailer/phpmailer/src/SMTP.php');
+require('../vendor/phpmailer/phpmailer/src/Exception.php');
 
 function send_mail(array $set_from, array $add_address, array $data=array(), array $add_reply_to = array('email' => 'no-reply@bwajes-plus.andadel.com', 'message' => 'Do not reply to this mail'))
 {

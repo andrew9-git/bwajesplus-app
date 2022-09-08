@@ -1615,7 +1615,7 @@ function count_mails_recieved_a($value)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(DISTINCT(sent_to_email)) FROM email_tracking WHERE admin_sent_emails_id IN (SELECT id FROM admin_sent_emails WHERE subject LIKE :subject OR body LIKE :body) AND sent_to_email = :sent_to_email ORDER BY id DESC";
+    $query = "SELECT COUNT(*) FROM email_tracking WHERE admin_sent_emails_id IN (SELECT id FROM admin_sent_emails WHERE subject LIKE :subject OR body LIKE :body) AND sent_to_email = :sent_to_email ORDER BY id DESC";
 
     $db->prep($query);
 
@@ -1675,6 +1675,73 @@ function search_mails_recieved($value, $offset, $limit, $by='id')
 
     return $rows;
 }
+
+function count_mail_opened_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM email_tracking WHERE admin_sent_emails_id = :admin_sent_emails_id AND email_status = 1 AND sent_to_email LIKE :sent_to_email ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':admin_sent_emails_id', $value['mail_opened_id'], 'int');
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_mail_opened_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM email_tracking WHERE admin_sent_emails_id = :admin_sent_emails_id AND email_status = 1 AND sent_to_email LIKE :sent_to_email ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':admin_sent_emails_id', $value['mail_opened_id'], 'int');
+    $db->bindvalue(':sent_to_email', $value['email'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_mail_opened_b($value, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM email_tracking WHERE admin_sent_emails_id = :admin_sent_emails_id AND email_status = 1 ORDER BY $by DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':admin_sent_emails_id', $value, 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_mail_opened($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM email_tracking WHERE admin_sent_emails_id = :admin_sent_emails_id AND email_status = 1 ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':admin_sent_emails_id', $value, 'int');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
 // End database queries
 
 
