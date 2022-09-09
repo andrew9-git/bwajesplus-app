@@ -1353,7 +1353,7 @@ if(isset($_POST['affiliate-url']))
 		else
 		{
 			$new_company_photo_name = time() .'_' . $company_photo_name;
-			$company_photo_folder = '../images/';
+			$company_photo_folder = 'affiliate_photos/';
 			$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
 		
 			move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);
@@ -1450,7 +1450,7 @@ if(isset($_POST['edit-affiliate-url']))
 		{
 			$affiliate_programme = fetch_single_row($affiliate_id, 'affiliate_programmes');
 
-            $filename = '../images/' . $affiliate_programme['image'];
+            $filename = 'affiliate_photos/' . $affiliate_programme['image'];
             if (file_exists($filename) && !is_dir($filename))
             {
                 $deleted = unlink($filename);
@@ -1461,7 +1461,7 @@ if(isset($_POST['edit-affiliate-url']))
                 else
                 {
 					$new_company_photo_name = time() .'_' . $company_photo_name;
-					$company_photo_folder = '../images/';
+					$company_photo_folder = 'affiliate_photos/';
 					$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
 				
 					move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);
@@ -1470,7 +1470,7 @@ if(isset($_POST['edit-affiliate-url']))
             else
             {
 				$new_company_photo_name = time() .'_' . $company_photo_name;
-				$company_photo_folder = '../images/';
+				$company_photo_folder = 'affiliate_photos/';
 				$tmp_company_photo = $_FILES['company-photo']['tmp_name'];
 			
 				move_uploaded_file($tmp_company_photo, $company_photo_folder .$new_company_photo_name);

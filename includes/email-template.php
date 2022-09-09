@@ -4,7 +4,7 @@
 
 function email_template_1($message='', $website=1, $id=1, $table_name="", $email="")
 {  
-    $host = 'http://localhost:9090/bwajesplus-app/';
+    $host = 'http://localhost:9090/bwajes/';
     
 ?>
 
@@ -293,7 +293,7 @@ p.footer {
                         <?php
                         if($website != 0)
                         {
-                            echo '<p><a href="https://bwajes-plus.andadel.com/email/'. $id . '" target="_blank">Click to view this email in your browser</a></p>';
+                            echo '<p><a href="'.$host.'email/'. $id . '/'.$table_name.'/'.$email.'" target="_blank">Click to view this email in your browser</a></p>';
                         }
                         ?>
     				</td>
@@ -309,7 +309,7 @@ p.footer {
                                         <table class="content">
                                             <tr>
                                                 <td align="center">
-                                                    <a href="#" target="_blank"><img src="<?php echo $host . 'images/bwajes_mail_1.png' ?>" class="logo"></a>
+                                                    <a href="<?php echo $host . 'about' ?>" target="_blank"><img src="<?php echo $host . 'images/bwajes_mail_1.png' ?>" class="logo"></a>
                                                 </td>
                                             </tr>
                                         </table>
@@ -345,7 +345,7 @@ p.footer {
             <table class="outer-table">
     			<tr>
     				<td class="image">
-    					<a href="#" target="_blank"><img src="<?php echo $host . 'images/bwajes_mail.png' ?>"></a>
+    					<a href="<?php echo $host . 'about' ?>" target="_blank"><img src="<?php echo $host . 'images/bwajes_mail.png' ?>"></a>
     				</td>
     			</tr> <!--- End Banner -->
             </table> <!--- End Outer Table -->
@@ -363,8 +363,8 @@ p.footer {
     					<table width="100%">
     						<tr>
     							<td class="footer">
-    								<a href="#" target="_blank"><img src="<?php echo $host . 'images/andLogo.png' ?>" style="width: 58px;"></a>
-    								<p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, <?php echo date('Y') ?>.<br><a href="<?php echo "#/" . $table_name. "/". $email ; ?>" target="_blank">Unsubscribe</a></p>
+    								<a href="<?php echo 'http://localhost:9090/andadel/' ?>" target="_blank"><img src="<?php echo $host . 'images/andLogo.png' ?>" style="width: 58px;"></a>
+    								<p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, <?php echo date('Y') ?>.<br><a href="<?php echo $host."dz5445z/unsubscribe/" . $table_name. "/". $email ; ?>" target="_blank">Unsubscribe</a></p>
     							</td>
     						</tr>
     					</table>
@@ -378,7 +378,7 @@ p.footer {
 </html>
 
 <!-- <div style="width: 100%;text-align: center;line-height: 40px;font-size: 25px;">
-	<a href="#" target="_blank" style="color: #404577;text-decoration: none;">www.ResponsiveHTMLEmail.com</a>
+	<a href="http://localhost:9090/andadel/" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
 </div> -->
 
 <?php 
@@ -389,7 +389,7 @@ p.footer {
 <?php 
 function email_template($message='', $website=1, $id=1, $table_name="", $email="")
 {  
-    $host = 'http://localhost:9090/bwajesplus-app/';
+    $host = 'http://localhost:9090/bwajes/';
 
     $output = '';
 
@@ -678,7 +678,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
 
                         if($website != 0)
                         {
-                            $output.= '<p><a href="https://bwajes-plus.andadel.com/email/'. $id . '" target="_blank">Click to view this email in your browser</a></p>';
+                            $output.= '<p><a href="'.$host.'email/'. $id . '/'.$table_name.'/'.$email.'" target="_blank">Click to view this email in your browser</a></p>';
                         }
     $output.= '</td>
         </tr> <!--- End Header -->
@@ -693,7 +693,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
                                 <table class="content">
                                     <tr>
                                         <td align="center">
-                                            <a href="#" target="_blank"><img src="' . $host . 'images/bwajes_mail_1.png " class="logo"></a>
+                                            <a href="'.$host.'about" target="_blank"><img src="' . $host . 'images/bwajes_mail_1.png " class="logo"></a>
                                         </td>
                                     </tr>
                                 </table>
@@ -729,7 +729,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
     <table class="outer-table">
         <tr>
             <td class="image">
-                <a href="#" target="_blank"><img src="' . $host . 'images/bwajes_mail.png"></a>
+                <a href="'.$host.'about" target="_blank"><img src="' . $host . 'images/bwajes_mail.png"></a>
             </td>
         </tr> <!--- End Banner -->
     </table> <!--- End Outer Table -->
@@ -747,8 +747,8 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
                 <table width="100%">
                     <tr>
                         <td class="footer">
-                            <a href="#" target="_blank"><img src="' . $host . 'images/andLogo.png" style="width: 58px;"></a>
-                            <p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, ' . date('Y') . '<br><a href="#/'.$table_name.'/'.$email.'" target="_blank">Unsubscribe</a></p>
+                            <a href="http://localhost:9090/andadel/" target="_blank"><img src="' . $host . 'images/andLogo.png" style="width: 58px;"></a>
+                            <p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, ' . date('Y') . '<br><a href="'.$host.'dz5445z/unsubscribe/'.$table_name.'/'.$email.'" target="_blank">Unsubscribe</a></p>
                         </td>
                     </tr>
                 </table>
@@ -762,7 +762,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
     </html>
 
     <!-- <div style="width: 100%;text-align: center;line-height: 40px;font-size: 25px;">
-    <a href="#" target="_blank" style="color: #404577;text-decoration: none;">www.ResponsiveHTMLEmail.com</a>
+    <a href="http://localhost:9090/andadel/" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
     </div> -->';
     return $output;
 }

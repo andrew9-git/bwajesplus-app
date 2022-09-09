@@ -100,8 +100,10 @@ foreach($users as $user)
         'name' => ''
     );
 
+    $tblname = encryption('users');
+
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/resubscribe">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
     $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
     $body = email_template($body);
@@ -135,8 +137,10 @@ foreach($subscribers as $subscriber)
         'name' => ''
     );
 
+    $tblname = encryption('users');
+
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/resubscribe">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
     $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
     $body = email_template($body);
@@ -170,8 +174,10 @@ foreach($comments as $comment)
         'name' => ''
     );
 
+    $tblname = encryption('users');
+
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/resubscribe">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
     $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
     $body = email_template($body);
@@ -205,8 +211,10 @@ foreach($email_lists as $email_list)
         'name' => ''
     );
 
+    $tblname = encryption('users');
+
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/resubscribe">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
     $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
     $body = email_template($body);

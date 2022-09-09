@@ -21,10 +21,10 @@ if(isset($_FILES['upload']['tmp_name']))
     else
     {
         $new_legal_photo_name = time() .'_' . $legal_photo_name;
-        $legal_photo_folder = '../images/';
+        $legal_photo_folder = 'upload_photos/';
         $tmp_legal_photo = $_FILES['upload']['tmp_name'];
 
-        chmod('../images', 0777);
+        chmod('upload_photos', 0777);
         move_uploaded_file($tmp_legal_photo, $legal_photo_folder . $new_legal_photo_name);
         $function_number = $_GET['CKEditorFuncNum'];
         $url = 'http://localhost:9090/bwajesplus-app/admin/'.$legal_photo_folder . $new_legal_photo_name;

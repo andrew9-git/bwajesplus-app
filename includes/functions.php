@@ -221,6 +221,38 @@ function profile_progress($id)
   return array($count, $progress);
 }
 
+function encryption($string)
+{
+    $ciphering = "AES-128-CTR";
+
+    $iv_length = openssl_cipher_iv_length($ciphering);
+
+    $options = 0;
+
+    $encryption_iv = '1234567891011121';
+    
+    $encryption_key = "bwajes-plus-key";
+
+    $encryption = openssl_encrypt($string, $ciphering,$encryption_key, $options,$encryption_iv);
+
+    return $encryption;
+}
+
+function decryption($encryption)
+{
+    $ciphering = "AES-128-CTR";
+
+    $decryption_iv = '1234567891011121';
+    $options = 0;
+
+    $decryption_key = "bwajes-plus-key";
+        
+    // encryption will be gotten from get super global
+    $decryption=openssl_decrypt ($encryption, $ciphering, $decryption_key, $options, $decryption_iv);
+
+    return $decryption;
+}
+
 // End miscellenious functions
 
 // Form validation functions
