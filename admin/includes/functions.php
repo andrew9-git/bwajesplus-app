@@ -348,12 +348,19 @@ function form_errors(array $errors)
 // Database queries
 
 //uniqueness and row count
-function db_row_count($value, $column_name, $table_name, $type='int', $where=1)
+function db_row_count($value, $column_name, $table_name, $type='int', $where=1, $distinct=0)
 {
     $db = new dbase();
 
     $query = "";
-    $query .= "SELECT COUNT(*) FROM $table_name";
+    if($distinct == 0)
+    {
+        $query .= "SELECT COUNT(*) FROM $table_name";
+    }
+    else
+    {
+        $query .= "SELECT COUNT(DISTINCT($column_name)) FROM $table_name";
+    }
     if($where == 1)
     {
         $query .= " WHERE $column_name = :value";

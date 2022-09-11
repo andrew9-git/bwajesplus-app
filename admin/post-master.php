@@ -23,11 +23,15 @@ $id = $_SESSION['admin_data']['id'];
                         <label for="support">Choose Support Department*</label>
                         <select class="form-control form_data_master" name="support" id="support">
                         <option value="S">Choose support</option>
-                        <option value="myphptestemail@gmail.com">General Support</option>
-                        <option value="it-support@bwajes-plus.andadel.com">IT Support</option>
+                        <option value="myphptestemail@gmail.com">General Support</option><!-- support@bwajes-plus.andadel.com -->
+                        <option value="it@bwajes-plus.andadel.com">IT Support</option>
                         <option value="admin@bwajes-plus.andadel.com">Adminstration Support</option>
                         <option value="billing@bwajes-plus.andadel.com">Billing Support</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sender">Sender</label>
+                        <input type="text" class="form-control form_data_master" name="sender" value="" id="sender">
                     </div>
                     <div class="form-group">
                         <label for="list">Send to*</label>
@@ -43,6 +47,10 @@ $id = $_SESSION['admin_data']['id'];
                         <label for="subject">Subject*</label>
                         <input type="text" class="form-control form_data_master" placeholder="Enter subject" id="subject" name="subject">
                     </div>
+                    <div class="form-group" id="salutation-div">
+                        <label for="salutation">Salutation</label>
+                        <input type="text" class="form-control form_data_master" name="salutation" value="" id="salutation">
+                    </div>
                     <div class="form-group">
                         <label for="message">Message*</label>
                         <textarea class="form-control" name="post-master" rows="5" id="message"></textarea>
@@ -51,12 +59,32 @@ $id = $_SESSION['admin_data']['id'];
                 </form>
             </div>
             <div class="card-footer">
+                <div class="info-container">
+                <a href="email-list" class="btn btn-success">See email stats</a>
+                </div>
             </div>
         </div>
       </div>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+
+
+        let salutation_div = document.getElementById('salutation-div');
+        let list = document.getElementById('list');
+
+        salutation_div.style.display = "none";
+
+        list.addEventListener('change', ()=>{
+            if(list.value == "registered-users")
+            {
+                salutation_div.style.display = "block";
+            }
+            else
+            {
+                salutation_div.style.display = "none";
+            }
+        });
 
         let form = document.getElementById('create_master_form');
         let create_master_button = document.getElementById('create_master');
