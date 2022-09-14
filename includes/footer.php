@@ -169,8 +169,8 @@ function ckeditor($page = '')
             <label for="support">Choose Support Department*</label>
             <select class="form-control form_data" name="department" id="department">
               <option value="S">Select department</option>
-              <option value="myphptestemail@gmail.com">General Support</option>
-              <option value="it-support@bwajes-plus.andadel.com">IT Support</option>
+              <option value="support@bwajes-plus.andadel.com">General Support</option>
+              <option value="it@bwajes-plus.andadel.com">IT Support</option>
               <option value="admin@bwajes-plus.andadel.com">Adminstration Support</option>
               <option value="billing@bwajes-plus.andadel.com">Billing Support</option>
             </select>
@@ -334,12 +334,24 @@ function ckeditor($page = '')
 
       if(bar)
       {
-          let hide_times = document.getElementById('hide-times');
+        let hide_times = document.getElementById('hide-times');
 
-          hide_times.addEventListener('click', () => {
-              // bar.style.display = "none";
-              bar.remove();
-          });
+        hide_times.addEventListener('click', () => {
+            // bar.style.display = "none";
+            bar.remove();
+        });
+      }
+
+      let bar_msg = document.getElementById('Bar-msg');
+
+      if(bar_msg)
+      {
+        let hide_times_msg = document.getElementById('hide-times-msg');
+
+        hide_times_msg.addEventListener('click', () => {
+            // bar.style.display = "none";
+            bar_msg.remove();
+        });
       }
 
       //ajax request for sending mail to bwajes+

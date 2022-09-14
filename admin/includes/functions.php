@@ -1505,7 +1505,15 @@ function select_distinct_emails($table_name)
 {
     $db = new dbase();
 
-    $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
+    if($table_name == "subscriber_list")
+    {
+        $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
+    }
+    else
+    {
+        $query = "SELECT DISTINCT email, first_name FROM $table_name WHERE unsubscribed = 0";
+    }
+
     $db->prep($query);
     $rows = $db->fetchMultiple();
     return $rows;
@@ -1525,20 +1533,6 @@ function insert_into_email_tracking(array $value)
 
     $execute = $db->execute();
 
-    return $execute;
-}
-
-//update email tracking
-function update_email_tracking($value)
-{
-    $db = new dbase();
-    $query = "UPDATE email_tracking SET email_status = 1, date_opened = NOW() WHERE email_track_code = :email_track_code";
-    $db->prep($query);
-
-    $db->bindvalue(':email_track_code', $value['email_track_code'], 'str');
-
-    $execute = $db->execute();
-    
     return $execute;
 }
 

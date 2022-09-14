@@ -2,7 +2,7 @@
 // include_once('functions.php');
 
 
-function email_template_1($message='', $website=1, $id=1, $table_name="", $email="")
+function email_template_1($message='', $website=1, $id=1, $table_name="", $email="", $is_admin = 0)
 {  
     $host = 'http://localhost:9090/bwajes/';
     
@@ -364,7 +364,7 @@ p.footer {
     						<tr>
     							<td class="footer">
     								<a href="<?php echo 'http://localhost:9090/andadel/' ?>" target="_blank"><img src="<?php echo $host . 'images/andLogo.png' ?>" style="width: 58px;"></a>
-    								<p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, <?php echo date('Y') ?>.<br><a href="<?php echo $host."dz5445z/unsubscribe/" . $table_name. "/". $email ; ?>" target="_blank">Unsubscribe</a></p>
+    								<p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, <?php echo date('Y') ?>.<?php if($is_admin == 0){ ?><br><a href="<?php echo $host."dz5445z/unsubscribe/" . $table_name. "/". $email ; ?>" target="_blank">Unsubscribe</a><?php } ?></p>
     							</td>
     						</tr>
     					</table>
@@ -387,9 +387,19 @@ p.footer {
 ?>
 
 <?php 
-function email_template($message='', $website=1, $id=1, $table_name="", $email="")
+function email_template($message='', $website=1, $id=1, $table_name="", $email="", $is_admin = 0)
 {  
     $host = 'http://localhost:9090/bwajes/';
+
+    if($is_admin == 0)
+    {
+        $unsubcribe = '<br><a href="'.$host.'dz5445z/unsubscribe/'.$table_name.'/'.$email.'" target="_blank">Unsubscribe</a>';
+    }
+    else
+    {
+        $unsubcribe = '';
+    }
+
 
     $output = '';
 
@@ -748,7 +758,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
                     <tr>
                         <td class="footer">
                             <a href="http://localhost:9090/andadel/" target="_blank"><img src="' . $host . 'images/andLogo.png" style="width: 58px;"></a>
-                            <p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, ' . date('Y') . '<br><a href="'.$host.'dz5445z/unsubscribe/'.$table_name.'/'.$email.'" target="_blank">Unsubscribe</a></p>
+                            <p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, ' . date('Y') . $unsubcribe .'</p>
                         </td>
                     </tr>
                 </table>

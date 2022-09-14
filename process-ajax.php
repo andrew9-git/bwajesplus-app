@@ -358,7 +358,7 @@ if(isset($_POST['department']))
             $subject = $title;
             $body_msg = $message;
             $altbody = $message;
-            $body = email_template($body_msg, 0);
+            $body = email_template($body_msg, 0, 1, '', '', 1);
 
             $data = array(
                 'subject' => $subject,

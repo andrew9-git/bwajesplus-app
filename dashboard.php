@@ -14,14 +14,14 @@ bwajes_plus_header('dashboard', 'Dashboard');
             $last_logout = $user_statistics['last_logout'];
             if($last_logout == NULL || $last_logout === "" || empty($last_logout))
             {
-              echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
-              <div id="left"><div style="margin-top:4%;"><h4>
+              echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar-msg">
+              <div id="left" style="color: #111;"><div style="margin-top:4%;"><h4>
               Welcome '.$_SESSION['user_data']['first_name'].'! Thanks for joining the bwajes+ family</h4></div>
               </div>
               <div id="right">
-                <a href="#" id="hide-times">X</a>
+                <a href="#" id="hide-times-msg">X</a>
               </div>
-            </div>';  
+            </div><br>';  
             }
 
             afiliate_programme_codes_wrapper($id);
@@ -75,7 +75,16 @@ bwajes_plus_header('dashboard', 'Dashboard');
             </table>
           </div>
           <div class="card-footer">
-            <div class="btn btn-secondary last-login">last visited: <?php if(isset($user_statistics)){echo date("F jS, Y", strtotime($user_statistics['last_logout']));} ?></div>
+            <div class="btn btn-secondary last-login">last visited: <?php if(isset($user_statistics)){
+              if($last_logout == NULL || $last_logout === "" || empty($last_logout))
+              {
+                echo date("F jS, Y");
+              }
+              else
+              {
+                echo date("F jS, Y", strtotime($user_statistics['last_logout']));
+              }
+              } ?></div>
           </div>
         </div>
         <?php 
@@ -101,7 +110,16 @@ bwajes_plus_header('dashboard', 'Dashboard');
             <img src="images/no-post.gif" class="loading-post-gif" />
           </div>
           <div class="card-footer">
-          <div class="btn btn-secondary last-login">last visited: <?php if(isset($user_statistics)){echo date("F jS, Y", strtotime($user_statistics['last_logout']));} ?></div>
+          <div class="btn btn-secondary last-login">last visited: <?php if(isset($user_statistics)){
+            if($last_logout == NULL || $last_logout === "" || empty($last_logout))
+            {
+              echo date("F jS, Y");
+            }
+            else
+            {
+              echo date("F jS, Y", strtotime($user_statistics['last_logout']));
+            }
+            } ?></div>
           </div>
         </div>
         <?php 

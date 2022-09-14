@@ -137,18 +137,35 @@ function afiliate_programmes_rotation()
 function afiliate_programme_codes_wrapper($id)
 {
   $row = fetch_single_row_in_payment($id, 'user_id');
-  $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
-  $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
-  //if there is no payment history or subcription has expired
-  if($count <= 0 || date('Y-m-d H:i:s') >= $end_date)
+  if(isset($row['end_date']))
   {
-    $display = afiliate_programmes_rotation();
-    echo '<div class="ShowHide" id="Bar">
-    <div id="left">'.$display.'</div>
-    <div id="right">
-      <a href="#" id="hide-times">X</a>
-    </div>
-    </div>';
+    $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
+    //if subcription has expired
+    if(date('Y-m-d H:i:s') >= $end_date)
+    {
+        $display = afiliate_programmes_rotation();
+        echo '<div class="ShowHide" id="Bar">
+        <div id="left">'.$display.'</div>
+        <div id="right">
+            <a href="#" id="hide-times">X</a>
+        </div>
+        </div>';
+    }
+  }
+  else
+  {
+    $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
+    //if there is no payment history
+    if($count <= 0)
+    {
+        $display = afiliate_programmes_rotation();
+        echo '<div class="ShowHide" id="Bar">
+        <div id="left">'.$display.'</div>
+        <div id="right">
+            <a href="#" id="hide-times">X</a>
+        </div>
+        </div>';
+    }
   }
 }
 

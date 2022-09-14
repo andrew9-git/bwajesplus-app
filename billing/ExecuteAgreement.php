@@ -114,8 +114,8 @@ include('billingFunctions.php');
                 if($executed)
                 {
                     $set_from = array(
-                        'email' => 'developer@andadel.com',
-                        'name' => 'bwajes+'
+                        'email' => 'billing@bwajes-plus.andadel.com',
+                        'name' => 'Payment Service'
                     );
 
                     $name = $_SESSION['user_data']['first_name']. ' ' . $_SESSION['user_data']['last_name'];
@@ -125,9 +125,9 @@ include('billingFunctions.php');
                     );
 
                     $subject = 'Ads removal';
-                    $body_msg = 'Thank you ' . $_SESSION['user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
-                    $altbody = 'Thank you ' . $_SESSION['user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
-                    $body = email_template($body_msg, 0);
+                    $body_msg = 'Thank you ' . ucfirst(strtolower($_SESSION['user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $altbody = 'Thank you ' . ucfirst(strtolower($_SESSION['user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $body = email_template($body_msg, 0, 1, encryption('users'), $_SESSION['user_data']['email']);
 
                     $data = array(
                         'subject' => $subject,

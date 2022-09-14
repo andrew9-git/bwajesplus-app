@@ -3481,6 +3481,198 @@ if(isset($_POST['edit-content']))
 // }
 
 //to send messages
+// if(isset($_POST['post-master']))
+// {
+//     $id               = trim($_POST['id']);
+//     $set_from_email   = trim($_POST['support']);
+//     $sender           = trim($_POST['sender']);
+//     $group_to_send_to = trim($_POST['list']);
+//     $subject          = trim($_POST['subject']);
+//     $salutation       = trim($_POST['salutation']);
+// 	$message          = "";
+    
+
+// 	if($sender == "")
+// 	{
+// 		if(preg_match('/support/',$set_from_email))
+// 		{
+// 			$set_from_name = "Support";
+// 		}
+// 		elseif(preg_match('/it/',$set_from_email))
+// 		{
+// 			$set_from_name = "IT Team";
+// 		}
+// 		elseif(preg_match('/admin/',$set_from_email))
+// 		{
+// 			$set_from_name = "Admin";
+// 		}
+// 		elseif(preg_match('/billing/',$set_from_email))
+// 		{
+// 			$set_from_name = "Payment service";
+// 		}
+// 		else
+// 		{
+// 			$set_from_name = "bwajes+";
+// 		}
+// 	}
+// 	else
+// 	{
+// 		$set_from_name = $sender;
+// 	}
+
+// 	if($salutation == "")
+// 	{
+// 		$salutation == "Dear";
+// 	}
+   
+//     //error array
+//     $errors = array();
+
+// 	if(accepted_option($set_from_email) == false)
+//     {
+//         $errors[] = 'Please select support';
+//     }
+
+// 	if(accepted_option($group_to_send_to) == false)
+//     {
+//         $errors[] = 'Please select send to';
+//     }
+
+//     if(has_presence($subject) == false)
+//     {
+//         $errors[] = 'subject cannot be empty';
+//     }
+//     elseif(strlen($subject) < 8)
+//     {
+//         $errors[] = 'The subject field cannot be lesser than 8 characters';
+//     }
+//     elseif(strlen($subject) > 60)
+//     {
+//         $errors[] = 'The subject field cannot be more than 60 characters';
+//     }
+    
+//     if(empty($errors))
+//     {
+// 		if($group_to_send_to == "all")
+// 		{
+// 			$table_name = "email_list";
+// 		}
+// 		elseif($group_to_send_to == "registered-users")
+// 		{
+// 			$table_name = "users";
+// 		}
+// 		elseif($group_to_send_to == "subscribers")
+// 		{
+// 			$table_name = "subscriber_list";
+// 		}
+// 		elseif($group_to_send_to == "commenters")
+// 		{
+// 			$table_name = "comments";
+// 		}
+
+// 		$group_emails = select_distinct_emails($table_name);
+
+// 		foreach($group_emails as $group_email)
+// 		{
+// 			//email track code
+// 			$code = email_track_code();
+
+// 			$base_url = "http://localhost:9090/bwajesplus-app/admin/";
+// 			$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+
+// 			if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
+// 			{
+// 				$message .= $salutation . " " . ucfirst($group_email['first_name']) . "\r\n";
+// 			}
+
+// 			$message.= trim($_POST['post-master']);
+
+// 			if(has_presence($message) == false)
+// 			{
+// 				$errors[] = 'message cannot be empty';
+// 			}
+// 			elseif(strlen($message) < 100)
+// 			{
+// 				$errors[] = 'Your message cannot be lesser than 100 characters';
+// 			}
+// 			elseif(strlen($message) > 65535)
+// 			{
+// 				$errors[] = 'Your message cannot be more than 65535 characters';
+// 			}
+// 			else
+// 			{
+// 				//insert into admin sent email table
+// 				//get last insertId from admin sent email table
+// 				$values = array(
+// 					'set_from_name'  => $set_from_name,
+// 					'set_from_email' => $set_from_email,
+// 					'subject'        => $subject,
+// 					'body'           => $message,
+// 					'admin_id'       => $id
+// 				);
+
+// 				$lastId = insert_into_admin_sent_emails($values);
+
+	
+// 				if($lastId)
+// 				{
+					
+// 					$set_from = array(
+// 						'email' => $set_from_email,
+// 						'name' => $set_from_name
+// 					);
+		
+// 					$sent_to_email = $group_email['email'];
+		
+// 					$add_address = array(
+// 						'email' => $sent_to_email,
+// 						'name' => ''
+// 					);
+		
+					
+// 					$altbody = 'Please update this app or use another app to view mail';
+	
+// 					$body = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
+	
+// 					$data = array(
+// 						'subject' => $subject,
+// 						'body' => $body,
+// 						'altbody' => $altbody
+// 					);
+	
+// 					$mail_response = send_mail($set_from, $add_address, $data);
+// 					if($mail_response !== true)
+// 					{
+// 						echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+// 					}
+// 					else
+// 					{
+// 						//insert into email tracking table
+// 						$values = array(
+// 							'admin_sent_emails_id' => $lastId,
+// 							'sent_to_email'        => $sent_to_email,
+// 							'email_track_code'     => $code
+// 						);
+	
+// 						$executed = insert_into_email_tracking($values);
+// 						if($executed)
+// 						{
+// 							$msg = "<div class='card success'><div><b>Success!</b> Email sent</div></div>";
+// 							echo $msg;
+// 						}
+// 					}
+// 				}
+// 			}
+
+// 		}
+//     }
+//     else
+//     {
+//         echo form_errors($errors);
+//     }
+// }
+
+//to send messages
 if(isset($_POST['post-master']))
 {
     $id               = trim($_POST['id']);
@@ -3489,8 +3681,7 @@ if(isset($_POST['post-master']))
     $group_to_send_to = trim($_POST['list']);
     $subject          = trim($_POST['subject']);
     $salutation       = trim($_POST['salutation']);
-	$message          = "";
-    
+	$message          = trim($_POST['post-master']);
 
 	if($sender == "")
 	{
@@ -3522,7 +3713,7 @@ if(isset($_POST['post-master']))
 
 	if($salutation == "")
 	{
-		$salutation == "Dear";
+		$salutation = "Dear";
 	}
    
     //error array
@@ -3550,6 +3741,19 @@ if(isset($_POST['post-master']))
     {
         $errors[] = 'The subject field cannot be more than 60 characters';
     }
+
+	if(has_presence($message) == false)
+	{
+		$errors[] = 'message cannot be empty';
+	}
+	elseif(strlen($message) < 100)
+	{
+		$errors[] = 'Your message cannot be lesser than 100 characters';
+	}
+	elseif(strlen($message) > 65535)
+	{
+		$errors[] = 'Your message cannot be more than 65535 characters';
+	}
     
     if(empty($errors))
     {
@@ -3570,101 +3774,99 @@ if(isset($_POST['post-master']))
 			$table_name = "comments";
 		}
 
-		$group_emails = select_distinct_emails($table_name);
+		//insert into admin sent email table
+		//get last insertId from admin sent email table
+		$values = array(
+			'set_from_name'  => $set_from_name,
+			'set_from_email' => $set_from_email,
+			'subject'        => $subject,
+			'body'           => $message,
+			'admin_id'       => $id
+		);
 
-		foreach($group_emails as $group_email)
+		$lastId = insert_into_admin_sent_emails($values);
+
+
+		if($lastId)
 		{
-			//email track code
-			$code = email_track_code();
+			$no_of_email_sent = 0;
 
-			$base_url = "http://localhost:9090/bwajesplus-app/admin/";
-			$message .= '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+			$group_emails = select_distinct_emails($table_name);
 
-			if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
+			foreach($group_emails as $group_email)
 			{
-				$message .= $salutation . " " . ucfirst($group_email['first_name']) . "\r\n";
-			}
+				if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
+				{
+					//email track code
+					$code = email_track_code();
+		
+					$base_url = "http://localhost:9090/bwajes/dz5445z/";
+					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
+				}
+				else
+				{
+					//email track code
+					$code = email_track_code();
 
-			$message.= trim($_POST['post-master']);
+					$base_url = "http://localhost:9090/bwajes/dz5445z/";
+					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+					$message = $track . trim($_POST['post-master']);	
+				}
+			
+				$set_from = array(
+					'email' => $set_from_email,
+					'name' => $set_from_name
+				);
+	
+				$sent_to_email = $group_email['email'];
+	
+				$add_address = array(
+					'email' => $sent_to_email,
+					'name' => ''
+				);
+	
+				
+				$altbody = 'Please update this app or use another app to view mail';
 
-			if(has_presence($message) == false)
-			{
-				$errors[] = 'message cannot be empty';
-			}
-			elseif(strlen($message) < 100)
-			{
-				$errors[] = 'Your message cannot be lesser than 100 characters';
-			}
-			elseif(strlen($message) > 65535)
-			{
-				$errors[] = 'Your message cannot be more than 65535 characters';
-			}
-			else
-			{
-				//insert into admin sent email table
-				//get last insertId from admin sent email table
-				$values = array(
-					'set_from_name'  => $set_from_name,
-					'set_from_email' => $set_from_email,
-					'subject'        => $subject,
-					'body'           => $message,
-					'admin_id'       => $id
+				$body = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
+
+				$data = array(
+					'subject' => $subject,
+					'body' => $body,
+					'altbody' => $altbody
 				);
 
-				$lastId = insert_into_admin_sent_emails($values);
-
-	
-				if($lastId)
+				$mail_response = send_mail($set_from, $add_address, $data);
+				if($mail_response !== true)
 				{
-					
-					$set_from = array(
-						'email' => $set_from_email,
-						'name' => $set_from_name
+					echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+				}
+				else
+				{
+					//insert into email tracking table
+					$values = array(
+						'admin_sent_emails_id' => $lastId,
+						'sent_to_email'        => $sent_to_email,
+						'email_track_code'     => $code
 					);
-		
-					$sent_to_email = $group_email['email'];
-		
-					$add_address = array(
-						'email' => $sent_to_email,
-						'name' => ''
-					);
-		
-					
-					$altbody = 'Please update this app or use another app to view mail';
-	
-					$body = email_template($message, 1, $lastId, encryption($table_name), $sent_to_email);
-	
-					$data = array(
-						'subject' => $subject,
-						'body' => $body,
-						'altbody' => $altbody
-					);
-	
-					$mail_response = send_mail($set_from, $add_address, $data);
-					if($mail_response !== true)
+
+					$executed = insert_into_email_tracking($values);
+					if($executed)
 					{
-						echo "<div class='card error'><div>" . $mail_response . "</div></div>";
-					}
-					else
-					{
-						//insert into email tracking table
-						$values = array(
-							'admin_sent_emails_id' => $lastId,
-							'sent_to_email'        => $sent_to_email,
-							'email_track_code'     => $code
-						);
-	
-						$executed = insert_into_email_tracking($values);
-						if($executed)
-						{
-							$msg = "<div class='card success'><div><b>Success!</b> Email sent</div></div>";
-							echo $msg;
-						}
+						$no_of_email_sent += 1;
 					}
 				}
+	
 			}
 
+			if($no_of_email_sent > 0)
+			{
+				$msg = "<div class='card success'><div><b>Success!</b> Email sent to ". $no_of_email_sent ." people</div></div>";
+				echo $msg;
+			}
 		}
+
     }
     else
     {

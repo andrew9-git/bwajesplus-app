@@ -22,12 +22,12 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_OFF;
         $mail->isSMTP();
-        $mail->Host       = 'andadel.com';//'smtp.gmail.com';//andadel.com
+        $mail->Host       = 'localhost';//'smtp.gmail.com';//andadel.com
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'developer@andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
-        $mail->Password   = '@Abletechservices9';//'@Deforce9';//@Abletechservices9
-        $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
-        $mail->Port       = 465;//587;//465
+        $mail->Username   = 'sender@bwajes-plus.andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
+        $mail->Password   = '@Deforce9';//'@Deforce9';//@Abletechservices9
+        // $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
+        $mail->Port       = 25;//465;//587;//465
 
         //Recipients
         $mail->setFrom($set_from['email'], $set_from['name']);

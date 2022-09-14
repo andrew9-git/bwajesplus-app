@@ -1942,3 +1942,48 @@
 [06-08-2022 15:45:49] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
 [06-08-2022 15:45:49] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-V8PYW44CD25R/cancel
 [06-08-2022 15:45:50] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 204
+[14-09-2022 17:48:46] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[14-09-2022 17:48:54] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 17:48:55] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-plans/
+[14-09-2022 17:49:02] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-09-2022 17:49:03] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-6XK63160JS146730JHSYHUMA
+[14-09-2022 17:49:11] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 17:49:11] PayPal\Core\PayPalHttpConnection : INFO: PATCH https://api.sandbox.paypal.com/v1/payments/billing-plans/P-6XK63160JS146730JHSYHUMA
+[14-09-2022 17:49:15] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 17:49:15] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-6XK63160JS146730JHSYHUMA
+[14-09-2022 17:49:17] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 17:49:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/
+[14-09-2022 17:49:24] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-09-2022 18:04:53] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[14-09-2022 18:04:56] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:04:56] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-plans/
+[14-09-2022 18:05:01] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-09-2022 18:05:01] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-1BE52526L4150663AHS7R3JA
+[14-09-2022 18:05:05] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:05:05] PayPal\Core\PayPalHttpConnection : INFO: PATCH https://api.sandbox.paypal.com/v1/payments/billing-plans/P-1BE52526L4150663AHS7R3JA
+[14-09-2022 18:05:07] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:05:07] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-1BE52526L4150663AHS7R3JA
+[14-09-2022 18:06:17] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[14-09-2022 18:06:19] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:06:19] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-plans/
+[14-09-2022 18:06:20] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-09-2022 18:06:20] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-7RS78763JP806945RHTAFCTY
+[14-09-2022 18:06:21] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:06:21] PayPal\Core\PayPalHttpConnection : INFO: PATCH https://api.sandbox.paypal.com/v1/payments/billing-plans/P-7RS78763JP806945RHTAFCTY
+[14-09-2022 18:06:23] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:06:23] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-7RS78763JP806945RHTAFCTY
+[14-09-2022 18:06:26] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:06:26] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/
+[14-09-2022 18:06:29] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[14-09-2022 18:07:45] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[14-09-2022 18:07:48] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:07:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/EC-57L96162RN622204A/agreement-execute
+[14-09-2022 18:07:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:07:52] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-LYWL5RF7UD3X
+[14-09-2022 18:07:55] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:24:50] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[14-09-2022 18:24:58] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:24:58] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-LYWL5RF7UD3X
+[14-09-2022 18:25:00] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[14-09-2022 18:25:00] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-LYWL5RF7UD3X/cancel
+[14-09-2022 18:25:01] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 204

@@ -22,12 +22,12 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_OFF;
         $mail->isSMTP();
-        $mail->Host       = 'andadel.com';//'smtp.gmail.com';//andadel.com
+        $mail->Host       = 'localhost';//'smtp.gmail.com';//andadel.com
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'developer@andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
-        $mail->Password   = '@Abletechservices9';//'@Deforce9';//@Abletechservices9
-        $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
-        $mail->Port       = 465;//587;//465
+        $mail->Username   = 'sender@bwajes-plus.andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
+        $mail->Password   = '@Deforce9';//'@Deforce9';//@Abletechservices9
+        // $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
+        $mail->Port       = 25;//465;//587;//465
 
         //Recipients
         $mail->setFrom($set_from['email'], $set_from['name']);
@@ -61,7 +61,37 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
 }
 
 //---------------//
+function encryption($string)
+{
+    $ciphering = "AES-128-CTR";
 
+    $iv_length = openssl_cipher_iv_length($ciphering);
+
+    $options = 0;
+
+    $encryption_iv = '1234567891011121';
+    
+    $encryption_key = "bwajes-plus-key";
+
+    $encryption = openssl_encrypt($string, $ciphering,$encryption_key, $options,$encryption_iv);
+
+    return $encryption;
+}
+
+function decryption($encryption)
+{
+    $ciphering = "AES-128-CTR";
+
+    $decryption_iv = '1234567891011121';
+    $options = 0;
+
+    $decryption_key = "bwajes-plus-key";
+        
+    // encryption will be gotten from get super global
+    $decryption=openssl_decrypt ($encryption, $ciphering, $decryption_key, $options, $decryption_iv);
+
+    return $decryption;
+}
 //schedule at custom interval
 
 //people that have unsubscribed for the last 30 days
@@ -103,10 +133,10 @@ foreach($users as $user)
     $tblname = encryption('users');
 
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
-    $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update. Please kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'" style="color: red;">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $altbody = 'Don\'t miss out on any important update. Please kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
-    $body = email_template($body);
+    $body = email_template($body, 0, 1, '', '', 1);
 
     $data = array(
         'subject' => $subject,
@@ -140,10 +170,10 @@ foreach($subscribers as $subscriber)
     $tblname = encryption('users');
 
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
-    $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update. Please kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'" style="color: red;">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $altbody = 'Don\'t miss out on any important update. Please kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
-    $body = email_template($body);
+    $body = email_template($body, 0, 1, '', '', 1);
 
     $data = array(
         'subject' => $subject,
@@ -177,10 +207,10 @@ foreach($comments as $comment)
     $tblname = encryption('users');
 
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
-    $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update. Please kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'" style="color: red;">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $altbody = 'Don\'t miss out on any important update. Please kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
-    $body = email_template($body);
+    $body = email_template($body, 0, 1, '', '', 1);
 
     $data = array(
         'subject' => $subject,
@@ -214,10 +244,10 @@ foreach($email_lists as $email_list)
     $tblname = encryption('users');
 
     $subject = '[IMPORTANT] UPDATE';
-    $body = 'Don\'t miss out on any important update\r\nPlease kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'">RESUBSCRIBE</a> to keep yourself updated on latest developments';
-    $altbody = 'Don\'t miss out on any important update\r\nPlease kindly RESUBSCRIBE to keep yourself updated on latest developments';
+    $body = 'Don\'t miss out on any important update. Please kindly <a href="http://localhost:9090/bwajes/dz5445z/resubscribe/'.$tblname.'/'.$email.'" style="color: red;">RESUBSCRIBE</a> to keep yourself updated on latest developments';
+    $altbody = 'Don\'t miss out on any important update. Please kindly RESUBSCRIBE to keep yourself updated on latest developments';
 
-    $body = email_template($body);
+    $body = email_template($body, 0, 1, '', '', 1);
 
     $data = array(
         'subject' => $subject,

@@ -22,22 +22,34 @@ bwajes_plus_header('remove-ads', 'Remove ads');
             <?php
                 if(isset($_GET['success']))
                 {
-                    $row = fetch_single_row_in_payment($id, 'user_id');
-                    $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
-                    if($_GET['success'] == 'true' && date('Y-m-d H:i:s') < $end_date && $row['state'] != 'Cancelled')
+                    $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
+                    if($count > 0)
                     {
-                        echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
-                        <div id="left">
-                        <div style="margin-top:4%;">Thank you '.$_SESSION['user_data']['first_name'].'. Your payment was successful.</div>
-                        </div>
-                        <div id="right">
-                          <a href="#" id="hide-times">X</a>
-                        </div>
-                      </div>';
+                        $row = fetch_single_row_in_payment($id, 'user_id');
+                        $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
+                        if($_GET['success'] == 'true' && date('Y-m-d H:i:s') < $end_date && $row['state'] != 'Cancelled')
+                        {
+                            echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
+                            <div id="left">
+                            <div style="margin-top:4%;">Thank you '.$_SESSION['user_data']['first_name'].'. Your payment was successful.</div>
+                            </div>
+                            <div id="right">
+                            <a href="#" id="hide-times">X</a>
+                            </div>
+                        </div>';
+                        }
                     }
+                    
                     elseif($_GET['success'] == 'false')
                     {
-
+                        echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar">
+                        <div id="left" style="color: #111;">
+                        <div style="margin-top:4%;">Hi '.$_SESSION['user_data']['first_name'].'. Please select a plan.</div>
+                        </div>
+                        <div id="right">
+                        <a href="#" id="hide-times">X</a>
+                        </div>
+                        </div>';
                     }
                 }
                 ?>

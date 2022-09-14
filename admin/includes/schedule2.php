@@ -22,12 +22,12 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_OFF;
         $mail->isSMTP();
-        $mail->Host       = 'andadel.com';//'smtp.gmail.com';//andadel.com
+        $mail->Host       = 'localhost';//'smtp.gmail.com';//andadel.com
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'developer@andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
-        $mail->Password   = '@Abletechservices9';//'@Deforce9';//@Abletechservices9
-        $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
-        $mail->Port       = 465;//587;//465
+        $mail->Username   = 'sender@bwajes-plus.andadel.com';//'myphptestemail@gmail.com';//developer@andadel.com
+        $mail->Password   = '@Deforce9';//'@Deforce9';//@Abletechservices9
+        // $mail->SMTPSecure = 'ssl';//PHPMailer::ENCRYPTION_STARTTLS;//ssl
+        $mail->Port       = 25;//465;//587;//465
 
         //Recipients
         $mail->setFrom($set_from['email'], $set_from['name']);
@@ -61,7 +61,37 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
 }
 
 //---------------//
+function encryption($string)
+{
+    $ciphering = "AES-128-CTR";
 
+    $iv_length = openssl_cipher_iv_length($ciphering);
+
+    $options = 0;
+
+    $encryption_iv = '1234567891011121';
+    
+    $encryption_key = "bwajes-plus-key";
+
+    $encryption = openssl_encrypt($string, $ciphering,$encryption_key, $options,$encryption_iv);
+
+    return $encryption;
+}
+
+function decryption($encryption)
+{
+    $ciphering = "AES-128-CTR";
+
+    $decryption_iv = '1234567891011121';
+    $options = 0;
+
+    $decryption_key = "bwajes-plus-key";
+        
+    // encryption will be gotten from get super global
+    $decryption=openssl_decrypt ($encryption, $ciphering, $decryption_key, $options, $decryption_iv);
+
+    return $decryption;
+}
 //schedule at custom interval
 
 
@@ -121,10 +151,10 @@ foreach($users as $user)
         );
     
         $subject = 'Got an [IDEA] to share?';
-        $body = 'You are just one click away from sharing that wonderful idea to the world!\r\n<a href="http://localhost:9090/bwajes/login">GET STARTED NOW!</a>';
-        $altbody = 'You are just one click away from sharing that wonderful idea to the world!\r\nGET STARTED NOW!';
+        $body = 'You are just one click away from sharing that wonderful idea to the world!. <a href="http://localhost:9090/bwajes/login" style="color: red;">GET STARTED NOW!</a>';
+        $altbody = 'You are just one click away from sharing that wonderful idea to the world!. GET STARTED NOW!';
     
-        $body = email_template($body);
+        $body = email_template($body, 0, 1, '', '', 1);
     
         $data = array(
             'subject' => $subject,
