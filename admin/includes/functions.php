@@ -390,7 +390,7 @@ function insert_into_admin(array $value)
 {
     $db = new dbase();
 
-    $query = "INSERT INTO admin(first_name, last_name, email, username, admin_type, gender, password, profile_image, phone, bio, website, birthdate, address, city, state, country, registered_by) VALUES(:first_name, :last_name, :email, :username, :admin_type, :gender, :password, :profile_image, :phone, :bio, :website, :birthdate, :address, :city, :state, :country, :registered_by)";
+    $query = "INSERT INTO admin(first_name, last_name, email, username, admin_type, gender, password, profile_image, phone, bio, website, birthdate, address, city, state, country, registered_by, updated_by) VALUES(:first_name, :last_name, :email, :username, :admin_type, :gender, :password, :profile_image, :phone, :bio, :website, :birthdate, :address, :city, :state, :country, :registered_by, :updated_by)";
     $db->prep($query);
 
     $db->bindvalue(':first_name', $value['first_name'], 'str');
@@ -410,6 +410,7 @@ function insert_into_admin(array $value)
     $db->bindvalue(':state', $value['state'], 'str');
     $db->bindvalue(':country', $value['country'], 'str');
     $db->bindvalue(':registered_by', $value['registered_by'], 'int');
+    $db->bindvalue(':updated_by', $value['registered_by'], 'int');
 
     $execute = $db->execute();
 
@@ -1743,6 +1744,537 @@ function search_mail_opened($value, $offset, $limit)
     return $rows;
 }
 
+function count_users_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM users WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR email LIKE :email ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_users_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM users WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR email LIKE :email ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_users_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM users ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_users($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM users ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_post_stat($user_id, $filter="")
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT COUNT(*) FROM posts";
+    if($filter == "published")
+    {
+        $query .= " WHERE user_id = :user_id AND published = 1";
+    }
+    elseif($filter == "non-published")
+    {
+        $query .= " WHERE user_id = :user_id AND published = 0";
+    }
+    elseif($filter == "suspended")
+    {
+        $query .= " WHERE user_id = :user_id AND suspended = 1";
+    }
+    else
+    {
+        $query .= " WHERE user_id = :user_id"; 
+    }
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $user_id, 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function count_admin_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':username', $value['username'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_admin_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':username', $value['username'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_admin_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM admin ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_admin($offset, $limit, $by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_ratings_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(user_id)) FROM ratings WHERE rating LIKE :rating OR reason LIKE :reason OR suggestion LIKE :suggestion ORDER BY rating DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':rating', $value['rating'], 'int');
+    $db->bindvalue(':reason', $value['reason'], 'str');
+    $db->bindvalue(':suggestion', $value['suggestion'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_ratings_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT id, user_id, rating, reason, suggestion FROM ratings WHERE rating = :rating OR reason LIKE :reason OR suggestion LIKE :suggestion GROUP BY user_id ORDER BY rating DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':rating', $value['rating'], 'int');
+    $db->bindvalue(':reason', $value['reason'], 'str');
+    $db->bindvalue(':suggestion', $value['suggestion'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_ratings_b($by='rating')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(user_id)) FROM ratings ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_ratings($offset, $limit, $by='rating')
+{
+    $db = new dbase();
+    
+    $query = "SELECT id, user_id, rating, reason, suggestion FROM ratings GROUP BY user_id ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_each_ratings_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM ratings WHERE (rating LIKE :rating OR reason LIKE :reason OR suggestion LIKE :suggestion) AND user_id = :user_id ORDER BY rating DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':rating', $value['rating'], 'int');
+    $db->bindvalue(':reason', $value['reason'], 'str');
+    $db->bindvalue(':suggestion', $value['suggestion'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_each_ratings_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM ratings WHERE (rating = :rating OR reason LIKE :reason OR suggestion LIKE :suggestion) AND user_id = :user_id ORDER BY rating DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':rating', $value['rating'], 'int');
+    $db->bindvalue(':reason', $value['reason'], 'str');
+    $db->bindvalue(':suggestion', $value['suggestion'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_each_ratings_b($user_id, $by='rating')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM ratings WHERE user_id = :user_id ORDER BY $by DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $user_id, 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_each_ratings($user_id, $offset, $limit, $by='rating')
+{
+    $db = new dbase();
+    
+    $query = "SELECT * FROM ratings WHERE user_id = :user_id ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':user_id', $user_id, 'int');
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_issues_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM issues WHERE subject LIKE :subject OR feedback_type LIKE :feedback_type OR comments LIKE :comments OR version LIKE :version ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':feedback_type', $value['feedback_type'], 'str');
+    $db->bindvalue(':comments', $value['comments'], 'str');
+    $db->bindvalue(':version', $value['version'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_issues_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM issues WHERE subject LIKE :subject OR feedback_type LIKE :feedback_type OR comments LIKE :comments OR version LIKE :version ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':feedback_type', $value['feedback_type'], 'str');
+    $db->bindvalue(':comments', $value['comments'], 'str');
+    $db->bindvalue(':version', $value['version'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_issues_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM issues ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_issues($offset, $limit, $by='id')
+{
+    $db = new dbase();
+    
+    $query = "SELECT * FROM issues ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//insert into faqs table
+function insert_into_faqs(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO faqs(faq, answer, created_by, updated_by) VALUES(:faq, :answer, :created_by, :updated_by)";
+    $db->prep($query);
+
+    $db->bindvalue(':faq', $value['faq'], 'str');
+    $db->bindvalue(':answer', $value['answer'], 'str');
+    $db->bindvalue(':created_by', $value['created_by'], 'int');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function count_faqs_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM faqs WHERE FAQ LIKE :FAQ OR answer LIKE :answer ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':FAQ', $value['faq'], 'str');
+    $db->bindvalue(':answer', $value['answer'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_faqs_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM faqs WHERE FAQ LIKE :FAQ OR answer LIKE :answer ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':FAQ', $value['faq'], 'str');
+    $db->bindvalue(':answer', $value['answer'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_faqs_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM faqs ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_faqs($offset, $limit, $by='id')
+{
+    $db = new dbase();
+    
+    $query = "SELECT * FROM faqs ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function update_faqs($value)
+{    
+
+    $db = new dbase();
+
+    $query = "UPDATE faqs SET FAQ = :FAQ, answer = :answer, updated_by = :updated_by, updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+
+    $db->bindvalue(':FAQ', $value['faqs'], 'str');
+    $db->bindvalue(':answer', $value['answer'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'int');
+    $db->bindvalue(':id', $value['faq_id'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//suspend admin
+function suspend_admin($id)
+{
+    $db = new dbase();
+    $query = "UPDATE admin SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 1, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//suspend admin
+function activate_admin($id)
+{
+    $db = new dbase();
+    $query = "UPDATE admin SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 0, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+function update_admin($value, $update_admin_photo)
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "UPDATE admin SET first_name = :first_name, last_name = :last_name, email = :email, admin_type = :admin_type, gender = :gender,";
+    if($update_admin_photo == 1)
+    {
+        $query .= " profile_image = :profile_image,";
+    }
+    $query .= " phone = :phone, bio = :bio, website = :website, birthdate = :birthdate, address = :address, city = :city, state = :state, country = :country, updated_by = :updated_by,";
+    $query .= " updated_at = NOW() WHERE id = :id";
+
+    $db->prep($query);
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':admin_type', $value['admin_type'], 'str');
+    $db->bindvalue(':gender', $value['gender'], 'str');
+    if($update_admin_photo == 1)
+    {
+        $db->bindvalue(':profile_image', $value['profile_image'], 'str');
+    }
+    $db->bindvalue(':phone', $value['phone'], 'str');
+    $db->bindvalue(':bio', $value['bio'], 'str');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':birthdate', $value['birthdate'], 'str');
+    $db->bindvalue(':address', $value['address'], 'str');
+    $db->bindvalue(':city', $value['city'], 'str');
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':updated_by', $value['updated_by'], 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
 // End database queries
 
 

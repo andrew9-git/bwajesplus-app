@@ -3,6 +3,18 @@
 include('includes/header.php');
 bwajes_plus_header('posts-statistics', 'User posts stat');
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+$id = $_SESSION['admin_data']['id'];
+
+if(isset($_GET['u']))
+{
+  $user_id = $_GET['u'];
+
+}
+else
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -17,7 +29,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             </div>
             <div class="card-body">
               <div class="info-body">
-                <h4 class="message-body">100</h4>
+                <h4 class="message-body"><?php echo count_post_stat($user_id, 'published'); ?></h4>
                 <i class="bx bx-book-add"></i>
               </div>
             </div>
@@ -30,7 +42,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             </div>
             <div class="card-body">
               <div class="info-body">
-                <h4 class="message-body">20</h4>
+                <h4 class="message-body"><?php echo count_post_stat($user_id, 'non-published'); ?></h4>
                 <i class="bx bx-book-alt"></i>
               </div>
             </div>
@@ -43,7 +55,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             </div>
             <div class="card-body">
               <div class="info-body">
-                <h4 class="message-body">50</h4>
+                <h4 class="message-body"><?php echo count_post_stat($user_id, 'suspended'); ?></h4>
                 <i class="bx bx-book-open"></i>
               </div>
             </div>
@@ -52,7 +64,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
           </div>
         </div>
         <div class="info-container">
-            <div class="btn btn-danger">Total: 120</div>
+            <div class="btn btn-danger">Total: <?php echo count_post_stat($user_id); ?></div>
         </div><br>
         <!-- <div class="card">
             <div class="card-header stat">

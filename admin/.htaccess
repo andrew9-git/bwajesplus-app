@@ -14,6 +14,9 @@
     RewriteRule ^admin/([0-9]+)$ admin.php?a=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^edit-admin/([0-9]+)$ edit-admin.php?a=$1 [NC,L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^admin-statistics/([0-9]+)$ admin-statistics.php?a=$1 [NC,L]
 
     RewriteCond %{REQUEST_FILENAME} !-f

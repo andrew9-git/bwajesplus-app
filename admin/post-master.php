@@ -41,6 +41,7 @@ $id = $_SESSION['admin_data']['id'];
                         <option value="registered-users">Registered users only</option>
                         <option value="subscribers">Subscribers only</option>
                         <option value="commenters">Commenters only</option>
+                        <option value="issuers">Feedback givers only</option>
                         </select>
                     </div>
                     <div class="form-group">

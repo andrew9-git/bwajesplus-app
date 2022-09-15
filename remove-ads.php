@@ -29,25 +29,25 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                         $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
                         if($_GET['success'] == 'true' && date('Y-m-d H:i:s') < $end_date && $row['state'] != 'Cancelled')
                         {
-                            echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
+                            echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar-msg">
                             <div id="left">
                             <div style="margin-top:4%;">Thank you '.$_SESSION['user_data']['first_name'].'. Your payment was successful.</div>
                             </div>
                             <div id="right">
-                            <a href="#" id="hide-times">X</a>
+                            <a href="#" id="hide-times-msg">X</a>
                             </div>
                         </div>';
                         }
                     }
                     
-                    elseif($_GET['success'] == 'false')
+                    if($_GET['success'] == 'false')
                     {
-                        echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar">
+                        echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar-msg">
                         <div id="left" style="color: #111;">
                         <div style="margin-top:4%;">Hi '.$_SESSION['user_data']['first_name'].'. Please select a plan.</div>
                         </div>
                         <div id="right">
-                        <a href="#" id="hide-times">X</a>
+                        <a href="#" id="hide-times-msg">X</a>
                         </div>
                         </div>';
                     }
@@ -61,14 +61,14 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                     $state = $row['state'];
                     if($state == 'Cancelled')
                     {
-                        echo '<div style="background-color: #dc3545;"   class="ShowHide" id="Bar">
+                        echo '<div style="background-color: #dc3545;"   class="ShowHide" id="Bar-msg">
                         <div id="left">
                             <div style="margin-top:4%;">
                             You have successfully cancelled your subscription.
                             </div>
                         </div>
                         <div id="right">
-                          <a href="#" id="hide-times">X</a>
+                          <a href="#" id="hide-times-msg">X</a>
                         </div>
                       </div>';  
                     }

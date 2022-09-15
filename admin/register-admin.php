@@ -22,7 +22,7 @@ bwajes_plus_header('all-admins', 'Register admin');
                 <div id="register_admin_messages">
                 </div>
                 <div class="form-group">
-                  <input type="hidden" class="form-control form_data_reg" name="registered-by" value="<?php echo 1;//to be changed later! ?>">
+                  <input type="hidden" class="form-control form_data_reg" name="registered-by" value="<?php echo $admin['id']; ?>">
                 </div>
                 <div class="form-group">
                   <label for="first-name">First name*</label>
@@ -98,7 +98,7 @@ bwajes_plus_header('all-admins', 'Register admin');
                       <?php $countries = fetch_countries();
                       foreach($countries as $country) {
                       ?>
-                      <option value="<?php echo $country['id']; ?>" <?php //if($admin['country'] == $country['id']){echo 'selected';} ?>><?php echo $country['country']; ?></option>
+                      <option value="<?php echo $country['id']; ?>"><?php echo $country['country']; ?></option>
                       <?php } ?>
                     </select>
                 </div>
@@ -184,7 +184,11 @@ bwajes_plus_header('all-admins', 'Register admin');
         CKEDITOR.replace('bio',
         {
             // Remove the redundant buttons from toolbar groups defined above.
-            removeButtons: 'About,Source,Anchor'
+            removeButtons: 'About,Source,Anchor',
+            extraPlugins: 'justify',
+            height: 300,
+            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadMethod: 'form'
         });
       });
     </script>

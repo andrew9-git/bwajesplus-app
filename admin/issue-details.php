@@ -3,6 +3,19 @@
 include('includes/header.php');
 bwajes_plus_header('issues', 'Issue details');
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+$id = $_SESSION['admin_data']['id'];
+
+if(isset($_GET['id']))
+{
+  $issue_id = $_GET['id'];
+
+  $issue = fetch_single_row($issue_id, 'issues');
+}
+else
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -14,32 +27,36 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             </div>
           </div>
           <div class="card-body">
-            <div style="line-height: 1.625rem; margin: 10px;">
-              <h4>First name:</h4>
-              <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, sint?
-              </div>
-              <h4>Email:</h4>
-              <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, sint?
-              </div>
-                <h4>Subjects:</h4>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, sint?
-                </div>
-                <h4>Feedback type:</h4>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, sint?
-                </div>
-                <h4>Comments:</h4>
-                <div>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore, illo maxime deserunt esse itaque doloribus ducimus dolor consequuntur in reprehenderit voluptatem. Exercitationem nostrum ipsa, ratione et aut ullam minus dolore.
-                </div>
-                <h4>Version:</h4>
-                <div>
-                    version 1.0.0
-                </div>
+          <div style="line-height: 1.625rem; margin: 10px;">
+            <h4>First Name:</h4>
+            <div>
+                <?php if(isset($issue['first_name'])){echo $issue['first_name'];} ?>
             </div>
+            <h4>Email:</h4>
+            <div>
+                <?php if(isset($issue['email'])){echo $issue['email'];} ?>
+            </div>
+            <h4>Subject:</h4>
+            <div>
+                <?php if(isset($issue['subject'])){echo $issue['subject'];} ?>
+            </div>
+            <h4>Feedback type:</h4>
+            <div>
+                <?php if(isset($issue['feedback_type'])){echo $issue['feedback_type'];} ?>
+            </div>
+            <h4>Comments:</h4>
+            <div>
+                <?php if(isset($issue['comments'])){echo $issue['comments'];} ?>
+            </div>
+            <h4>Version:</h4>
+            <div>
+                <?php if(isset($issue['version'])){echo $issue['version'];} ?>
+            </div>
+            <h4>Date reported:</h4>
+            <div>
+                <?php if(isset($issue['created_at'])){echo date("F jS, Y", strtotime($issue['created_at']));} ?>
+            </div>
+          </div>
           </div>
           <div class="card-footer">
           </div>

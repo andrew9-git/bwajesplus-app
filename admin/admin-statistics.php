@@ -3,6 +3,18 @@
 include('includes/header.php');
 bwajes_plus_header('admins-statistics', 'Admin statistics');
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+if(isset($_GET['a']))
+{
+  $admin_id = $_GET['a'];
+
+  $admin_stat = fetch_single_row($admin_id, 'admin_statistics', 'admin_id');
+
+}
+else
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -12,57 +24,30 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
         </div>
         <div class="card">
             <div class="card-header">
-              <form action="">
-                  <div class="form-wrapper">
-                      <div class="form-group">
-                          <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
-                      </div>
-                      <div class="search-button-wrapper">
-                          <div class="form-group">
-                              <input type="search" class="form-control" placeholder="search here..." name="search" id="search">
-                          </div>
-                          <div class="form-group">
-                              <button name="filter" class="btn btn-primary">filter</button>
-                          </div>
-                      </div>
-                  </div>
-              </form>
             </div>
             <div class="card-body">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Browser</th>
-                    <th>OS</th>
-                    <th>Device name</th>
-                    <th>Last visited</th>
-                    <th>Last login</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Chrome</td>
-                    <td>Windows 11</td>
-                    <td>Samsung</td>
-                    <td>12, Sept., 2021 12:00:00</td>
-                    <td>14, Sept., 2021 12:00:00</td>
-                  </tr>
-                  <tr>
-                    <td>Mozila firefox</td>
-                    <td>Linux</td>
-                    <td>Dell</td>
-                    <td>12, Sept., 2021 12:00:00</td>
-                    <td>14, Sept., 2021 12:00:00</td>
-                  </tr>
-                  <tr>
-                    <td>Mozila firefox</td>
-                    <td>Linux</td>
-                    <td>Dell</td>
-                    <td>12, Sept., 2021 12:00:00</td>
-                    <td>14, Sept., 2021 12:00:00</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div style="line-height: 1.625rem; margin: 10px;">
+                <h4>Browser:</h4>
+                <div>
+                    <?php if(isset($admin_stat['browser'])){echo $admin_stat['browser'];} ?>
+                </div>
+                <h4>OS:</h4>
+                <div>
+                    <?php if(isset($admin_stat['os'])){echo $admin_stat['os'];} ?>
+                </div>
+                <h4>Device name:</h4>
+                <div>
+                    <?php if(isset($admin_stat['device_name'])){echo $admin_stat['device_name'];} ?>
+                </div>
+                <h4>Last visited:</h4>
+                <div>
+                    <?php if(isset($admin_stat['last_logout'])){echo date("F jS, Y", strtotime($admin_stat['last_logout']));} ?>
+                </div>
+                <h4>Last login:</h4>
+                <div>
+                <?php if(isset($admin_stat['last_login'])){echo date("F jS, Y", strtotime($admin_stat['last_login']));} ?>
+                </div>
+              </div>
             </div>
             <div class="card-footer">
             </div>
