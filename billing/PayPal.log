@@ -2005,3 +2005,21 @@
 [16-09-2022 21:24:12] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
 [16-09-2022 21:24:12] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-6GGNUKSSUNVS
 [16-09-2022 21:24:13] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:56:37] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[17-09-2022 14:56:43] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:56:43] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-plans/
+[17-09-2022 14:56:46] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[17-09-2022 14:56:47] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-9EB98741RW1521829JOC5UBQ
+[17-09-2022 14:56:49] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:56:49] PayPal\Core\PayPalHttpConnection : INFO: PATCH https://api.sandbox.paypal.com/v1/payments/billing-plans/P-9EB98741RW1521829JOC5UBQ
+[17-09-2022 14:56:51] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:56:51] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-plans/P-9EB98741RW1521829JOC5UBQ
+[17-09-2022 14:56:52] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:56:53] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/
+[17-09-2022 14:56:56] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 201
+[17-09-2022 14:57:41] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/oauth2/token
+[17-09-2022 14:57:48] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:57:48] PayPal\Core\PayPalHttpConnection : INFO: POST https://api.sandbox.paypal.com/v1/payments/billing-agreements/EC-85D86792U71281831/agreement-execute
+[17-09-2022 14:57:54] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200
+[17-09-2022 14:57:55] PayPal\Core\PayPalHttpConnection : INFO: GET https://api.sandbox.paypal.com/v1/payments/billing-agreements/I-16X8GHAHSRVF
+[17-09-2022 14:57:58] PayPal\Core\PayPalHttpConnection : INFO: Response Status 	: 200

@@ -1510,6 +1510,10 @@ function select_distinct_emails($table_name)
     {
         $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
     }
+    elseif($table_name == "payment_subscriptions")
+    {
+        $query = "SELECT DISTINCT email FROM $table_name";
+    }
     else
     {
         $query = "SELECT DISTINCT email, first_name FROM $table_name WHERE unsubscribed = 0";
@@ -2447,7 +2451,8 @@ function payment_subscriptions($value='', $date_range=0, $unit=0, $user_id=0)
 
     if($unit == 1)
     {
-        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
+        // $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
+        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", NOW(), created_at) <= ".$value['period'] ."";
     }
 
     if($user_id != 0)

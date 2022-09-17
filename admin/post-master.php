@@ -42,6 +42,8 @@ $id = $_SESSION['admin_data']['id'];
                         <option value="subscribers">Subscribers only</option>
                         <option value="commenters">Commenters only</option>
                         <option value="issuers">Feedback givers only</option>
+                        <option value="S">-------- Special list --------</option>
+                        <option value="payers">Ad removal subscribers</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -78,6 +80,10 @@ $id = $_SESSION['admin_data']['id'];
 
         list.addEventListener('change', ()=>{
             if(list.value == "registered-users")
+            {
+                salutation_div.style.display = "block";
+            }
+            else if(list.value == "payers")
             {
                 salutation_div.style.display = "block";
             }

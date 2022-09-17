@@ -3885,6 +3885,10 @@ if(isset($_POST['post-master']))
 		{
 			$table_name = "issues";
 		}
+		elseif($group_to_send_to == "payers")
+		{
+			$table_name = "payment_subscriptions";
+		}
 
 		//insert into admin sent email table
 		//get last insertId from admin sent email table
@@ -3907,7 +3911,7 @@ if(isset($_POST['post-master']))
 
 			foreach($group_emails as $group_email)
 			{
-				if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
+				if(isset($group_email['first_name']) && ($group_to_send_to == "registered-users" || $group_to_send_to == "payers"))
 				{
 					//email track code
 					$code = email_track_code();
@@ -6682,15 +6686,15 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-10 year");
+		// $dt = new DateTime(date("Y-m-d"));
+		// $dt->modify("-10 year");
 
-		$past = $dt->format('Y-m-d');
+		// $past = $dt->format('Y-m-d');
 		$unit = "YEAR";
 		$period = 10;
 
 		$values = array(
-			'past'   => $past,
+			// 'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6706,16 +6710,10 @@ if(isset($_POST['payment-periods']))
 	elseif($payment_periods == '5y')
 	{
 		$amount = 0;
-
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-5 year");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "YEAR";
 		$period = 5;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6732,15 +6730,10 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-1 year");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "YEAR";
 		$period = 1;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6757,15 +6750,10 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-6 month");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "MONTH";
 		$period = 6;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6782,15 +6770,10 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-3 month");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "MONTH";
 		$period = 3;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6807,15 +6790,10 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-1 month");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "MONTH";
 		$period = 1;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
@@ -6832,15 +6810,10 @@ if(isset($_POST['payment-periods']))
 	{
 		$amount = 0;
 
-		$dt = new DateTime(date("Y-m-d"));
-		$dt->modify("-1 day");
-
-		$past = $dt->format('Y-m-d');
 		$unit = "DAY";
 		$period = 1;
 
 		$values = array(
-			'past'   => $past,
 			'unit'   => $unit,
 			'period' => $period
 		);
