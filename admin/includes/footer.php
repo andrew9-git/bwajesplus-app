@@ -11,6 +11,9 @@ function ckeditor($page = '')
     $username = $_SESSION['admin_data']['username'];
     $first_name = $_SESSION['admin_data']['first_name'];
     $last_name = $_SESSION['admin_data']['last_name'];
+
+    $info = fetch_single_row($id, 'admin');
+    $email = $info['email'];
 ?>
 </section>
 <?php
@@ -23,14 +26,16 @@ function ckeditor($page = '')
         <h4 class="message-head">Upload photo</h4>
       </div>
       <div class="card-body">
-        <form action="" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
+        <form id="profile_image_form" enctype="multipart/form-data">
+            <div id="profile_image_messages">
             </div>
             <div class="form-group">
-                <input type="file" class="form-control" id="upload-photo">
+                <input type="hidden" class="form-control form_data_profile_image" name="admin-id-profile-image" value="<?php echo $id; ?>" id="admin-id">
             </div>
-            <button type="submit" name="send-mail" class="btn btn-primary">Upload</button>
+            <div class="form-group">
+                <input type="file" accept="image/*" name="profile-image" class="form-control" id="prof-image">
+            </div>
+            <button type="submit" name="send-mail" id="profile_image" class="btn btn-primary">Upload</button>
         </form>
       </div>
       <div class="card-footer">
@@ -45,23 +50,31 @@ function ckeditor($page = '')
         <h4 class="message-head">Update My password</h4>
       </div>
       <div class="card-body">
-        <form action="">
+        <form id="update_password_form">
+          <div id="update_password_messages">
+          </div>
           <div class="form-group">
-              <input type="hidden" class="form-control" name="csrf" value="" id="csrf">
+            <input type="hidden" class="form-control form_data_update_password" name="admin-id" value="<?php echo $id; ?>" id="admin-id">
+          </div>
+          <!-- <div class="form-group">
+              <input type="hidden" class="form-control form_data_update_password" name="username" value="<?php //echo $username; ?>" id="username">
+          </div> -->
+          <div class="form-group">
+              <input type="hidden" class="form-control form_data_update_password" name="email" value="<?php echo $email; ?>" id="email">
           </div>
           <div class="form-group">
             <label for="old-password">Old password*</label>
-            <input type="password" class="form-control" name="old-password" id="old-password">
+            <input type="password" class="form-control form_data_update_password" name="old-password" id="old-password">
           </div>
           <div class="form-group">
             <label for="new-password">New password*</label>
-            <input type="password" class="form-control" name="new-password" id="new-password">
+            <input type="password" class="form-control form_data_update_password" name="new-password" id="new-password">
           </div>
           <div class="form-group">
             <label for="confirm-new-password">Confirm new password*</label>
-            <input type="password" class="form-control" name="confirm-new-password" id="confirm-new-password">
+            <input type="password" class="form-control form_data_update_password" name="confirm-new-password" id="confirm-new-password">
           </div>
-          <button type="submit" name="update-password" class="btn btn-primary">Update</button>
+          <button name="update-password" id="update_password" class="btn btn-primary">Update</button>
       </form>
       </div>
       <div class="card-footer">
@@ -216,6 +229,48 @@ function ckeditor($page = '')
       setInterval(function(){ 
         load_unseen_notification();
       }, 5000);
+
+    });
+  </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+      //ajax request for getting admin's profile image
+
+      const admin_id = <?php echo $id; ?>;
+      setInterval(() => 
+        {
+          get_admin_profile_image(admin_id);
+        }, 2000);
+
+      get_admin_profile_image(admin_id);
+
+      function get_admin_profile_image(admin_id, admin_profile_image = '')
+      {
+
+        let form_data = new FormData();
+
+        form_data.append('admin_id', admin_id);
+        form_data.append('admin_profile_image', admin_profile_image);
+        
+        let xhr = new XMLHttpRequest();
+        
+        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+
+        xhr.onload = function()
+        {
+          if(this.status == 200)
+          {
+            let response = xhr.responseText;
+
+            const admin_image_div = document.getElementById('admin-profile-image');
+
+            admin_image_div.innerHTML = response;
+          }
+        }
+        
+        xhr.send(form_data);
+      }
 
     });
   </script>

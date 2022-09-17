@@ -511,6 +511,253 @@ if(isset($_POST['edit-admin-type']))
     }
 }
 
+if(isset($_POST['update-admin-type']))
+{
+    $admin_id      = trim($_POST['admin-id']);
+    $updated_by    = trim($_POST['admin-id']);
+    $first_name    = trim($_POST['first-name']);
+    $last_name     = trim($_POST['last-name']);
+    $email         = trim($_POST['email']);
+    $admin_type    = trim($_POST['update-admin-type']);
+    $gender        = trim($_POST['gender']);
+    $phone         = trim($_POST['phone']);
+    $bio           = trim($_POST['bio']);
+    $website       = trim($_POST['website']);
+    $birth_date    = trim($_POST['birth-date']);
+    $address       = trim($_POST['address']);
+    $city          = trim($_POST['city']);
+    $state         = trim($_POST['state']);
+    $country       = trim($_POST['country']);
+
+    //error array
+    $errors = array();
+
+    if(has_presence($first_name) == false)
+    {
+        $errors[] = 'First name cannot be empty';
+    }
+    elseif(strlen($first_name) < 2)
+    {
+        $errors[] = 'First name cannot be lesser than 2 characters';
+    }
+    elseif(strlen($first_name) > 30)
+    {
+        $errors[] = 'First name cannot be more than 30 characters';
+    }   
+    elseif(accepted_data_type($first_name, 'name') == false)
+    {
+        $name = ucfirst($first_name);
+        $errors[] = $name . ' is not a valid first name';
+    }
+
+    if(has_presence($last_name) == false)
+    {
+        $errors[] = 'Last name cannot be empty';
+    }
+    elseif(strlen($last_name) < 2)
+    {
+        $errors[] = 'Last name cannot be lesser than 2 characters';
+    }
+    elseif(strlen($last_name) > 30)
+    {
+        $errors[] = 'Last name cannot be more than 30 characters';
+    }
+    elseif(accepted_data_type($last_name, 'name') == false)
+    {
+        $name = ucfirst($last_name);
+        $errors[] = $name . ' is not a valid last name';
+    }
+
+    if(has_presence($email) == false)
+    {
+        $errors[] = 'Email cannot be empty';
+    }
+    elseif(accepted_data_type($email, 'email') == false)
+    {
+        $errors[] = $email . ' is not a valid email';
+    }
+
+    if(accepted_option($gender) == false)
+    {
+        $errors[] = 'Please select a gender';
+    }
+
+	if(isset($_FILES['admin-photo']['name']))
+	{
+		$update_admin_photo = 1;
+
+		$admin_photo_name = $_FILES['admin-photo']['name'];
+		$admin_photo_size = $_FILES['admin-photo']['size'];
+	
+		$allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+		$image_ext = pathinfo($admin_photo_name, PATHINFO_EXTENSION);
+	
+		if(!in_array($image_ext, $allowed_images))
+		{
+			$errors[] = 'The accepted admin photo types are png and jpg/jpeg only';
+		}
+		elseif($admin_photo_size > 1000000)
+		{
+			$errors[] = 'The accepted admin photo size should not be more than 1Mb';
+		}
+		else
+		{
+			$new_admin_photo_name = time() .'_' . $admin_photo_name;
+			$admin_photo_folder = 'profile_images/';
+			$tmp_admin_photo = $_FILES['admin-photo']['tmp_name'];
+		
+			move_uploaded_file($tmp_admin_photo, $admin_photo_folder .$new_admin_photo_name);
+		}
+	}
+	else
+	{
+		$update_admin_photo = 0;
+	}
+
+
+    if(has_presence($phone) == false)
+    {
+        $errors[] = 'Phone cannot be empty';
+    }
+    elseif(accepted_data_type($phone, 'phone') == false)
+    {
+        $errors[] = 'Invalid phone format';
+    }
+
+    if(has_presence($bio) == false)
+    {
+        $errors[] = 'Bio cannot be empty';
+    }
+    elseif(strlen($bio) < 100)
+    {
+        $errors[] = 'Bio should not be lesser than 100 characters';
+    }
+    elseif(strlen($bio) > 65535)
+    {
+        $name = substr(ucfirst($bio), 0, 8);
+        $errors[] = 'Bio should not be more than 65535 characters';
+    }
+
+    if(has_presence($website) == false)
+    {
+        $errors[] = 'Website cannot be empty';
+    }
+    elseif(accepted_data_type($website, 'url') == false)
+    {
+        $errors[] = 'Invalid website address is valid';
+    }
+
+	if(has_presence($birth_date) == false)
+    {
+        $errors[] = 'Birth date cannot be empty';
+    }
+    elseif(accepted_data_type($birth_date, 'name') == false)
+    {
+        $errors[] = 'Invalid birth date address is valid';
+    }
+    
+    if(has_presence($address) == false)
+    {
+        $errors[] = 'Address cannot be empty';
+    }
+    if(accepted_data_type($address, 'address') == false)
+    {
+        $errors[] = 'Invalid address is valid';
+    }
+    elseif(strlen($address) < 5)
+    {
+        $errors[] = 'Address should not be lesser than 5 characters';
+    }
+    elseif(strlen($address) > 255)
+    {
+        $errors[] = 'Address should not be greater than 255 characters';
+    }
+
+    if(has_presence($city) == false)
+    {
+        $errors[] = 'City cannot be empty';
+    }
+    elseif(accepted_data_type($city, 'address') == false)
+    {
+        $errors[] = 'Invalid city';
+    }
+    elseif(strlen($city) < 5)
+    {
+        $errors[] = 'City should not be lesser than 5 characters';
+    }
+    elseif(strlen($city) > 255)
+    {
+        $errors[] = 'City should not be greater than 255 characters';
+    }
+
+    if(has_presence($state) == false)
+    {
+        $errors[] = 'State cannot be empty';
+    }
+    elseif(accepted_data_type($state, 'address') == false)
+    {
+        $errors[] = 'Invalid state';
+    }
+    elseif(strlen($state) < 5)
+    {
+        $errors[] = 'State should not be lesser than 5 characters';
+    }
+    elseif(strlen($state) > 255)
+    {
+        $errors[] = 'State should not be greater than 255 characters';
+    }
+
+    if(accepted_option($country) == false)
+    {
+        $errors[] = 'Please select a country';
+    }
+
+
+    if(empty($errors))
+    {
+		if(isset($new_admin_photo_name))
+        {
+            $new_admin_photo_name = $new_admin_photo_name;
+        }
+        else
+        {
+            $new_admin_photo_name = '';
+        }
+
+        //update admin table
+        $values = array(
+            'first_name'    => $first_name,
+            'last_name'     => $last_name,
+            'email'         => $email,
+            'admin_type'    => $admin_type,
+            'gender'        => $gender,
+            'profile_image' => $new_admin_photo_name,
+            'phone'         => $phone,
+            'bio'           => $bio,
+            'website'       => $website,
+            'birthdate'     => $birth_date,
+            'address'       => $address,
+            'city'          => $city,
+            'state'         => $state,
+            'country'       => $country,
+            'updated_by'    => $updated_by,
+            'id'            => $admin_id,
+        );
+
+        $executed = update_admin($values, $update_admin_photo);
+
+        if($executed)
+        {
+			$msg = "<div class='card success'><div><b>Success!</b> Admin updated </div></div>";
+			echo $msg;
+        }
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
 if(isset($_POST['generate-id']))
 {
     $generate_id = trim($_POST['generate-id']);
@@ -5955,6 +6202,1179 @@ if(isset($_POST['edit-faqs']))
             $msg = "<div class='card success'><div><b>Success!</b> Faqs has been updated</div></div>";
             echo $msg;
         }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['post_query']))
+{
+    $user_id = $_POST['user_id'];
+
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['post_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["post_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'user_id'     =>	$user_id,
+			'title'       =>	'%' . $condition . '%',
+			'description' =>	'%' . $condition . '%'
+		);
+
+        $total_data = count_posts_a($values);
+        $posts = search_posts_with_wildcard($values, $offset, $limit);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($posts as $post)
+		{
+			$data[] = array(
+				'post_id'	    =>	$post["id"],
+				'title'	        =>	str_ireplace($replace_array_1, $replace_array_2, $post["title"]),
+				'description'	=>	str_ireplace($replace_array_1, $replace_array_2, $post["description"]),
+				'date_created'	=>	$post["created_at"],
+				'date_updated'	=>	$post["updated_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_posts_b($user_id);
+        $posts = search_posts($user_id, $offset, $limit);
+
+		foreach($posts as $post)
+		{
+			$data[] = array(
+				'post_id'	    =>	$post["id"],
+				'title'	        =>	$post["title"],
+				'description'	=>	$post["description"],
+				'date_created'	=>	$post["created_at"],
+				'date_updated'	=>	$post["updated_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["post_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["post_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['all_post_query']))
+{
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['all_post_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["all_post_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'title'       =>	'%' . $condition . '%',
+			'description' =>	'%' . $condition . '%'
+		);
+
+        $total_data = count_posts_a($values, 0);
+        $posts = search_posts_with_wildcard($values, $offset, $limit, 0);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($posts as $post)
+		{
+			$data[] = array(
+				'post_id'	    =>	$post["id"],
+				'title'	        =>	str_ireplace($replace_array_1, $replace_array_2, $post["title"]),
+				'description'	=>	str_ireplace($replace_array_1, $replace_array_2, $post["description"]),
+				'date_created'	=>	$post["created_at"],
+				'date_updated'	=>	$post["updated_at"]
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_posts_b('', 0);
+        $posts = search_posts('', $offset, $limit, 0);
+
+		foreach($posts as $post)
+		{
+			$data[] = array(
+				'post_id'	    =>	$post["id"],
+				'title'	        =>	$post["title"],
+				'description'	=>	$post["description"],
+				'date_created'	=>	$post["created_at"],
+				'date_updated'	=>	$post["updated_at"]
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["all_post_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["all_post_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["all_post_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['to']))
+{
+	$to = trim($_POST['to']);
+	$from = trim($_POST['from']);
+
+	if($from == '')
+	{
+		echo 'please choose a date';
+	}
+	else
+	{
+		$amount = 0;
+
+		$values = array(
+			'from' => $from,
+			'to'   => $to
+		);
+		$payments = payment_subscriptions($values, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+}
+
+if(isset($_POST['payment-periods']))
+{
+	$payment_periods = trim($_POST['payment-periods']);
+
+	if($payment_periods == 'S')
+	{
+		echo 'select a period';
+	}
+	elseif($payment_periods == '10y')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-10 year");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "YEAR";
+		$period = 10;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '5y')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-5 year");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "YEAR";
+		$period = 5;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '1y')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-1 year");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "YEAR";
+		$period = 1;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '6m')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-6 month");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "MONTH";
+		$period = 6;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '3m')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-3 month");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "MONTH";
+		$period = 3;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '1m')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-1 month");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "MONTH";
+		$period = 1;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	elseif($payment_periods == '1d')
+	{
+		$amount = 0;
+
+		$dt = new DateTime(date("Y-m-d"));
+		$dt->modify("-1 day");
+
+		$past = $dt->format('Y-m-d');
+		$unit = "DAY";
+		$period = 1;
+
+		$values = array(
+			'past'   => $past,
+			'unit'   => $unit,
+			'period' => $period
+		);
+
+		$payments = payment_subscriptions($values, 0, 1);
+
+		foreach($payments as $payment)
+		{
+			$amount += $payment['amount'];
+		}
+		echo $amount;
+	}
+	
+}
+
+if(isset($_POST['payment_query']))
+{
+    $data = array();
+
+    $limit = 5;
+
+	$page = 1;
+
+	if($_POST["page"] > 1)
+	{
+		$offset = (($_POST["page"] - 1) * $limit);
+
+		$page = $_POST["page"];
+	}
+	else
+	{
+		$offset = 0;
+	}
+
+    if($_POST['payment_query'] !== '')
+    {
+        $condition = preg_replace('/[^A-Za-z0-9\- ]/', '', $_POST["payment_query"]);
+		$condition = trim($condition);
+		$condition = str_replace(" ", "%", $condition);
+
+		$values = array(
+			'state'   =>	'%' . $condition . '%',
+			'expires' =>	'%' . $condition . '%',
+			'amount'  =>	'%' . $condition . '%'
+		);
+
+        $total_data = count_payment_subscriptions_a($values, 0);
+        $payments = search_payment_subscriptions_with_wildcard($values, $offset, $limit, 0);
+
+		$replace_array_1 = explode("%", $condition);
+
+		foreach($replace_array_1 as $row_data)
+		{
+			$replace_array_2[] = '<span style="background-color:#'.rand(100000, 999999).'; color:#fff">'.$row_data.'</span>';
+		}
+
+		foreach($payments as $payment)
+		{
+			$data[] = array(
+				'payment_id'   =>	$payment["id"],
+				'user_id'	   =>	$payment["user_id"],
+				'agreement_id' =>	$payment["agreement_id"],
+				'state'	       =>	str_ireplace($replace_array_1, $replace_array_2, $payment["state"]),
+				'expires'	   =>	str_ireplace($replace_array_1, $replace_array_2, $payment["end_date"]),
+				'amount_w_c'   =>	str_ireplace($replace_array_1, $replace_array_2, $payment["amount_with_currency"]),
+			);
+		}
+    }
+    else
+	{
+        $total_data = count_payment_subscriptions_b();
+        $payments = search_payment_subscriptions($offset, $limit);
+
+		foreach($payments as $payment)
+		{
+			$data[] = array(
+				'payment_id'   =>	$payment["id"],
+				'user_id'	   =>	$payment["user_id"],
+				'agreement_id' =>	$payment["agreement_id"],
+				'state'	       =>	$payment["state"],
+				'expires'	   =>	$payment["end_date"],
+				'amount_w_c'   =>	$payment["amount_with_currency"],
+			);
+		}
+	}
+
+    $pagination_html = '
+	<div align="center">
+  		<ul class="pagination">
+	';
+
+	$total_links = ceil($total_data/$limit);
+
+	$previous_link = '';
+
+	$next_link = '';
+
+	$page_link = '';
+
+	$page_array = array();
+
+	if($total_links > 4)
+	{
+		if($page < 5)
+		{
+			for($count = 1; $count <= 5; $count++)
+			{
+				$page_array[] = $count;
+			}
+			$page_array[] = '...';
+			$page_array[] = $total_links;
+		}
+		else
+		{
+			$end_limit = $total_links - 5;
+
+			if($page > $end_limit)
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $end_limit; $count <= $total_links; $count++)
+				{
+					$page_array[] = $count;
+				}
+			}
+			else
+			{
+				$page_array[] = 1;
+
+				$page_array[] = '...';
+
+				for($count = $page - 1; $count <= $page + 1; $count++)
+				{
+					$page_array[] = $count;
+				}
+
+				$page_array[] = '...';
+
+				$page_array[] = $total_links;
+			}
+		}
+	}
+	else
+	{
+		for($count = 1; $count <= $total_links; $count++)
+		{
+			$page_array[] = $count;
+		}
+	}
+
+	for($count = 0; $count < count($page_array); $count++)
+	{
+		if($page == $page_array[$count])
+		{
+			$page_link .= '
+			<li class="page-item active">
+	      		<a class="page-link" href="#">'.$page_array[$count].' <span class="sr-only">(current)</span></a>
+	    	</li>
+			';
+
+			$previous_id = $page_array[$count] - 1;
+
+			if($previous_id > 0)
+			{
+				$previous_link = '<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["payment_query"].'`, '.$previous_id.')">Previous</a></li>';
+			}
+			else
+			{
+				$previous_link = '
+				<li class="page-item disabled">
+			        <a class="page-link" href="#">Previous</a>
+			    </li>
+				';
+			}
+
+			$next_id = $page_array[$count] + 1;
+
+			if($next_id > $total_links)
+			{
+				$next_link = '
+				<li class="page-item disabled">
+	        		<a class="page-link" href="#">Next</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$next_link = '
+				<li class="page-item"><a class="page-link" href="javascript:load_data(`'.$_POST["payment_query"].'`, '.$next_id.')">Next</a></li>
+				';
+			}
+
+		}
+		else
+		{
+			if($page_array[$count] == '...')
+			{
+				$page_link .= '
+				<li class="page-item disabled">
+	          		<a class="page-link" href="#">...</a>
+	      		</li>
+				';
+			}
+			else
+			{
+				$page_link .= '
+				<li class="page-item">
+					<a class="page-link" href="javascript:load_data(`'.$_POST["payment_query"].'`, '.$page_array[$count].')">'.$page_array[$count].'</a>
+				</li>
+				';
+			}
+		}
+	}
+
+	$pagination_html .= $previous_link . $page_link . $next_link;
+
+
+	$pagination_html .= '
+		</ul>
+	</div>
+	';
+
+	$output = array(
+		'data'				=>	$data,
+		'pagination'		=>	$pagination_html,
+		'total_data'		=>	$total_data
+	);
+
+	echo json_encode($output);
+}
+
+if(isset($_POST['amount-per-month']))
+{
+	$id               = trim($_POST['price-id']);
+	$subject          = trim($_POST['subject']);
+	$desc             = trim($_POST['price-description']);
+	$amount_per_month = trim($_POST['amount-per-month']);
+	$rate             = trim($_POST['rate']);
+
+	//error array
+	$errors = array();
+
+	if(has_presence($subject) == false)
+	{
+		$errors[] = 'Subject cannot be empty';
+	}
+	elseif(accepted_data_type($subject, 'name') == false)
+	{
+		$errors[] = $subject . ' is not valid';
+	}
+	elseif(strlen($subject) < 2)
+	{
+		$errors[] = 'The subject field cannot be lesser than 2 characters';
+	}
+	elseif(strlen($subject) > 255)
+	{
+		$errors[] = 'The subject field cannot be more than 255 characters';
+	}
+
+	if(has_presence($desc) == false)
+	{
+		$errors[] = 'Description cannot be empty';
+	}
+	elseif(strlen($desc) < 12)
+	{
+		$errors[] = 'The description field cannot be lesser than 12 characters';
+	}
+	elseif(strlen($desc) > 65535)
+	{
+		$errors[] = 'The description field cannot be more than 65535 characters';
+	}
+
+	if(has_presence($amount_per_month) == false)
+	{
+		$errors[] = 'Amount per month cannot be empty';
+	}
+	elseif(accepted_data_type($amount_per_month, 'name') == false)
+	{
+		$errors[] = $amount_per_month . ' is not valid';
+	}
+	elseif(strlen($amount_per_month) > 10)
+	{
+		$errors[] = 'The amount per month field cannot be more than 10 characters';
+	}
+
+	if(has_presence($rate) == false)
+	{
+		$errors[] = 'rate cannot be empty';
+	}
+	elseif(accepted_data_type($rate, 'int') == false)
+	{
+		$errors[] = $rate . ' is not valid';
+	}
+	elseif(strlen($rate) > 3)
+	{
+		$errors[] = 'The rate field cannot be more than 3 characters';
+	}
+
+	if(empty($errors))
+    {
+		//update
+		$values = array(
+			'id'               => $id,
+			'subject'          => $subject,
+			'description'      => $desc,
+			'amount_per_month' => $amount_per_month,
+			'rate'             => $rate
+		);
+		$executed = update_payment_prices($values);
+		if($executed)
+		{
+			$msg = "<div class='card success'><div><b>Success!</b> Ad removal updated </div></div>";
+			echo $msg;	
+		}
+	}
+	else
+	{
+		echo form_errors($errors);
+	}
+
+}
+
+if(isset($_POST['admin_profile_image_for_setting']))
+{
+    $host = url()[0];
+    $host1 = url()[1];
+    $id = $_POST['admin_id'];
+    $admin = fetch_single_row($id, 'admin');
+    $image = $admin['profile_image'] === NULL ? $host1 . 'images/avatar.png' : $host . 'profile_images/' . $admin['profile_image'];
+
+    echo "background: url(". $image .");background-size:cover;background-repeat:no-repeat;background-position:center top;";
+}
+
+if(isset($_POST['admin-id-profile-image']))
+{
+    $id = trim($_POST['admin-id-profile-image']);
+
+    //error array
+    $errors =  array();
+
+    if(isset($_FILES['profile-image']['name']))
+    {
+    
+        $profile_image_name = $_FILES['profile-image']['name'];
+        $profile_image_size = $_FILES['profile-image']['size'];
+
+        $allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+        $image_ext = pathinfo($profile_image_name, PATHINFO_EXTENSION);
+
+        if(!in_array($image_ext, $allowed_images))
+        {
+            $errors[] = 'The accepted profile image types are png and jpg/jpeg only';
+        }
+        elseif($profile_image_size > 1000000)
+        {
+            $errors[] = 'Profile image size should not be more than 1Mb';
+        }
+        else
+        {
+            $admin = fetch_single_row($id, 'admin');
+
+            $filename = 'profile_images/' . $admin['profile_image'];
+            if (file_exists($filename) && !is_dir($filename))
+            {
+                $deleted = unlink($filename);
+                if (!$deleted)
+                {
+                    $errors[] = 'Something went wrong. Please try again';
+                }
+                else
+                {
+                    $new_profile_image_name = time() .'_' . $profile_image_name;
+                    $profile_image_folder = 'profile_images/';
+                    $tmp_profile_image = $_FILES['profile-image']['tmp_name'];
+                
+                    move_uploaded_file($tmp_profile_image, $profile_image_folder .$new_profile_image_name);
+                }
+            }
+            else
+            {
+                $new_profile_image_name = time() .'_' . $profile_image_name;
+                $profile_image_folder = 'profile_images/';
+                $tmp_profile_image = $_FILES['profile-image']['tmp_name'];
+            
+                move_uploaded_file($tmp_profile_image, $profile_image_folder .$new_profile_image_name);
+            }
+        }
+    }
+    else
+    {
+        $errors[] = 'You must upload a profile image';
+    }
+
+    if(empty($errors))
+    {
+        $values = array(
+            'id'            => $id,
+            'profile_image' => $new_profile_image_name,
+        );
+
+        //update profile image in admin table
+        $executed = update_admin_profile_image($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>Success!</b> Your profile image has been updated</div></div>";
+            echo $msg;
+        }
+
+    }
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['admin_profile_image']))
+{
+    $id = $_POST['admin_id'];
+    $row = fetch_single_row($id, 'admin');
+
+    $host = url()[0];
+    $host1 = url()[1];
+
+    if($row['profile_image'] === NULL)
+    {
+      echo '<img src="' . $host1 . 'images/avatar.png" alt="">';
+    }
+    else
+    {
+      echo '<img src="' . $host . 'profile_images/' . $row['profile_image'] .'" alt="">';
+    }
+}
+
+if(isset($_POST['old-password']))
+{
+    $id                   = trim($_POST['admin-id']);
+    // $username            = trim($_POST['username']);
+    $email                = trim($_POST['email']);
+    $old_password         = trim($_POST['old-password']);
+    $new_password         = trim($_POST['new-password']);
+    $confirm_new_password = trim($_POST['confirm-new-password']);
+
+    //error array
+    $errors = array();
+
+    $admin = fetch_single_row($id, 'admin');
+
+    $admin_password = $admin['password'];
+
+    if(has_presence($old_password) == false)
+    {
+        $errors[] = 'The password field cannot be empty';
+    }
+    elseif(password_verify($old_password, $admin_password) == false)
+    {
+        $errors[] = 'Please provide your valid account password';
+    }
+
+    if(has_presence($new_password) == false)
+    {
+        $errors[] = 'The new password field cannot be empty';
+    }
+    elseif(strlen($new_password) < 8)
+    {
+        $errors[] = 'The new password field cannot be lesser than 8 characters';
+    }
+    elseif(strlen($new_password) > 32)
+    {
+        $errors[] = 'The new password field cannot be more than 32 characters';
+    }
+    elseif(!preg_match("#[0-9]+#",$new_password)) {
+        $errors[] = "The new password field must contain at least one number!";
+    }
+    elseif(!preg_match("#[A-Z]+#",$new_password)) {
+        $errors[] = "The new password field must contain at least one capital letter!";
+    }
+    elseif(!preg_match("#[a-z]+#",$new_password)) {
+        $errors[] = "The new password field must contain at least one lowercase letter!";
+    }
+    elseif(!preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $new_password)) {
+        $errors[] = "The new password field must contain at least one special character!";
+    }
+
+    //get all the passwords of this admin from admin passwords table
+    $rows = fetch_rows_in_passwords($email);
+    foreach($rows as $row)
+    {
+        if(password_verify($new_password, $row['password']))
+        {
+            $errors[] = "You can't reuse your previous password(s)!";
+            break;
+        }
+    }
+
+    if(has_presence($confirm_new_password) == false)
+    {
+        $errors[] = 'The confirm new password field cannot be empty';
+    }
+    
+    if($new_password !== $confirm_new_password)
+    {
+        $errors[] = 'The new and confirm new password fields does not match!';
+    }
+
+    if(empty($errors))
+    {
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+
+        $values = array($email, $hashed_password);
+
+        //insert hashed password into admin's passwords table
+        $executed = insert_into_admin_passwords($values);
+
+        if($executed)
+        {
+            $values = array(
+                'generate_id' => $id,
+                'updated_by'  => $id,
+                'password'    => $hashed_password,
+            );
+    
+            //update admin's hashed password in admins table
+            $executed = update_admin_password($values);
+    
+            if($executed)
+            {
+                $msg = "<div class='card success'><div><b>Success!</b> Your password has been updated</div></div>";
+                echo $msg;
+            }
+        }
+
 
     }
     else

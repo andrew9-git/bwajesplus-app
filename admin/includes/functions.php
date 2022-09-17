@@ -2275,6 +2275,312 @@ function update_admin($value, $update_admin_photo)
 
     return $execute;
 }
+
+//suspend user
+function suspend_user($id)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 1, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//activate user
+function activate_user($id)
+{
+    $db = new dbase();
+    $query = "UPDATE users SET suspended = :suspended WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $id, 'int');
+    $db->bindvalue(':suspended', 0, 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+function count_posts_a($value, $where=1)
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT COUNT(*) FROM posts WHERE (title LIKE :title OR description LIKE :description)";
+    if($where == 1)
+    {
+        $query .= " AND user_id = :user_id";
+    }
+    $query .= " ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    if($where == 1)
+    {
+        $db->bindvalue(':user_id', $value['user_id'], 'int');
+    }
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_posts_with_wildcard($value, $offset, $limit, $where=1)
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT * FROM posts WHERE (title LIKE :title OR description LIKE :description)";
+    if($where == 1)
+    {
+        $query .= " AND user_id = :user_id";
+    }
+    $query .= " ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':title', $value['title'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    if($where == 1)
+    {
+        $db->bindvalue(':user_id', $value['user_id'], 'int');
+    }
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_posts_b($id, $where=1, $by='id')
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT COUNT(*) FROM posts";
+    if($where == 1)
+    {
+        $query .= " WHERE user_id = :user_id";
+    }
+    $query .= " ORDER BY $by DESC";
+
+    $db->prep($query);
+
+    if($where == 1)
+    {
+        $db->bindvalue(':user_id', $id, 'int');
+    }
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_posts($id, $offset, $limit, $where=1, $by='id')
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT * FROM posts";
+    if($where == 1)
+    {
+        $query .= " WHERE user_id = :user_id";
+    }
+    $query .= " ORDER BY $by DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    if($where == 1)
+    {
+        $db->bindvalue(':user_id', $id, 'int');
+    }
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//getting all post types
+function post_type()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_type";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//getting all post categories
+function post_category()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM post_category";
+    $db->prep($query);
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//getting all payment subscriptions
+function payment_subscriptions($value='', $date_range=0, $unit=0, $user_id=0)
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT * FROM payment_subscriptions";
+
+    if($date_range == 1)
+    {
+        $query .= " WHERE created_at BETWEEN :from AND :to";
+    }
+
+    if($unit == 1)
+    {
+        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
+    }
+
+    if($user_id != 0)
+    {
+        $query .= " WHERE user_id = :user_id";
+    }
+    
+    $db->prep($query);
+
+    if($date_range == 1)
+    {
+        $db->bindvalue(':from', $value['from'], 'str');
+        $db->bindvalue(':to', $value['to'], 'str');
+    }
+
+    if($user_id != 0)
+    {
+        $db->bindvalue(':user_id', $user_id, 'int');
+    }
+
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+function count_payment_subscriptions_a($value)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+
+    $db->prep($query);
+
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':end_date', $value['expires'], 'str');
+    $db->bindvalue(':amount_with_currency', $value['amount'], 'str');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_payment_subscriptions_with_wildcard($value, $offset, $limit)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':end_date', $value['expires'], 'str');
+    $db->bindvalue(':amount_with_currency', $value['amount'], 'str');
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function count_payment_subscriptions_b($by='id')
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(*) FROM payment_subscriptions ORDER BY $by DESC";
+
+    $db->prep($query);
+
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
+}
+
+function search_payment_subscriptions($offset, $limit, $by='id')
+{
+    $db = new dbase();
+    
+    $query = "SELECT * FROM payment_subscriptions ORDER BY $by DESC";
+    
+    $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
+
+    $db->prep($filter_query);
+
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+//update admin's password
+function update_payment_prices($value)
+{
+    $db = new dbase();
+    $query = "UPDATE payment_prices SET subject = :subject, description = :description, amount_per_month = :amount_per_month, rate = :rate, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':subject', $value['subject'], 'str');
+    $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':amount_per_month', $value['amount_per_month'], 'str');
+    $db->bindvalue(':rate', $value['rate'], 'int');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//update admin's profile image
+function update_admin_profile_image($value)
+{
+    $db = new dbase();
+    $query = "UPDATE admin SET profile_image = :profile_image, updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':profile_image', $value['profile_image'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
+}
+
+//getting all rows of a specific user in passwords table
+function fetch_rows_in_passwords($email)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM admin_passwords WHERE email = :email";
+    $db->prep($query);
+    $db->bindvalue(':email', $email, 'str');
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
 // End database queries
 
 

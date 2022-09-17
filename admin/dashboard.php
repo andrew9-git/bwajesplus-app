@@ -6,20 +6,6 @@ bwajes_plus_header('dashboard', 'Dashboard');
 $id = $_SESSION['admin_data']['id'];
 $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
 ?>
-    <?php
-      $last_logout = $admin_statistics['last_logout'];
-      if($last_logout == NULL || $last_logout === "" || empty($last_logout))
-      {
-        echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar">
-        <div id="left"><div style="margin-top:4%;"><h4>
-        Welcome '.$_SESSION['admin_data']['first_name'].'! Thanks for joining the bwajes+ admin family</h4></div>
-        </div>
-        <div id="right">
-          <a href="#" id="hide-times">X</a>
-        </div>
-      </div>';  
-      }
-    ?>
     <div class="home-content">
       <div class="post-area">
         <div class="info">

@@ -397,7 +397,7 @@ function bwajes_plus_header($active, $page_name)
         <span class="dashboard"><?php echo $page_name; ?></span>
       </div>
       <div class="profile-details">
-        <img src="<?php echo $host .'profile_images/' . $admin['profile_image']; ?>" alt="">
+        <span id="admin-profile-image"></span>
         <span class="admin_name"><?php echo ucfirst(strtolower($first_name)) . ' ' . ucfirst(strtolower($last_name)); ?></span>
         <i id="notify_bell" class='bx bx-bell'></i>
         <span id="notify_number" class="notify-number"></span>

@@ -22,7 +22,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
         <div class="card">
             <div class="card-header">
                 <div class="info-container">
-                    <a href="<?php echo $host .'all-admins'; ?>" class="btn btn-success">back</a>
+                    <span class="btn btn-success back" id="back">back</span>
                 </div>
                 <!-- Using if statement to show either suspend or activate button -->
                 <?php if($admin_info['suspended'] == 0){ ?>
@@ -201,6 +201,11 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
   <script>
     document.addEventListener('DOMContentLoaded', () => {
 
+        document.getElementById('back').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.history.back();
+        });
+        
         //generate password
 
         const generatePassword = document.querySelector("#generate-password");

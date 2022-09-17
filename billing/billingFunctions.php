@@ -111,7 +111,7 @@ function payment_subscriptions(array $value)
 {
     $db = new dbase();
 
-    $query = "INSERT INTO payment_subscriptions(user_id, agreement_id, interval_value, state, status, amount, payer_id, email, first_name, last_name, start_date, end_date, payment_method) VALUES(:user_id, :agreement_id, :interval_value, :state, :status, :amount, :payer_id, :email, :first_name, :last_name, :start_date, :end_date, :payment_method)";
+    $query = "INSERT INTO payment_subscriptions(user_id, agreement_id, interval_value, state, status, amount, amount_with_currency, payer_id, email, first_name, last_name, start_date, end_date, payment_method) VALUES(:user_id, :agreement_id, :interval_value, :state, :status, :amount, :amount_with_currency, :payer_id, :email, :first_name, :last_name, :start_date, :end_date, :payment_method)";
     $db->prep($query);
 
     $db->bindvalue(':user_id', $value['user_id'], 'int');
@@ -120,6 +120,7 @@ function payment_subscriptions(array $value)
     $db->bindvalue(':state', $value['state'], 'str');
     $db->bindvalue(':status', $value['status'], 'str');
     $db->bindvalue(':amount', $value['amount'], 'str');
+    $db->bindvalue(':amount_with_currency', $value['amount_with_currency'], 'str');
     $db->bindvalue(':payer_id', $value['payer_id'], 'str');
     $db->bindvalue(':email', $value['email'], 'str');
     $db->bindvalue(':first_name', $value['first_name'], 'str');
