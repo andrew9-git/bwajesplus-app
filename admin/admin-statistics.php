@@ -4,6 +4,15 @@ include('includes/header.php');
 bwajes_plus_header('admins-statistics', 'Admin statistics');
 $host='http://localhost:9090/bwajesplus-app/admin/';
 
+$id = $_SESSION['admin_data']['id'];
+
+$admin = fetch_single_row($id, 'admin');
+
+if($admin['admin_type'] != 1)
+{
+  redirect_to($host . 'logout');
+}
+
 if(isset($_GET['a']))
 {
   $admin_id = $_GET['a'];

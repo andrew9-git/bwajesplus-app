@@ -4,6 +4,13 @@ include('includes/header.php');
 bwajes_plus_header('legal', 'Legal');
 
 $id = $_SESSION['admin_data']['id'];
+
+$admin = fetch_single_row($id, 'admin');
+
+if($admin['admin_type'] != 1)
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">

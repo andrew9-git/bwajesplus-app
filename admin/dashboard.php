@@ -4,10 +4,17 @@ include('includes/header.php');
 bwajes_plus_header('dashboard', 'Dashboard');
 
 $id = $_SESSION['admin_data']['id'];
+
+$admin = fetch_single_row($id, 'admin');
+
 $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
 ?>
     <div class="home-content">
       <div class="post-area">
+      <?php 
+        if($admin['suspended'] != 1)
+        {
+      ?>
         <div class="info">
           <div class="card">
             <div class="card-header">
@@ -53,7 +60,7 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
         <div class="card">
           <div class="card-header">
             <div class="info-container">
-              <a href="all-users" class="btn btn-success">see all users</a>
+              <a href="all-users" target="_blank" class="btn btn-success">see all users</a>
             </div>
           </div>
           <div class="card-body">
@@ -95,6 +102,7 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
         <?php }else{ ?>
           <span class="btn btn-warning no-post">no users yet</span>
         <?php } ?><br>
+        <?php if($admin['admin_type'] == 1){ ?>
         <div class="info">
           <div class="card">
             <div class="card-header">
@@ -147,7 +155,7 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
         <div class="card">
           <div class="card-header">
             <div class="info-container">
-              <a href="all-admins" class="btn btn-success">see all admins</a>
+              <a href="all-admins" target="_blank" class="btn btn-success">see all admins</a>
             </div>
           </div>
           <div class="card-body">
@@ -189,9 +197,26 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
         <?php }else{ ?>
           <span class="btn btn-warning no-post">no admins yet</span>
         <?php } ?>
+        <?php } ?>
         <div class="info-container">
           <div class="btn btn-secondary last-login">last visited: <?php if(isset($admin_statistics)){echo date("F jS, Y", strtotime($admin_statistics['last_logout']));} ?></div>
         </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please contact the organisation
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
 

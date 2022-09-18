@@ -84,6 +84,7 @@ function ckeditor($page = '')
         <div class="delete-account-container">
           <div>
             <div class="delete-account-notification-wrapper">
+            <?php  $sub = active_subscription($id);if($sub['state'] == 'Cancelled'){ ?>
               <i class="bx bx-alarm-exclamation delete-notification"></i> <span class="delete-account-notification-text">Deleting your account will</span>
             </div>
             <div>
@@ -133,6 +134,13 @@ function ckeditor($page = '')
                 </div>
                 <button name="send-mail" id="delete_user" class="btn btn-danger">Delete</button>
             </form>
+            <?php }elseif($sub['state'] == 'Active'){ ?>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    You need to cancel your subscription before you can delete your account
+                </div>
+            </div>
+            <?php } ?>
           </div>
         </div>
       </div>

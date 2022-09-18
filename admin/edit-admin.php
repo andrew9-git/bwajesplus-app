@@ -6,6 +6,16 @@ bwajes_plus_header('all-admins', 'Update admin');
 $host='http://localhost:9090/bwajesplus-app/admin/';
 ?>
 <?php
+
+  $id = $_SESSION['admin_data']['id'];
+
+  $admin = fetch_single_row($id, 'admin');
+
+  if($admin['admin_type'] != 1)
+  {
+    redirect_to($host . 'logout');
+  }
+
     if(isset($_GET['a']))
     {
         $admin_id = $_GET['a'];
@@ -16,7 +26,6 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
       redirect_to('logout');
     }
 
-    $id = $_SESSION['admin_data']['id'];
     $admin_types = admin_type();
     $country = fetch_countries();
 ?>

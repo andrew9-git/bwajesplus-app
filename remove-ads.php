@@ -8,6 +8,12 @@ bwajes_plus_header('remove-ads', 'Remove ads');
 
 <?php 
     $id = $_SESSION['user_data']['id'];
+
+    $count = db_row_count($id, 'user_id', 'posts', 'int');
+    if($count == 0)
+    {
+        redirect_to('logout');
+    }
 ?>
     <div class="home-content">
       <div class="post-area">

@@ -7,6 +7,11 @@ $id = $_SESSION['admin_data']['id'];
 $admin = fetch_single_row($id, 'admin');
 
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+if($admin['admin_type'] != 1)
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -85,8 +90,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                     html += '<td>' + serial_no + '</td>';
                     html += '<td>' + response.data[count].legal + '</td>';
                     html += '<td><a href="each-legal/'+ response.data[count].legal_id +'"><i class="bx bx-link-external"></i></a></td>';
-                    html += '<td><a href="edit-legal/'+ response.data[count].legal_id +'"><i class="bx bx-edit"></i></a><?php //if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this legal?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].legal_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="all-legals" style="display: none;" id="form-delete-'+ response.data[count].legal_id +'"><input type="hidden" value="'+ response.data[count].legal_id +'" name="delete-legal" class="form_data_ac"></form></td>';
-                    <?php //} ?>
+                    html += '<td><a href="edit-legal/'+ response.data[count].legal_id +'"><i class="bx bx-edit"></i></a><?php if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this legal?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].legal_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><?php } ?><form method="post" action="all-legals" style="display: none;" id="form-delete-'+ response.data[count].legal_id +'"><input type="hidden" value="'+ response.data[count].legal_id +'" name="delete-legal" class="form_data_ac"></form></td>';
                     html += '</tr>';
                     serial_no++;
 

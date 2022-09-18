@@ -6,6 +6,14 @@ bwajes_plus_header('all-admins', 'Register admin');
 ?>
 <?php 
     $id = $_SESSION['admin_data']['id'];
+
+    $admin = fetch_single_row($id, 'admin');
+
+    if($admin['admin_type'] != 1)
+    {
+        redirect_to('logout');
+    }
+
     $admin_types = admin_type();
     $admin = fetch_single_row($id, 'admin');
 ?>

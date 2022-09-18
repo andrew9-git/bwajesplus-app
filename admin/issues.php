@@ -4,6 +4,9 @@ include('includes/header.php');
 bwajes_plus_header('issues', 'User\'s feedback');
 
 $host='http://localhost:9090/bwajesplus-app/admin/';
+
+$id = $_SESSION['admin_data']['id'];
+$admin = fetch_single_row($id, 'admin');
 ?>
 
 <div class="home-content">
@@ -36,7 +39,9 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                   <th>Subject</th>
                   <th>Date created</th>
                   <th>Check details</th>
+                  <?php if($admin['admin_type'] == 1){ ?>
                   <th>Delete</th>
+                  <?php } ?>
                 </tr>
               </thead>
               <tbody id="issue_data"></tbody>
@@ -85,7 +90,8 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                     html += '<td>' + response.data[count].subject + '</td>';
                     html += '<td>' + response.data[count].date_created + '</td>';
                     html += '<td><a href="issue-details/'+ response.data[count].issue_id +'"><i class="bx bx-link-external"></i></a></td>';
-                    html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this feedback?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].issue_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="issues" style="display: none;" id="form-delete-'+ response.data[count].issue_id +'"><input type="hidden" value="'+ response.data[count].issue_id +'" name="delete-issue" class="form_data_issue"></form></td>';
+                    <?php if($admin['admin_type'] == 1){ ?>
+                    html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this feedback?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].issue_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="issues" style="display: none;" id="form-delete-'+ response.data[count].issue_id +'"><input type="hidden" value="'+ response.data[count].issue_id +'" name="delete-issue" class="form_data_issue"></form></td>';<?php } ?>
                     html += '</tr>';
                     serial_no++;
 

@@ -16,6 +16,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
     }
 
     $id = $_SESSION['admin_data']['id'];
+    $admin = fetch_single_row($id, 'admin');
 ?>
 <div class="home-content">
       <div class="post-area">
@@ -23,14 +24,15 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             <div class="card-header">
                 <div class="info-container">
                     <span class="btn btn-success back" id="back">back</span>
+                    <!-- <a href="<?php //echo $host."all-users" ?>" class="btn btn-success back" id="back">back</a> -->
                 </div>
                 <!-- Using if statement to show either suspend or activate button
                 and it's only super admin that should be able to delete user -->
                 <?php if($user_info['suspended'] == 0){ ?>
                 <span style="cursor: pointer;" class="btn btn-warning" onclick="event.preventDefault();if(confirm('Do you really want to suspend this user?')){document.getElementById('form-suspend-<?php echo $get_user_id; ?>').submit();}">suspend</span><?php } ?>
                 <?php if($user_info['suspended'] == 1){ ?><span style="cursor: pointer;" class="btn btn-success" onclick="event.preventDefault();if(confirm('Do you really want to activate this user?')){document.getElementById('form-activate-<?php echo $get_user_id; ?>').submit();}">activate</span> 
-                <?php } ?> | <a href="#" class="btn btn-danger" onclick="event.preventDefault();if(confirm('Do you really want to delete this user?')){document.getElementById('form-delete-<?php echo $get_user_id; ?>').submit();}"><i class="bx bx-trash"></i></a>
-                
+                <?php } ?> <?php if($admin['admin_type'] == 1){ ?>| <a href="#" class="btn btn-danger" onclick="event.preventDefault();if(confirm('Do you really want to delete this user?')){document.getElementById('form-delete-<?php echo $get_user_id; ?>').submit();}"><i class="bx bx-trash"></i></a>
+                <?php } ?>
                 <form method="post" action="<?php echo $host . 'user/' . $get_user_id; ?>" style="display: none;" id="form-suspend-<?php echo $get_user_id; ?>">
                 <input type="hidden" value="<?php echo $get_user_id; ?>" name="suspend-user">
                 </form>
@@ -173,13 +175,169 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
 
       if(isset($_POST['delete-user']))
       {
-        $get_user_id = $_POST['delete-user'];
-        $executed = delete_single_row($get_user_id, 'users');
+        $delete_id         = $_POST['delete-user'];
+        $delete_first_name = $user_info['first_name'];
+        $delete_last_name  = $user_info['last_name'];
+        $delete_email      = $user_info['email'];
+        $delete_gender     = $user_info['gender'];
+    
+        $phone      = $user_info['phone'];
+        $website    = $user_info['website'];
+        $birth_date = $user_info['birthdate'];
+        $address    = $user_info['address'];
+        $city       = $user_info['city'];
+        $state      = $user_info['state'];
+        $country    = $user_info['country'];
+    
+        empty($phone) || $phone == '' || $phone == null ? $delete_phone = $phone : $delete_phone = NULL;
+        empty($website) || $website == '' || $website == null ? $delete_website = $website : $delete_website = NULL;
+        empty($birth_date) || $birth_date == '' || $birth_date == null ? $delete_birth_date = $birth_date : $delete_birth_date = NULL;
+        empty($address) || $address == '' || $address == null ? $delete_address = $address : $delete_address = NULL;
+        empty($city) || $city == '' || $city == null ? $delete_city = $city : $delete_city = NULL;
+        empty($state) || $state == '' || $state == null ? $delete_state = $state : $delete_state = NULL;
+        empty($country) || $country == '' || $country == null ? $delete_country = $country : $delete_country = NULL;
+
+        //delete all user's previous passwords from user passwords table
+        $executed = delete_single_row($delete_email, 'user_passwords', 'email', 'str');
+
         if($executed)
-        {
-          $url = $host . 'all-users';
-          redirect_to($url);
+        {    
+            //delete registered users from email list table
+            $executed = delete_from_email_list($delete_email, 1);
+    
+            if($executed)
+            {
+                $values = array(
+                    'user_id'    => $delete_id,
+                    'first_name' => $delete_first_name,
+                    'last_name'  => $delete_last_name,
+                    'email'      => $delete_email,
+                    'gender'     => $delete_gender,
+                    'phone'      => $delete_phone,
+                    'website'    => $delete_website,
+                    'birthdate'  => $delete_birth_date,
+                    'address'    => $delete_address,
+                    'city'       => $delete_city,
+                    'state'      => $delete_state,
+                    'country'    => $delete_country
+                );
+        
+                //insert into deleted users table
+                $executed = deleted_users($values);
+        
+                if($executed)
+                {
+                    //delete all cover photo uploaded by user
+    
+                    $user_posts = fetch_all_posts($delete_id);
+    
+                    foreach($user_posts as $post)
+                    {
+                        $filename = '../cover_photos/' . $post['cover_photo'];
+                        if (file_exists($filename) && !is_dir($filename))
+                        {
+                            $deleted = unlink($filename);
+                            if(!$deleted)
+                            {
+                                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                                echo $msg;
+                                break;
+                            }
+                        }
+                    }
+    
+                    //delete profile image uploaded by user
+                    $user = fetch_single_row($delete_id, 'users');
+    
+                    $user_profile_image = $user['profile_image'];
+    
+                    if($user_profile_image !== null || $user_profile_image !== '')
+                    {
+                        $filename = '../profile_images/' . $user_profile_image;
+                        if (file_exists($filename) && !is_dir($filename))
+                        {
+                            $deleted = unlink($filename);
+                            if(!$deleted)
+                            {
+                                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                                echo $msg;
+                            }
+                            else
+                            {
+                                //delete from users table
+                                $executed = delete_single_row($delete_id, 'users');
+                                if($executed)
+                                {
+                                    $url = $host . 'all-users';
+                                    redirect_to($url);
+                            
+                                }
+                                else
+                                {
+                                    $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                                    echo $msg;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //delete from users table
+                            $executed = delete_single_row($delete_id, 'users');
+                            if($executed)
+                            {
+                                $url = $host . 'all-users';
+                                redirect_to($url);
+                        
+                            }
+                            else
+                            {
+                                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                                echo $msg;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //delete from users table
+                        $executed = delete_single_row($delete_id, 'users');
+                        if($executed)
+                        {
+                            $url = $host . 'all-users';
+                            redirect_to($url);
+                    
+                        }
+                        else
+                        {
+                            $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                            echo $msg;
+                        }
+                    }
+                }
+                else
+                {
+                    $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                    echo $msg;
+                }
+            }
+            else
+            {
+                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                echo $msg;
+            }
         }
+        else
+        {
+            $msg = "<div class='card error'><div>Something went wrong</div></div>";
+            echo $msg;
+        }
+
+        // $get_user_id = $_POST['delete-user'];
+        // $executed = delete_single_row($get_user_id, 'users');
+        // if($executed)
+        // {
+        //   $url = $host . 'all-users';
+        //   redirect_to($url);
+        // }
       }
     ?>
 <?php

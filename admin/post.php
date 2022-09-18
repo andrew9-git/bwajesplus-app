@@ -16,6 +16,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
     }
 
     $id = $_SESSION['admin_data']['id'];
+    $admin = fetch_single_row($id, 'admin');
 
     $post_types = post_type();
     $post_categories = post_category();
@@ -26,22 +27,23 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
             <div class="card-header">
                 <div class="info-container">
                     <span class="btn btn-success back" id="back">back</span>
+                    <!-- <a href="<?php //echo $host."all-posts" ?>" class="btn btn-success back" id="back">back</a> -->
                 </div>
                 <!-- Using if statement to show either suspend or activate button
                 and it's only super admin that should be able to delete post -->
                 <?php if($post_info['suspended'] == 0){ ?>
-                <span style="cursor: pointer;" class="btn btn-warning" onclick="event.preventDefault();if(confirm('Do you really want to suspend this user?')){document.getElementById('form-suspend-<?php echo $post_id; ?>').submit();}">suspend</span><?php } ?>
-                <?php if($post_info['suspended'] == 1){ ?><span style="cursor: pointer;" class="btn btn-success" onclick="event.preventDefault();if(confirm('Do you really want to activate this user?')){document.getElementById('form-activate-<?php echo $post_id; ?>').submit();}">activate</span> 
-                <?php } ?> | <a href="#" class="btn btn-danger" onclick="event.preventDefault();if(confirm('Do you really want to delete this user?')){document.getElementById('form-delete-<?php echo $post_id; ?>').submit();}"><i class="bx bx-trash"></i></a>
-                
-                <form method="post" action="<?php echo $host . 'user/' . $post_id; ?>" style="display: none;" id="form-suspend-<?php echo $post_id; ?>">
-                <input type="hidden" value="<?php echo $post_id; ?>" name="suspend-user">
+                <span style="cursor: pointer;" class="btn btn-warning" onclick="event.preventDefault();if(confirm('Do you really want to suspend this post?')){document.getElementById('form-suspend-<?php echo $post_id; ?>').submit();}">suspend</span><?php } ?>
+                <?php if($post_info['suspended'] == 1){ ?><span style="cursor: pointer;" class="btn btn-success" onclick="event.preventDefault();if(confirm('Do you really want to activate this post?')){document.getElementById('form-activate-<?php echo $post_id; ?>').submit();}">activate</span> 
+                <?php } ?> <?php if($admin['admin_type'] == 1){ ?>| <a href="#" class="btn btn-danger" onclick="event.preventDefault();if(confirm('Do you really want to delete this post?')){document.getElementById('form-delete-<?php echo $post_id; ?>').submit();}"><i class="bx bx-trash"></i></a>
+                <?php } ?>
+                <form method="post" action="<?php echo $host . 'post/' . $post_id; ?>" style="display: none;" id="form-suspend-<?php echo $post_id; ?>">
+                <input type="hidden" value="<?php echo $post_id; ?>" name="suspend-post">
                 </form>
-                <form method="post" action="<?php echo $host . 'user/' . $post_id; ?>" style="display: none;" id="form-activate-<?php echo $post_id; ?>">
-                    <input type="hidden" value="<?php echo $post_id; ?>" name="activate-user">
+                <form method="post" action="<?php echo $host . 'post/' . $post_id; ?>" style="display: none;" id="form-activate-<?php echo $post_id; ?>">
+                    <input type="hidden" value="<?php echo $post_id; ?>" name="activate-post">
                 </form>
-                <form method="post" action="<?php echo $host . 'user/' . $post_id; ?>" style="display: none;" id="form-delete-<?php echo $post_id; ?>">
-                    <input type="hidden" value="<?php echo $post_id; ?>" name="delete-user">
+                <form method="post" action="<?php echo $host . 'post/' . $post_id; ?>" style="display: none;" id="form-delete-<?php echo $post_id; ?>">
+                    <input type="hidden" value="<?php echo $post_id; ?>" name="delete-post">
                 </form>
             </div>
             <div class="card-body">
@@ -120,36 +122,48 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
         });
     </script>
     <?php
-      if(isset($_POST['suspend-user']))
+      if(isset($_POST['suspend-post']))
       {
-        $post_id = $_POST['suspend-user'];
-        $executed = suspend_user($post_id);
+        $post_id = $_POST['suspend-post'];
+        $executed = suspend_user_post($post_id);
         if($executed)
         {
-          $url = $host . 'user/' . $post_id;
+          $url = $host . 'post/' . $post_id;
           redirect_to($url);
         }
       }
 
-      if(isset($_POST['activate-user']))
+      if(isset($_POST['activate-post']))
       {
-        $post_id = $_POST['activate-user'];
-        $executed = activate_user($post_id);
+        $post_id = $_POST['activate-post'];
+        $executed = activate_user_post($post_id);
         if($executed)
         {
-          $url = $host . 'user/' . $post_id;
+          $url = $host . 'post/' . $post_id;
           redirect_to($url);
         }
       }
 
-      if(isset($_POST['delete-user']))
+      if(isset($_POST['delete-post']))
       {
-        $post_id = $_POST['delete-user'];
-        $executed = delete_single_row($post_id, 'users');
-        if($executed)
+        $post_id = $_POST['delete-post'];
+        $post = fetch_single_row($post_id, 'posts');
+
+        $filename = '../cover_photos/' . $post['cover_photo'];
+        if (file_exists($filename) && !is_dir($filename))
         {
-          $url = $host . 'all-users';
-          redirect_to($url);
+          $deleted = unlink($filename);
+          if ($deleted)
+          {
+            //delete post
+            $executed = delete_single_row($post_id, 'posts');
+
+            if($executed)
+            {
+              $url = $host . 'all-posts';
+              redirect_to($url);
+            }
+          }
         }
       }
     ?>

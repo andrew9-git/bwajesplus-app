@@ -5,6 +5,7 @@ bwajes_plus_header('ratings', 'Each User Ratings');
 $host='http://localhost:9090/bwajesplus-app/admin/';
 
 $id = $_SESSION['admin_data']['id'];
+$admin = fetch_single_row($id, 'admin');
 
 if(isset($_GET['r']))
 {
@@ -44,7 +45,9 @@ else
                         <th width="5%">Rating</th>
                         <th width="25%">Reason</th>
                         <th width="60%">Suggestion</th>
+                        <?php if($admin['admin_type'] == 1){ ?>
                         <th width="5%">Delete</th>
+                        <?php } ?>
                     </tr>
                     </thead>
                     <tbody id="rating_data"></tbody>
@@ -110,7 +113,8 @@ else
                 {
                     html += '<td>' + response.data[count].suggestion + '</td>';
                 }
-                html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this rating?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].rating_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="http://localhost:9090/bwajesplus-app/admin/each-user-ratings/'+ response.data[count].user_id +'" style="display: none;" id="form-delete-'+ response.data[count].rating_id +'"><input type="hidden" value="'+ response.data[count].rating_id +'" name="delete-rating" class="form_data_rating"></form></td>';
+                <?php if($admin['admin_type'] == 1){ ?>
+                html += '<td><span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this rating?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].rating_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="http://localhost:9090/bwajesplus-app/admin/each-user-ratings/'+ response.data[count].user_id +'" style="display: none;" id="form-delete-'+ response.data[count].rating_id +'"><input type="hidden" value="'+ response.data[count].rating_id +'" name="delete-rating" class="form_data_rating"></form></td>';<?php } ?>
                 html += '</tr>';
                 serial_no++;
 

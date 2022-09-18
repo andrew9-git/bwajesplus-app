@@ -1512,7 +1512,11 @@ function select_distinct_emails($table_name)
     }
     elseif($table_name == "payment_subscriptions")
     {
-        $query = "SELECT DISTINCT email FROM $table_name";
+        $query = "SELECT DISTINCT email FROM $table_name WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
+    }
+    elseif($table_name == "deleted_users")
+    {
+        $query = "SELECT DISTINCT email FROM $table_name WHERE email NOT IN (SELECT DISTINCT email FROM users) AND unsubscribed = 0";
     }
     else
     {
@@ -2585,6 +2589,71 @@ function fetch_rows_in_passwords($email)
     $db->bindvalue(':email', $email, 'str');
     $rows = $db->fetchMultiple();
     return $rows;
+}
+
+//getting all posts
+function fetch_all_posts($id=0, $by='id', $order="DESC")
+{
+    $db = new dbase();
+
+    $query = "";
+
+    $query .= "SELECT * FROM posts";
+    if($id != 0)
+    {
+        $query .= " WHERE user_id = :id";
+    }
+
+    $query .= " ORDER BY $by $order";
+ 
+    $db->prep($query);
+    if($id != 0)
+    {
+        $db->bindvalue(':id', $id, 'int');
+    }
+    $rows = $db->fetchMultiple();
+    return $rows;
+}
+
+//insert into deleted users table
+function deleted_users(array $value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO deleted_users(user_id, first_name, last_name, email, gender, phone, website, birthdate, address, city, state, country) VALUES(:user_id, :first_name, :last_name, :email, :gender, :phone, :website, :birthdate, :address, :city, :state, :country)";
+    $db->prep($query);
+
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':last_name', $value['last_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':gender', $value['gender'], 'str');
+    $db->bindvalue(':phone', $value['phone'], 'str');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':birthdate', $value['birthdate'], 'str');
+    $db->bindvalue(':address', $value['address'], 'str');
+    $db->bindvalue(':city', $value['city'], 'str');
+    $db->bindvalue(':state', $value['state'], 'str');
+    $db->bindvalue(':country', $value['country'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function delete_from_email_list($email, $source)
+{
+    $db = new dbase();
+
+    $query = "DELETE FROM email_list WHERE email = :email AND source = $source";
+
+    $db->prep($query);
+
+    $db->bindvalue(':email', $email, 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
 }
 // End database queries
 

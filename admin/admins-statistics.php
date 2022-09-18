@@ -3,6 +3,14 @@
 include('includes/header.php');
 bwajes_plus_header('admins-statistics', 'Admins statistics');
 
+$id = $_SESSION['admin_data']['id'];
+
+$admin = fetch_single_row($id, 'admin');
+
+if($admin['admin_type'] != 1)
+{
+  redirect_to('logout');
+}
 ?>
 
 <div class="home-content">
@@ -88,7 +96,7 @@ bwajes_plus_header('admins-statistics', 'Admins statistics');
                       html += '<td>basic</td>';
                     }
                     if(response.data[count].suspended == 0){
-                    html += '<td><i class="bx bxs-admin-check"></i></td>';
+                    html += '<td><i class="bx bxs-user-check"></i></td>';
                     }else{
                     html += '<td><span class="times">&times;</span></td>';
                     }

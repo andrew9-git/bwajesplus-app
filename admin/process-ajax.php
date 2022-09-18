@@ -3889,6 +3889,10 @@ if(isset($_POST['post-master']))
 		{
 			$table_name = "payment_subscriptions";
 		}
+		elseif($group_to_send_to == "deleted-users")
+		{
+			$table_name = "deleted_users";
+		}
 
 		//insert into admin sent email table
 		//get last insertId from admin sent email table
@@ -3911,13 +3915,21 @@ if(isset($_POST['post-master']))
 
 			foreach($group_emails as $group_email)
 			{
-				if(isset($group_email['first_name']) && ($group_to_send_to == "registered-users" || $group_to_send_to == "payers"))
+				if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
 				{
 					//email track code
 					$code = email_track_code();
 		
 					$base_url = "http://localhost:9090/bwajes/dz5445z/";
 					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
+					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
+				}
+				elseif(isset($group_email['first_name']) && $group_to_send_to == "payers")
+				{
+					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
+				}
+				elseif(isset($group_email['first_name']) && $group_to_send_to == "deleted-users")
+				{
 					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
 				}
 				else
@@ -3978,8 +3990,16 @@ if(isset($_POST['post-master']))
 
 			if($no_of_email_sent > 0)
 			{
-				$msg = "<div class='card success'><div><b>Success!</b> Email sent to ". $no_of_email_sent ." people</div></div>";
-				echo $msg;
+				if($no_of_email_sent == 1)
+				{
+					$msg = "<div class='card success'><div><b>Success!</b> Email sent to ". $no_of_email_sent ." person</div></div>";
+					echo $msg;
+				}
+				else
+				{
+					$msg = "<div class='card success'><div><b>Success!</b> Email sent to ". $no_of_email_sent ." people</div></div>";
+					echo $msg;
+				}
 			}
 		}
 

@@ -44,7 +44,9 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                   <th width="5%">Subject</th>
                   <th width="5%">Date created</th>
                   <th width="5%">Check email</th>
+                  <?php if($admin['admin_type'] == 1){ ?>
                   <th width="5%">Delete</th>
+                  <?php } ?>
                 </tr>
               </thead>
               <tbody id="admin_emails_data"></tbody>

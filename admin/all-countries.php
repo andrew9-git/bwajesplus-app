@@ -87,7 +87,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                     html += '<td>' + response.data[count].country + '</td>';
                     html += '<td>' + response.data[count].date_created + '</td>';
                     html += '<td>' + response.data[count].last_updated + '</td>';
-                    html += '<td><a href="edit-country/'+ response.data[count].country_id +'"><i class="bx bx-link-external"></i></a><?php //if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this country?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].country_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="all-countries" style="display: none;" id="form-delete-'+ response.data[count].country_id +'"><input type="hidden" value="'+ response.data[count].country_id +'" name="delete-country" class="form_data_ac"></form></td>';<?php //} ?>
+                    html += '<td><a href="edit-country/'+ response.data[count].country_id +'"><i class="bx bx-link-external"></i></a><?php if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this country?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].country_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><?php } ?><form method="post" action="all-countries" style="display: none;" id="form-delete-'+ response.data[count].country_id +'"><input type="hidden" value="'+ response.data[count].country_id +'" name="delete-country" class="form_data_ac"></form></td>';
                     html += '</tr>';
                     serial_no++;
 

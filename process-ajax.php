@@ -668,60 +668,86 @@ if(isset($_POST['delete-user-id']))
 
     if($executed)
     {
-        $values = array(
-            'user_id'    => $delete_id,
-            'first_name' => $delete_first_name,
-            'last_name'  => $delete_last_name,
-            'email'      => $delete_email,
-            'gender'     => $delete_gender,
-            'phone'      => $delete_phone,
-            'website'    => $delete_website,
-            'birthdate'  => $delete_birth_date,
-            'address'    => $delete_address,
-            'city'       => $delete_city,
-            'state'      => $delete_state,
-            'country'    => $delete_country
-        );
-
-        //insert into deleted users table
-        $executed = deleted_users($values);
-
+        //delete registered users from email list table
+        $executed = delete_from_email_list($delete_email, 1);
+    
         if($executed)
         {
-            //delete all cover photo uploaded by user
-
-            $user_posts = posts_to_show_in_dashboard($delete_id, 0);
-
-            foreach($user_posts as $post)
+            $values = array(
+                'user_id'    => $delete_id,
+                'first_name' => $delete_first_name,
+                'last_name'  => $delete_last_name,
+                'email'      => $delete_email,
+                'gender'     => $delete_gender,
+                'phone'      => $delete_phone,
+                'website'    => $delete_website,
+                'birthdate'  => $delete_birth_date,
+                'address'    => $delete_address,
+                'city'       => $delete_city,
+                'state'      => $delete_state,
+                'country'    => $delete_country
+            );
+    
+            //insert into deleted users table
+            $executed = deleted_users($values);
+    
+            if($executed)
             {
-                $filename = 'cover_photos/' . $post['cover_photo'];
-                if (file_exists($filename) && !is_dir($filename))
+                //delete all cover photo uploaded by user
+    
+                $user_posts = posts_to_show_in_dashboard($delete_id, 0);
+    
+                foreach($user_posts as $post)
                 {
-                    $deleted = unlink($filename);
-                    if(!$deleted)
+                    $filename = 'cover_photos/' . $post['cover_photo'];
+                    if (file_exists($filename) && !is_dir($filename))
                     {
-                        $msg = "<div class='card error'><div>Something went wrong</div></div>";
-                        echo $msg;
-                        break;
+                        $deleted = unlink($filename);
+                        if(!$deleted)
+                        {
+                            $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                            echo $msg;
+                            break;
+                        }
                     }
                 }
-            }
-
-            //delete profile image uploaded by user
-            $user = fetch_single_row($delete_id, 'users');
-
-            $user_profile_image = $user['profile_image'];
-
-            if($user_profile_image !== null || $user_profile_image !== '')
-            {
-                $filename = 'profile_images/' . $user_profile_image;
-                if (file_exists($filename) && !is_dir($filename))
+    
+                //delete profile image uploaded by user
+                $user = fetch_single_row($delete_id, 'users');
+    
+                $user_profile_image = $user['profile_image'];
+    
+                if($user_profile_image !== null || $user_profile_image !== '')
                 {
-                    $deleted = unlink($filename);
-                    if(!$deleted)
+                    $filename = 'profile_images/' . $user_profile_image;
+                    if (file_exists($filename) && !is_dir($filename))
                     {
-                        $msg = "<div class='card error'><div>Something went wrong</div></div>";
-                        echo $msg;
+                        $deleted = unlink($filename);
+                        if(!$deleted)
+                        {
+                            $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                            echo $msg;
+                        }
+                        else
+                        {
+                            //delete from users table
+                            $executed = delete_single_row($delete_id, 'users');
+                            if($executed)
+                            {
+                                //redirect to register
+    
+                                unset($_SESSION['is_user_logged_in']);
+                                session_destroy();
+                                $msg = "<div class='card error'><div>Success!</div></div>";
+                                echo $msg;
+                        
+                            }
+                            else
+                            {
+                                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                                echo $msg;
+                            }
+                        }
                     }
                     else
                     {
@@ -730,7 +756,7 @@ if(isset($_POST['delete-user-id']))
                         if($executed)
                         {
                             //redirect to register
-
+    
                             unset($_SESSION['is_user_logged_in']);
                             session_destroy();
                             $msg = "<div class='card error'><div>Success!</div></div>";
@@ -751,7 +777,7 @@ if(isset($_POST['delete-user-id']))
                     if($executed)
                     {
                         //redirect to register
-
+    
                         unset($_SESSION['is_user_logged_in']);
                         session_destroy();
                         $msg = "<div class='card error'><div>Success!</div></div>";
@@ -767,23 +793,8 @@ if(isset($_POST['delete-user-id']))
             }
             else
             {
-                //delete from users table
-                $executed = delete_single_row($delete_id, 'users');
-                if($executed)
-                {
-                    //redirect to register
-
-                    unset($_SESSION['is_user_logged_in']);
-                    session_destroy();
-                    $msg = "<div class='card error'><div>Success!</div></div>";
-                    echo $msg;
-            
-                }
-                else
-                {
-                    $msg = "<div class='card error'><div>Something went wrong</div></div>";
-                    echo $msg;
-                }
+                $msg = "<div class='card error'><div>Something went wrong</div></div>";
+                echo $msg;
             }
         }
         else

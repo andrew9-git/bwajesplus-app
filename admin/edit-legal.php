@@ -16,6 +16,13 @@ else
 }
 
 $admin_id = $_SESSION['admin_data']['id'];
+
+$admin = fetch_single_row($admin_id, 'admin');
+
+if($admin['admin_type'] != 1)
+{
+  redirect_to($host . 'logout');
+}
 ?>
 
 <div class="home-content">

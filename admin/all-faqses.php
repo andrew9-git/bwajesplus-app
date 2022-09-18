@@ -3,6 +3,8 @@
 include('includes/header.php');
 bwajes_plus_header('faqs', 'All faqses');
 
+$id = $_SESSION['admin_data']['id'];
+$admin = fetch_single_row($id, 'admin');
 ?>
 
 <div class="home-content">
@@ -81,8 +83,7 @@ bwajes_plus_header('faqs', 'All faqses');
                     html += '<td>' + serial_no + '</td>';
                     html += '<td>' + response.data[count].faq + '</td>';
                     html += '<td><a href="each-faqs/'+ response.data[count].faq_id +'"><i class="bx bx-link-external"></i></a></td>';
-                    html += '<td><a href="edit-faqs/'+ response.data[count].faq_id +'"><i class="bx bx-edit"></i></a><?php //if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this faqs?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].faq_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><form method="post" action="all-faqses" style="display: none;" id="form-delete-'+ response.data[count].faq_id +'"><input type="hidden" value="'+ response.data[count].faq_id +'" name="delete-faqs" class="form_data_faqs"></form></td>';
-                    <?php //} ?>
+                    html += '<td><a href="edit-faqs/'+ response.data[count].faq_id +'"><i class="bx bx-edit"></i></a><?php if($admin['admin_type'] == 1){ ?>|<span style="cursor: pointer;" onclick="event.preventDefault();if(confirm(&quot;Do you really want to delete this faqs?&quot;)){document.getElementById(&quot;form-delete-'+ response.data[count].faq_id +'&quot;).submit();}"><i class="bx bx-trash"></i></span><?php } ?><form method="post" action="all-faqses" style="display: none;" id="form-delete-'+ response.data[count].faq_id +'"><input type="hidden" value="'+ response.data[count].faq_id +'" name="delete-faqs" class="form_data_faqs"></form></td>';
                     html += '</tr>';
                     serial_no++;
 

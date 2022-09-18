@@ -872,7 +872,7 @@ function deleted_users(array $value)
     $db->bindvalue(':address', $value['address'], 'str');
     $db->bindvalue(':city', $value['city'], 'str');
     $db->bindvalue(':state', $value['state'], 'str');
-    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':country', $value['country'], 'int');
 
     $execute = $db->execute();
 
@@ -948,5 +948,31 @@ function fetch_countries($by='country')
     return $rows;
 }
 
+function delete_from_email_list($email, $source)
+{
+    $db = new dbase();
+
+    $query = "DELETE FROM email_list WHERE email = :email AND source = $source";
+
+    $db->prep($query);
+
+    $db->bindvalue(':email', $email, 'str');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+//getting a single row in payment subscriptions table
+function active_subscription($value, $column_name = 'user_id', $type='int')
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM payment_subscriptions WHERE $column_name = :value ORDER BY id DESC LIMIT 1";
+    $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
+    $row = $db->fetchSingle();
+    return $row;
+}
 // End database queries
 ?>
