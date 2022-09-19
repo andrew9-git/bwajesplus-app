@@ -3865,6 +3865,8 @@ if(isset($_POST['post-master']))
     
     if(empty($errors))
     {
+		$table_name = "";
+		
 		if($group_to_send_to == "all")
 		{
 			$table_name = "email_list";
@@ -3884,10 +3886,6 @@ if(isset($_POST['post-master']))
 		elseif($group_to_send_to == "issuers")
 		{
 			$table_name = "issues";
-		}
-		elseif($group_to_send_to == "payers")
-		{
-			$table_name = "payment_subscriptions";
 		}
 		elseif($group_to_send_to == "deleted-users")
 		{
@@ -3911,21 +3909,17 @@ if(isset($_POST['post-master']))
 		{
 			$no_of_email_sent = 0;
 
-			$group_emails = select_distinct_emails($table_name);
+			$group_emails = select_distinct_emails($table_name, $group_to_send_to);
 
 			foreach($group_emails as $group_email)
 			{
-				if(isset($group_email['first_name']) && $group_to_send_to == "registered-users")
+				if(isset($group_email['first_name']) && ($group_to_send_to == "registered-users" || $group_to_send_to == "payers" || $group_to_send_to == "payers-1" || $group_to_send_to == "payers-2"))
 				{
 					//email track code
 					$code = email_track_code();
 		
 					$base_url = "http://localhost:9090/bwajes/dz5445z/";
 					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
-					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
-				}
-				elseif(isset($group_email['first_name']) && $group_to_send_to == "payers")
-				{
 					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
 				}
 				elseif(isset($group_email['first_name']) && $group_to_send_to == "deleted-users")
@@ -4000,6 +3994,11 @@ if(isset($_POST['post-master']))
 					$msg = "<div class='card success'><div><b>Success!</b> Email sent to ". $no_of_email_sent ." people</div></div>";
 					echo $msg;
 				}
+			}
+			else
+			{
+				$msg = "<div class='card error'><div>No user/person to send email to</div></div>";
+				echo $msg;
 			}
 		}
 

@@ -43,7 +43,10 @@ $id = $_SESSION['admin_data']['id'];
                         <option value="commenters">Commenters only</option>
                         <option value="issuers">Feedback givers only</option>
                         <option value="S">-------- Special list --------</option>
-                        <option value="payers">Ad removal subscribers</option>
+                        <option value="payers">Ad removal subscribers (All sub users)</option>
+                        <option value="payers-1">Ad removal subscribers (unexpired sub users)</option>
+                        <option value="payers-2">Ad removal subscribers (expired sub users)</option>
+                        <option value="payers-3">Ad removal subscribers (All sub non-users)</option>
                         <option value="deleted-users">Deleted users</option>
                         </select>
                     </div>
@@ -84,7 +87,7 @@ $id = $_SESSION['admin_data']['id'];
             {
                 salutation_div.style.display = "block";
             }
-            else if(list.value == "payers")
+            else if(list.value == "payers" || list.value == "payers-1" || list.value == "payers-2")
             {
                 salutation_div.style.display = "block";
             }

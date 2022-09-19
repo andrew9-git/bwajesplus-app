@@ -1502,7 +1502,7 @@ function insert_into_admin_sent_emails(array $value)
 }
 
 //getting all admin types
-function select_distinct_emails($table_name)
+function select_distinct_emails($table_name="", $group_to_send_to="")
 {
     $db = new dbase();
 
@@ -1510,9 +1510,21 @@ function select_distinct_emails($table_name)
     {
         $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
     }
-    elseif($table_name == "payment_subscriptions")
+    elseif($group_to_send_to == "payers")
     {
-        $query = "SELECT DISTINCT email FROM $table_name WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
+        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
+    }
+    elseif($group_to_send_to == "payers-1")
+    {
+        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0 AND end_date > NOW()";
+    }
+    elseif($group_to_send_to == "payers-2")
+    {
+        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0 AND end_date <= NOW()";
+    }
+    elseif($group_to_send_to == "payers-3")
+    {
+        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id NOT IN (SELECT id FROM users) AND unsubscribed = 0";
     }
     elseif($table_name == "deleted_users")
     {
