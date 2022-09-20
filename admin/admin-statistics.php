@@ -28,6 +28,10 @@ else
 
 <div class="home-content">
       <div class="post-area">
+      <?php 
+        if($admin['suspended'] != 1)
+        {
+      ?>
         <div class="info-container">
             <a href="<?php echo $host .'admins-statistics'; ?>" class="btn btn-success">back</a>
         </div>
@@ -61,6 +65,22 @@ else
             <div class="card-footer">
             </div>
           </div>
+          <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please contact the organisation
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
 

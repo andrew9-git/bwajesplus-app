@@ -17,9 +17,15 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
       }
 
       $admin_id = $_SESSION['admin_data']['id'];
+
+      $admin = fetch_single_row($admin_id, 'admin');
     ?>
 <div class="home-content">
       <div class="post-area">
+      <?php 
+        if($admin['suspended'] != 1)
+        {
+      ?>
         <div class="card">
           <div class="card-header">
             <div class="info-container">
@@ -46,6 +52,22 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
           <div class="card-footer">
           </div>
         </div>
+        <?php }
+        else
+        {
+        ?>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="message-head">Your account has been suspended</h4>
+            </div>
+            <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
+                <div class="ad-removal">
+                    For more information, or if you think your account was suspended by mistake, please contact the organisation
+                </div>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+        <?php } ?>
       </div>
     </div>
   <script>
