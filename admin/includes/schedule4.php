@@ -3,14 +3,16 @@
 include("scheduleFunctions.php");
 //schedule at custom interval
 
-//users that have not logged in after a day of registration
+//People that have not posted anything after 3 days of logging in to the system 
 
-$users = fetch_users_not_login();
+$users = fetch_users_login_with_no_posts();
 foreach($users as $user)
 {
-    $id = $user['id'];
+    $id = $user['user_id'];
 
-    $email = $user['email'];
+    $value = fetch_single_row($id, 'users');
+
+    $email = $value['email'];
 
     $set_from = array(
         'email' => 'support@bwajes-plus.andadel.com',

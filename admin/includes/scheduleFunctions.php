@@ -140,7 +140,20 @@ function fetch_users_not_login()
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM user_statistics WHERE last_login IS NULL AND DATEDIFF(NOW(), created_at) >= 1";
+    $query = "SELECT * FROM users WHERE id NOT IN (SELECT user_id FROM user_statistics) AND DATEDIFF(NOW(), created_at) >= 1";
+
+    $db->prep($query);
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function fetch_users_login_with_no_posts()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM user_statistics WHERE DATEDIFF(NOW(), created_at) >= 3 AND user_id NOT IN (SELECT user_id FROM posts)";
 
     $db->prep($query);
     

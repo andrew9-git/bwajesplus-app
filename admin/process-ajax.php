@@ -788,13 +788,15 @@ if(isset($_POST["view_notification"]))
 
     if($_POST["view_notification"] != '')
     {
-        update_unseen_user_sent_email();
+        update_unseen_table('user_sent_emails');
+        update_unseen_table('issues');
     }
     
-    $results = user_sent_emails_in_notification();
+    $results = tables_in_notification('user_sent_emails');
+    $results_1 = tables_in_notification('issues');
     $output = '';
 
-    if($results)
+    if($results || $result_1)
     {
         foreach($results as $result)
         {
@@ -808,6 +810,19 @@ if(isset($_POST["view_notification"]))
             </li>
             ';
         }
+
+		foreach($results_1 as $result_1)
+        {
+
+            $url  = 'http://localhost:9090/bwajesplus-app/admin/issue-details/'.$result_1['id'];
+            $output .= '
+            <li>
+                <a target="_blank" href="'.$url.'">
+                '.substr($result_1["subject"], 0, 20).'...
+                </a>
+            </li>
+            ';
+        }
     }
     else
     {
@@ -815,11 +830,14 @@ if(isset($_POST["view_notification"]))
     }
 
     //count unseen comments
-    $count = count_unseen_user_sent_emails();
+    $count = count_unseen_table('user_sent_emails');
+    $count_1 = count_unseen_table('issues');
+
+	$total = $count + $count_1;
 
     $data = array(
     'notification'   => $output,
-    'unseen_notification' => $count
+    'unseen_notification' => $total
     );
     
     echo json_encode($data);

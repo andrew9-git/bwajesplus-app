@@ -496,10 +496,10 @@ function update_last_logout($id)
 }
 
 //update unseen user sent email to 1
-function update_unseen_user_sent_email()
+function update_unseen_table($table_name)
 {
     $db = new dbase();
-    $query = "UPDATE user_sent_emails SET status = 1 WHERE status = 0";
+    $query = "UPDATE $table_name SET status = 1 WHERE status = 0";
     $db->prep($query);
 
     $execute = $db->execute();
@@ -508,11 +508,11 @@ function update_unseen_user_sent_email()
 }
 
 //fetch user sent emails to be displayed in notification
-function user_sent_emails_in_notification($limit=5, $by='id')
+function tables_in_notification($table_name, $limit=5, $by='id')
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM user_sent_emails ORDER BY $by DESC LIMIT $limit";
+    $query = "SELECT * FROM $table_name ORDER BY $by DESC LIMIT $limit";
     $db->prep($query);
 
     $rows = $db->fetchMultiple();
@@ -521,11 +521,11 @@ function user_sent_emails_in_notification($limit=5, $by='id')
 }
 
 //count unseen user sent emails
-function count_unseen_user_sent_emails()
+function count_unseen_table($table_name)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM user_sent_emails WHERE status = 0";
+    $query = "SELECT COUNT(*) FROM $table_name WHERE status = 0";
 
     $db->prep($query);
 
