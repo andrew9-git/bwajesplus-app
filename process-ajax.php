@@ -829,7 +829,7 @@ if(isset($_POST["view_notification"]))
         {
             $post = fetch_single_row($result["post_id"], 'posts');
 
-            $url  = 'http://localhost:9090/bwajes/post/'.$result["post_id"].'/'.$post["title"].'/#'.$result['id'];
+            $url  = 'http://localhost:9090/bwajes/post/'.$result["post_id"].'/'.$post["title"].'#'.$result['id'];
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">

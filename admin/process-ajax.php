@@ -790,13 +790,15 @@ if(isset($_POST["view_notification"]))
     {
         update_unseen_table('user_sent_emails');
         update_unseen_table('issues');
+        update_unseen_table('reported_posts');
     }
     
-    $results = tables_in_notification('user_sent_emails');
-    $results_1 = tables_in_notification('issues');
+    $results = tables_in_notification('user_sent_emails', 3,);
+    $results_1 = tables_in_notification('issues', 3,);
+    $results_2 = tables_in_notification('reported_posts', 3, 'post_id');
     $output = '';
 
-    if($results || $result_1)
+    if($results || $result_1 || $result_2)
     {
         foreach($results as $result)
         {
@@ -811,6 +813,8 @@ if(isset($_POST["view_notification"]))
             ';
         }
 
+		$output .= '<hr>';
+
 		foreach($results_1 as $result_1)
         {
 
@@ -823,6 +827,22 @@ if(isset($_POST["view_notification"]))
             </li>
             ';
         }
+
+		$output .= '<hr>';
+
+		foreach($results_2 as $result_2)
+        {
+			$report = fetch_single_row($result_2["report_id"], 'reports');
+
+            $url  = 'http://localhost:9090/bwajesplus-app/admin/reports-about-post/'.$result_2['post_id'];
+            $output .= '
+            <li>
+                <a target="_blank" href="'.$url.'">
+                '.substr($report["report"], 0, 20).'...
+                </a>
+            </li>
+            ';
+        }
     }
     else
     {
@@ -830,10 +850,11 @@ if(isset($_POST["view_notification"]))
     }
 
     //count unseen comments
-    $count = count_unseen_table('user_sent_emails');
+    $count   = count_unseen_table('user_sent_emails');
     $count_1 = count_unseen_table('issues');
+    $count_2 = count_unseen_table('reported_posts');
 
-	$total = $count + $count_1;
+	$total = $count + $count_1 + $count_2;
 
     $data = array(
     'notification'   => $output,
