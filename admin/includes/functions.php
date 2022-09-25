@@ -408,7 +408,7 @@ function insert_into_admin(array $value)
     $db->bindvalue(':address', $value['address'], 'str');
     $db->bindvalue(':city', $value['city'], 'str');
     $db->bindvalue(':state', $value['state'], 'str');
-    $db->bindvalue(':country', $value['country'], 'str');
+    $db->bindvalue(':country', $value['country'], 'int');
     $db->bindvalue(':registered_by', $value['registered_by'], 'int');
     $db->bindvalue(':updated_by', $value['registered_by'], 'int');
 
