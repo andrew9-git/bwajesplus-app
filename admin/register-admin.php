@@ -54,7 +54,7 @@ $admin = fetch_single_row($id, 'admin');
                 <div class="form-group">
                     <label for="admin-type">Admin type*</label>
                     <select class="form-control form_data_reg" name="admin-type" id="admin-type">
-                      <option value="null">Select type</option>
+                      <option value="S">Select type</option>
                       <?php 
                      foreach($admin_types as $admin_type)
                      {

@@ -84,6 +84,11 @@ if(isset($_POST['admin-type']))
         $errors[] = $email . ' is not a valid email';
     }
 
+	if(accepted_option($admin_type) == false)
+    {
+        $errors[] = 'Please select an admin type';
+    }
+
     if(accepted_option($gender) == false)
     {
         $errors[] = 'Please select a gender';
