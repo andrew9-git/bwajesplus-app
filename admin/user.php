@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('all-users', 'User');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
 <?php
     if(isset($_GET['u']))

@@ -6,7 +6,7 @@ bwajes_plus_header('all-countries', 'Edit country');
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 if(isset($_GET['ctr']))
 {
@@ -104,8 +104,10 @@ else
             }
 
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host . 'process-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+            xhr.open('POST', url);
 
             xhr.onload = function()
             {

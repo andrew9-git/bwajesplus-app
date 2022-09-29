@@ -30,7 +30,7 @@ foreach($users as $user)
     );
 
     $subject = 'Got an [IDEA] to share?';
-    $body = 'You are just one click away from sharing that wonderful idea to the world!. <a href="http://localhost:9090/bwajes/login" style="color: red;">GET STARTED NOW!</a>';
+    $body = 'You are just one click away from sharing that wonderful idea to the world!. <a href="'.url()[0].'login" style="color: red;">GET STARTED NOW!</a>';
     $altbody = 'You are just one click away from sharing that wonderful idea to the world!. GET STARTED NOW!';
 
     $body = email_template($body, 0, 1, '', '', 1);

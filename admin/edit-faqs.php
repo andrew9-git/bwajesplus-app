@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('faqs', 'Update FAQ');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
@@ -109,8 +109,10 @@ else
             form_data.append('answer', answer);
 
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host . 'process-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+            xhr.open('POST', url);
 
             xhr.onload = function()
             {
@@ -140,13 +142,15 @@ else
             xhr.send(form_data);
         }
 
+        let upload_url = '<?php echo $host . 'upload' ?>';
+
         CKEDITOR.replace('answer',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

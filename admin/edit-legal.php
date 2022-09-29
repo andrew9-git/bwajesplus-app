@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('legal', 'Update legal');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 if(isset($_GET['l']))
 {
@@ -121,8 +121,10 @@ if($admin['admin_type'] != 1)
             form_data.append('edit-content', content);
 
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host . 'process-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+            xhr.open('POST', url);
 
             xhr.onload = function()
             {
@@ -154,13 +156,15 @@ if($admin['admin_type'] != 1)
             xhr.send(form_data);
         }
 
+        let upload_url = '<?php echo $host . 'upload' ?>';
+
         CKEDITOR.replace('edit-content',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

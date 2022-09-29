@@ -3,7 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('create-post', 'Edit post');
 
-$host='http://localhost:9090/bwajesplus-app/';
+$host = url()[0];
 ?>
     <?php 
       if(isset($_GET['p']))
@@ -185,8 +185,10 @@ $host='http://localhost:9090/bwajesplus-app/';
             }
             // console.log(document.querySelector('.form-check-input:checked').value);
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host.'process-edit-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-edit-ajax');
+            xhr.open('POST', url);
             // const boundary = '---------------------------' + Date.now().toString(16);
             // xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary=' + boundary);
 
@@ -220,13 +222,15 @@ $host='http://localhost:9090/bwajesplus-app/';
             xhr.send(form_data);
         }
 
+        let upload_url = '<?php echo $host.'upload' ?>';
+
         CKEDITOR.replace('post',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

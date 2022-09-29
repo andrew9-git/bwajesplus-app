@@ -63,7 +63,7 @@ if(isset($_POST['user-id']))
             if($executed)
             {
                 //redirect
-                $url = 'http://localhost:9090/bwajesplus-app/remove-ads?cancelled=true';
+                $url = url()[0].'remove-ads?cancelled=true';
 
                 // redirect_to($url);
                 echo $url;

@@ -7,7 +7,7 @@ $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
 
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 if(isset($_GET['ues']))
 {

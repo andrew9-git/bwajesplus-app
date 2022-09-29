@@ -230,8 +230,10 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
           form_data.append('active_users', value);
           
           let xhr = new XMLHttpRequest();
+
+          let url = '<?php echo url()[0] . 'process-ajax' ?>';
           
-          xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+          xhr.open('POST', url);
 
           xhr.onload = function()
           {
@@ -259,8 +261,10 @@ $admin_statistics = fetch_single_row($id, 'admin_statistics', 'admin_id');
           form_data.append('active_admins', value);
           
           let xhr = new XMLHttpRequest();
+
+          let url_1 = '<?php echo url()[0] . 'process-ajax' ?>';
           
-          xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+          xhr.open('POST', url_1);
 
           xhr.onload = function()
           {

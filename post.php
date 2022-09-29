@@ -3,7 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('all-posts', 'Post');
 
-$host='http://localhost:9090/bwajesplus-app/';
+$host = url()[0];
 ?>
 <?php 
     $id = $_SESSION['bwajes_plus_user_data']['id'];
@@ -114,7 +114,7 @@ $host='http://localhost:9090/bwajesplus-app/';
               </div>
             </div>
             <div class="card-footer">
-              <a href="http://localhost:9090/bwajes/post/<?php echo $post['id'] . '/' . urlencode($post['title']) . '/'; ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
+              <a href="<?php echo url()[1].'post/'.$post['id'] . '/' . urlencode($post['title']) . '/'; ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
             </div>
             <?php }
         else
@@ -166,8 +166,10 @@ $host='http://localhost:9090/bwajesplus-app/';
           form_data.append('delete-post', id);
 
           let xhr = new XMLHttpRequest();
+
+          let url = '<?php echo $host.'process-ajax' ?>';
             
-          xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+          xhr.open('POST', url);
 
           xhr.onload = function()
           {

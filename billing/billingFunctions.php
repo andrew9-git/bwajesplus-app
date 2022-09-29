@@ -48,6 +48,12 @@ function redirect_to($url)
     header("Location: {$url}");
 }
 
+function url()
+{
+    $host='http://localhost:9090/bwajesplus-app/';
+    return array($host);
+}
+
 function encryption($string)
 {
     $ciphering = "AES-128-CTR";

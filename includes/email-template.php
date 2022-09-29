@@ -4,7 +4,8 @@
 
 function email_template_1($message='', $website=1, $id=1, $table_name="", $email="", $is_admin = 0)
 {  
-    $host = 'http://localhost:9090/bwajes/';
+    $host  = 'http://localhost:9090/bwajes/';
+    $host1 = 'http://localhost:9090/andadel/';
     
 ?>
 
@@ -363,7 +364,7 @@ p.footer {
     					<table width="100%">
     						<tr>
     							<td class="footer">
-    								<a href="<?php echo 'http://localhost:9090/andadel/' ?>" target="_blank"><img src="<?php echo $host . 'images/andLogo.png' ?>" style="width: 58px;"></a>
+    								<a href="<?php echo $host1 ?>" target="_blank"><img src="<?php echo $host . 'images/andLogo.png' ?>" style="width: 58px;"></a>
     								<p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, <?php echo date('Y') ?>.<?php if($is_admin == 0){ ?><br><a href="<?php echo $host."dz5445z/unsubscribe/" . $table_name. "/". $email ; ?>" target="_blank">Unsubscribe</a><?php } ?></p>
     							</td>
     						</tr>
@@ -378,7 +379,7 @@ p.footer {
 </html>
 
 <!-- <div style="width: 100%;text-align: center;line-height: 40px;font-size: 25px;">
-	<a href="http://localhost:9090/andadel/" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
+	<a href="<?php echo $host1 ?>" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
 </div> -->
 
 <?php 
@@ -389,7 +390,8 @@ p.footer {
 <?php 
 function email_template($message='', $website=1, $id=1, $table_name="", $email="", $is_admin = 0)
 {  
-    $host = 'http://localhost:9090/bwajes/';
+    $host  = 'http://localhost:9090/bwajes/';
+    $host1 = 'http://localhost:9090/andadel/';
 
     if($is_admin == 0)
     {
@@ -757,7 +759,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
                 <table width="100%">
                     <tr>
                         <td class="footer">
-                            <a href="http://localhost:9090/andadel/" target="_blank"><img src="' . $host . 'images/andLogo.png" style="width: 58px;"></a>
+                            <a href="'.$host1.'" target="_blank"><img src="' . $host . 'images/andLogo.png" style="width: 58px;"></a>
                             <p class="footer">1000 Street Road My City, My State 19000<br>&copy; andadel, ' . date('Y') . $unsubcribe .'</p>
                         </td>
                     </tr>
@@ -772,7 +774,7 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
     </html>
 
     <!-- <div style="width: 100%;text-align: center;line-height: 40px;font-size: 25px;">
-    <a href="http://localhost:9090/andadel/" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
+    <a href="'.$host1.'" target="_blank" style="color: #404577;text-decoration: none;">ANDADEL</a>
     </div> -->';
     return $output;
 }

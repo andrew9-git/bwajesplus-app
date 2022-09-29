@@ -3,7 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('all-admins', 'Update admin');
 
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
 <?php
 
@@ -191,8 +191,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                 form_data.append('admin-photo', document.querySelector('#upload-photo').files[0]);
                 
                 let xhr = new XMLHttpRequest();
+
+                let url = '<?php echo $host . 'process-ajax' ?>';
                 
-                xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+                xhr.open('POST', url);
 
                 xhr.onload = function()
                 {
@@ -226,13 +228,14 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        let upload_url = '<?php echo $host . 'upload' ?>';
         CKEDITOR.replace('bio',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

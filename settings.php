@@ -10,7 +10,7 @@ bwajes_plus_header('settings', 'Settings');
   $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
   $email = $_SESSION['bwajes_plus_user_data']['email'];
 
-  $host = url();
+  $host = url()[0];
   $user = fetch_single_row($id, 'users');
 ?>
     <div class="home-content">
@@ -274,13 +274,15 @@ bwajes_plus_header('settings', 'Settings');
       xhr.send(form_data);
     }
 
+      let upload_url = '<?php echo $host.'upload' ?>';
+
       CKEDITOR.replace('bio',
       {
           // Remove the redundant buttons from toolbar groups defined above.
           removeButtons: 'About,Source,Anchor',
           extraPlugins: 'justify',
           height: 300,
-          filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/upload',
+          filebrowserUploadUrl: upload_url,
           filebrowserUploadMethod: 'form'
       });
     });
@@ -480,7 +482,7 @@ bwajes_plus_header('settings', 'Settings');
                 if(regex === true)
                 {
                   form.reset();
-                  let url = 'http://localhost:9090/bwajes/register';
+                  let url = <?php echo url()[1].'register' ?>;
                   window.location.href = url;
                 }
                 delete_user_messages.innerHTML = response;
@@ -514,8 +516,10 @@ bwajes_plus_header('settings', 'Settings');
         form_data.append('user_profile_image_for_setting', user_profile_image_for_setting);
         
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {

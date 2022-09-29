@@ -77,7 +77,7 @@ if(isset($_POST['interval']))
         // $paymentDefinition->setChargeModels(array($chargeModel));
     
         $merchantPreferences = new MerchantPreferences();
-        $baseUrl = 'http://localhost:9090/bwajesplus-app';
+        $baseUrl = url()[0];
         // $baseUrl = getBaseUrl();
     
         $merchantPreferences->setReturnUrl("$baseUrl/billing/ExecuteAgreement?success=true")

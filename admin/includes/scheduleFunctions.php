@@ -60,6 +60,12 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
     // }
 }
 
+function url()
+{
+    $host='http://localhost:9090/bwajes/';
+    return array($host);
+}
+
 
 function encryption($string)
 {

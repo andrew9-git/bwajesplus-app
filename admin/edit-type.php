@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('post-type', 'Update post type');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
@@ -104,8 +104,10 @@ else
             }
 
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host . 'process-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+            xhr.open('POST', url);
 
             xhr.onload = function()
             {

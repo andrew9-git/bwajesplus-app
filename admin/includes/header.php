@@ -380,7 +380,9 @@ function bwajes_plus_header($active, $page_name)
   <?php
     if(admin_is_logged_in() === false)
     {
-      redirect_to('http://localhost:9090/bwajes/admin/login');
+      $url = url()[2].'admin/login';
+
+      redirect_to($url);
     }
     else
     {

@@ -10,7 +10,7 @@ if(isset($_POST['user_profile_image']))
     $id = $_POST['user_id'];
     $row = fetch_single_row($id, 'users');
 
-    $host = url();
+    $host = url()[0];
 
     if($row['profile_image'] === NULL)
     {
@@ -24,7 +24,7 @@ if(isset($_POST['user_profile_image']))
 
 if(isset($_POST['user_profile_image_for_setting']))
 {
-    $host = url();
+    $host = url()[0];
     $id = $_POST['user_id'];
     $user = fetch_single_row($id, 'users');
     $image = $user['profile_image'] === NULL ? $host . 'images/avatar.png' : $host . 'profile_images/' . $user['profile_image'];
@@ -829,7 +829,7 @@ if(isset($_POST["view_notification"]))
         {
             $post = fetch_single_row($result["post_id"], 'posts');
 
-            $url  = 'http://localhost:9090/bwajes/post/'.$result["post_id"].'/'.$post["title"].'#'.$result['id'];
+            $url  = url()[1].'post/'.$result["post_id"].'/'.$post["title"].'#'.$result['id'];
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">

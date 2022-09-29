@@ -2,7 +2,7 @@
 
 function ckeditor($page = '')
 {
-  $host='http://localhost:9090/bwajesplus-app/';  
+  $host = url()[0];  
 ?>
 </section>
 <?php 
@@ -393,8 +393,10 @@ function ckeditor($page = '')
           form_data.append(form_element[i].name, form_element[i].value);          
         }
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {
@@ -473,8 +475,10 @@ function ckeditor($page = '')
         } 
 
         let xhr = new XMLHttpRequest();
+
+        let url_1 = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+        xhr.open('POST', url_1);
 
         xhr.onload = function()
         {
@@ -529,8 +533,10 @@ function ckeditor($page = '')
         form_data.append('user_profile_image', user_profile_image);
         
         let xhr = new XMLHttpRequest();
+
+        let url_2 = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+        xhr.open('POST', url_2);
 
         xhr.onload = function()
         {
@@ -565,8 +571,10 @@ function ckeditor($page = '')
         form_data.append('view_notification', view_notification);
         
         let xhr = new XMLHttpRequest();
+
+        let url_3 = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/process-ajax');
+        xhr.open('POST', url_3);
 
         xhr.onload = function()
         {

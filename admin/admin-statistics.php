@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('admins-statistics', 'Admin statistics');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 

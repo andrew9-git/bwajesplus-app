@@ -1,5 +1,7 @@
 <?php
 
+include('includes/functions.php');
+
 if(isset($_FILES['upload']['tmp_name']))
 {
     $legal_photo_name = $_FILES['upload']['name'];
@@ -27,7 +29,7 @@ if(isset($_FILES['upload']['tmp_name']))
         chmod('upload_photos', 0777);
         move_uploaded_file($tmp_legal_photo, $legal_photo_folder . $new_legal_photo_name);
         $function_number = $_GET['CKEditorFuncNum'];
-        $url = 'http://localhost:9090/bwajesplus-app/admin/'.$legal_photo_folder . $new_legal_photo_name;
+        $url = url()[0].$legal_photo_folder . $new_legal_photo_name;
         $message = '';
         echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($function_number, '$url', '$message');</script>";
     

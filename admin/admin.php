@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('all-admins', 'Admin');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
 <?php
 
@@ -292,8 +292,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                 form_data.append(form_element[i].name, form_element[i].value);          
             }
             let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host.'process-ajax' ?>';
             
-            xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+            xhr.open('POST', url);
 
             xhr.onload = function()
             {

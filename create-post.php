@@ -192,13 +192,15 @@ bwajes_plus_header('create-post', 'Create post');
             xhr.send(form_data);
         }
 
+        let upload_url = '<?php echo $host.'upload' ?>';
+
         CKEDITOR.replace('post',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

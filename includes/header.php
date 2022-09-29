@@ -10,7 +10,7 @@ function bwajes_plus_header($active, $page_name)
   $first_name = $_SESSION['bwajes_plus_user_data']['first_name'];
   $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
   $email = $_SESSION['bwajes_plus_user_data']['email'];
-  $host = url();
+  $host = url()[0];
   $duration = 3600; // 1 hour 
 ?>
 
@@ -157,7 +157,8 @@ function bwajes_plus_header($active, $page_name)
     <?php
     if(user_is_logged_in() === false)
     {
-      redirect_to('http://localhost:9090/bwajes/login');
+      $url = url()[1].'login';
+      redirect_to($url);
     }
     else
     {

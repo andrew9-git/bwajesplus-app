@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('reported-posts', 'Reports about post');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
     <?php 
       if(isset($_GET['p']))
@@ -116,8 +116,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
           form_data.append('post_id', post_id);
 
           let xhr = new XMLHttpRequest();
+
+          let url = '<?php echo $host . 'process-ajax' ?>';
                   
-          xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+          xhr.open('POST', url);
 
           xhr.onload = function()
           {

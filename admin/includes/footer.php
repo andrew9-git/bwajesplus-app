@@ -3,7 +3,8 @@
 function ckeditor($page = '')
 {
 
-  $hostname='http://localhost:9090/bwajesplus-app/';
+  $host  = url()[0];
+  $host1 = url()[1];
   
 ?>
 <?php 
@@ -99,7 +100,7 @@ function ckeditor($page = '')
     </div>
   </div>
 
-  <script src="<?php echo $hostname .'assets/js/admin.js'; ?>">
+  <script src="<?php echo $host1 .'assets/js/admin.js'; ?>">
   </script>
   <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -192,8 +193,10 @@ function ckeditor($page = '')
         form_data.append('view_notification', view_notification);
         
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {
@@ -254,8 +257,10 @@ function ckeditor($page = '')
         form_data.append('admin_profile_image', admin_profile_image);
         
         let xhr = new XMLHttpRequest();
+
+        let url_1 = '<?php echo $host.'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+        xhr.open('POST', url_1);
 
         xhr.onload = function()
         {

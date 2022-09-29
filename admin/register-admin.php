@@ -3,6 +3,8 @@
 include('includes/header.php');
 bwajes_plus_header('all-admins', 'Register admin');
 
+$host = url()[0];
+
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
@@ -208,13 +210,16 @@ $admin = fetch_single_row($id, 'admin');
     </script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+
+        let upload_url = '<?php echo $host . 'upload' ?>';
+
         CKEDITOR.replace('bio',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

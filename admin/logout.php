@@ -15,7 +15,8 @@ if($executed)
     {
         unset($_SESSION['is_bwajes_plus_admin_logged_in']);
         session_destroy();
-        redirect_to('http://localhost:9090/bwajes/admin/login');
+        $url = url()[2]. 'admin/login';
+        redirect_to($url);
     }
 }
 

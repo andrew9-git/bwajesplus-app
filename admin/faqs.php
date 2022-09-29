@@ -3,6 +3,8 @@
 include('includes/header.php');
 bwajes_plus_header('faqs', 'FAQs');
 
+$host = url()[0];
+
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
@@ -125,13 +127,15 @@ $admin = fetch_single_row($id, 'admin');
             xhr.send(form_data);
         }
 
+        let upload_url = '<?php echo $host . 'upload' ?>';
+
         CKEDITOR.replace('answer',
         {
             // Remove the redundant buttons from toolbar groups defined above.
             removeButtons: 'About,Source,Anchor',
             extraPlugins: 'justify',
             height: 300,
-            filebrowserUploadUrl: 'http://localhost:9090/bwajesplus-app/admin/upload',
+            filebrowserUploadUrl: upload_url,
             filebrowserUploadMethod: 'form'
         });
       });

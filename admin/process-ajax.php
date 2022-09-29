@@ -8,6 +8,8 @@ require_once('includes/phpmailer.php');
 require_once('includes/functions.php');
 session_start();
 
+$host = url()[0];
+
 if(isset($_POST['admin-type']))
 {
     $registered_by = trim($_POST['registered-by']);
@@ -808,7 +810,7 @@ if(isset($_POST["view_notification"]))
         foreach($results as $result)
         {
 
-            $url  = 'http://localhost:9090/bwajesplus-app/admin/user-email/'.$result['id'];
+            $url  = $host .'user-email/'.$result['id'];
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">
@@ -823,7 +825,7 @@ if(isset($_POST["view_notification"]))
 		foreach($results_1 as $result_1)
         {
 
-            $url  = 'http://localhost:9090/bwajesplus-app/admin/issue-details/'.$result_1['id'];
+            $url  = $host .'issue-details/'.$result_1['id'];
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">
@@ -839,7 +841,7 @@ if(isset($_POST["view_notification"]))
         {
 			$report = fetch_single_row($result_2["report_id"], 'reports');
 
-            $url  = 'http://localhost:9090/bwajesplus-app/admin/reports-about-post/'.$result_2['post_id'];
+            $url  = $host .'reports-about-post/'.$result_2['post_id'];
             $output .= '
             <li>
                 <a target="_blank" href="'.$url.'">
@@ -3962,7 +3964,7 @@ if(isset($_POST['post-master']))
 					//email track code
 					$code = email_track_code();
 		
-					$base_url = "http://localhost:9090/bwajes/dz5445z/";
+					$base_url = url()[2]."dz5445z/";
 					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
 					$message = $track . '<p>'.$salutation . ' ' . ucfirst(strtolower($group_email['first_name'])) . '</p>' . trim($_POST['post-master']);
 				}
@@ -3975,7 +3977,7 @@ if(isset($_POST['post-master']))
 					//email track code
 					$code = email_track_code();
 
-					$base_url = "http://localhost:9090/bwajes/dz5445z/";
+					$base_url = url()[2]."dz5445z/";
 					$track = '<img src="'.$base_url.'email_track/'.$code.'" width="1" height="1">';
 					$message = $track . trim($_POST['post-master']);	
 				}

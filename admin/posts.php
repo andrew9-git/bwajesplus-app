@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('all-users', 'User posts');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
 <?php
     if(isset($_GET['u']))
@@ -97,8 +97,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
         form_data.append('user_id', user_id);
 
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host . 'process-ajax' ?>';
                 
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {
@@ -118,7 +120,7 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
                     html += '<td>' + response.data[count].description + '</td>';
                     html += '<td>' + response.data[count].date_created + '</td>';
                     html += '<td>' + response.data[count].date_updated + '</td>';
-                    html += '<td><a href="http://localhost:9090/bwajesplus-app/admin/post/'+ response.data[count].post_id +'"><i class="bx bx-link-external"></i></a></td>';
+                    html += '<td><a href="<?php echo $host ?>post/'+ response.data[count].post_id +'"><i class="bx bx-link-external"></i></a></td>';
                     html += '</tr>';
                     serial_no++;
 

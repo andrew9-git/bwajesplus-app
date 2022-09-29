@@ -14,7 +14,9 @@ function db($dbname)
 function url()
 {
     $host='http://localhost:9090/bwajesplus-app/';
-    return $host;
+    $host1='http://localhost:9090/bwajes/';
+    $host2='http://localhost:9090/andadel/';
+    return array($host, $host1, $host2);
 }
 
 function redirect_to($url)
@@ -102,7 +104,7 @@ function afiliate_programmes_rotation()
 
         //the url can first be a php page with query string to check the number of times an affiliate link has been clicked
 
-        $display .= '<a href="'. $url .'" target="_blank"><img src="http://localhost:9090/bwajesplus-app/images/'. $image .'"></a>';
+        $display .= '<a href="'. $url .'" target="_blank"><img src="'.url()[0].'images/'. $image .'"></a>';
 
         //if you want to track impressions
 

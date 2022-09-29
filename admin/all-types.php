@@ -6,7 +6,7 @@ bwajes_plus_header('post-type', 'All post types');
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 $admin = fetch_single_row($id, 'admin');
 
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
 
 <div class="home-content">

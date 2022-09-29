@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('create-report', 'Edit report');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 ?>
     <?php 
       if(isset($_GET['r']))
@@ -103,8 +103,10 @@ $host='http://localhost:9090/bwajesplus-app/admin/';
         }
 
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host . 'process-ajax' ?>';
         
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {

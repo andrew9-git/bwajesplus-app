@@ -143,7 +143,7 @@ include('billingFunctions.php');
                     else
                     {
                         //redirect to remove-ads page with a message using query string
-                        $url = 'http://localhost:9090/bwajesplus-app/remove-ads?success=true';
+                        $url = url()[0].'remove-ads?success=true';
 
                         redirect_to($url);
                     }
@@ -205,7 +205,7 @@ include('billingFunctions.php');
                     else
                     {
                         //redirect to remove-ads page with a message using query string
-                        $url = 'http://localhost:9090/bwajesplus-app/remove-ads?success=true';
+                        $url = url()[0].'remove-ads?success=true';
 
                         redirect_to($url);
                     }

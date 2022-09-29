@@ -2,7 +2,7 @@
 
 include('includes/header.php');
 bwajes_plus_header('admin-sent-emails', 'All users and/or others that opened mail');
-$host='http://localhost:9090/bwajesplus-app/admin/';
+$host = url()[0];
 
 $id = $_SESSION['bwajes_plus_admin_data']['id'];
 $admin = fetch_single_row($id, 'admin');
@@ -101,8 +101,10 @@ $admin = fetch_single_row($id, 'admin');
         form_data.append('mail_opened_id', mail_opened_id);
 
         let xhr = new XMLHttpRequest();
+
+        let url = '<?php echo $host . 'process-ajax' ?>';
                 
-        xhr.open('POST', 'http://localhost:9090/bwajesplus-app/admin/process-ajax');
+        xhr.open('POST', url);
 
         xhr.onload = function()
         {
