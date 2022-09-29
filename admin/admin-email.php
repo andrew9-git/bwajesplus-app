@@ -4,7 +4,7 @@ include('includes/header.php');
 bwajes_plus_header('admin-sent-emails', 'Admin sent email');
 $host='http://localhost:9090/bwajesplus-app/admin/';
 
-$id = $_SESSION['admin_data']['id'];
+$id = $_SESSION['bwajes_plus_admin_data']['id'];
 $host='http://localhost:9090/bwajesplus-app/admin/';
 
 if(isset($_GET['aes']))
@@ -18,7 +18,6 @@ else
   redirect_to('logout');
 }
 
-$id = $_SESSION['admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
 ?>

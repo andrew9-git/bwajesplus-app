@@ -4,7 +4,7 @@ include('includes/header.php');
 bwajes_plus_header('post-category', 'Update post category');
 $host='http://localhost:9090/bwajesplus-app/admin/';
 
-$id = $_SESSION['admin_data']['id'];
+$id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
 

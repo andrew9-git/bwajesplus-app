@@ -53,7 +53,7 @@ function csrf_token()
 //checking if the user has already logged in or not
 function user_is_logged_in()
 {
-    if(isset($_SESSION['is_user_logged_in']))
+    if(isset($_SESSION['is_bwajes_plus_user_logged_in']))
     {
         return true;
     }

@@ -6,7 +6,7 @@ bwajes_plus_header('all-posts', 'All posts');
 ?>
 
 <?php 
-    $id = $_SESSION['user_data']['id'];
+    $id = $_SESSION['bwajes_plus_user_data']['id'];
 ?>
     <div class="home-content">
       <div class="post-area">

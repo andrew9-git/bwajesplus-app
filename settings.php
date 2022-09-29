@@ -5,10 +5,10 @@ bwajes_plus_header('settings', 'Settings');
 
 ?>
 <?php
-  $id = $_SESSION['user_data']['id'];
-  $first_name = $_SESSION['user_data']['first_name'];
-  $last_name = $_SESSION['user_data']['last_name'];
-  $email = $_SESSION['user_data']['email'];
+  $id = $_SESSION['bwajes_plus_user_data']['id'];
+  $first_name = $_SESSION['bwajes_plus_user_data']['first_name'];
+  $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
+  $email = $_SESSION['bwajes_plus_user_data']['email'];
 
   $host = url();
   $user = fetch_single_row($id, 'users');

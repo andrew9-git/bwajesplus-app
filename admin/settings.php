@@ -6,7 +6,7 @@ bwajes_plus_header('settings', 'Settings');
 ?>
 <?php
 
-    $id = $_SESSION['admin_data']['id'];
+    $id = $_SESSION['bwajes_plus_admin_data']['id'];
     $admin = fetch_single_row($id, 'admin');
 
     $admin_types = admin_type();

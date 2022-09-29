@@ -7,7 +7,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
 
 
 <?php 
-    $id = $_SESSION['user_data']['id'];
+    $id = $_SESSION['bwajes_plus_user_data']['id'];
 
     $count = db_row_count($id, 'user_id', 'posts', 'int');
     if($count == 0)
@@ -37,7 +37,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                         {
                             echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar-msg">
                             <div id="left">
-                            <div style="margin-top:4%;">Thank you '.$_SESSION['user_data']['first_name'].'. Your payment was successful.</div>
+                            <div style="margin-top:4%;">Thank you '.$_SESSION['bwajes_plus_user_data']['first_name'].'. Your payment was successful.</div>
                             </div>
                             <div id="right">
                             <a href="#" id="hide-times-msg">X</a>
@@ -50,7 +50,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                     {
                         echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar-msg">
                         <div id="left" style="color: #111;">
-                        <div style="margin-top:4%;">Hi '.$_SESSION['user_data']['first_name'].'. Please select a plan.</div>
+                        <div style="margin-top:4%;">Hi '.$_SESSION['bwajes_plus_user_data']['first_name'].'. Please select a plan.</div>
                         </div>
                         <div id="right">
                         <a href="#" id="hide-times-msg">X</a>
@@ -99,7 +99,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                             <form id="cancel_subscription_form">
                                 <div id="cancel_subscription_messages"></div>
                                 <div class="form-group">
-                                    <input type="hidden" class="form-control form_data_cancel" value="<?php echo $_SESSION['user_data']['id']; ?>" name="user-id">
+                                    <input type="hidden" class="form-control form_data_cancel" value="<?php echo $_SESSION['bwajes_plus_user_data']['id']; ?>" name="user-id">
                                 </div>
                                 <button name="cancel-sub" id="cancel-subscription" class="btn btn-danger">Cancel subscription</button>
                             </form>

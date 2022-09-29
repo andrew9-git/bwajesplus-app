@@ -15,7 +15,7 @@ else
   redirect_to('logout');
 }
 
-$admin_id = $_SESSION['admin_data']['id'];
+$admin_id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($admin_id, 'admin');
 

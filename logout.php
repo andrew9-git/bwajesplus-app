@@ -3,7 +3,7 @@ require_once('includes/functions.php');
 //logout script with last visited algorithm
 session_start();
 
-$id = $_SESSION['user_data']['id'];
+$id = $_SESSION['bwajes_plus_user_data']['id'];
 
 $executed = set_active_to_0($id);
 
@@ -13,7 +13,7 @@ if($executed)
     
     if($executed)
     {
-        unset($_SESSION['is_user_logged_in']);
+        unset($_SESSION['is_bwajes_plus_user_logged_in']);
         session_destroy();
         redirect_to('http://localhost:9090/bwajes/login');
     }

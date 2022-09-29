@@ -5,7 +5,7 @@ bwajes_plus_header('dashboard', 'Dashboard');
 
 ?>
     <?php 
-      $id = $_SESSION['user_data']['id'];
+      $id = $_SESSION['bwajes_plus_user_data']['id'];
       $user_statistics = fetch_single_row($id, 'user_statistics', 'user_id');
     ?>
     <div class="home-content">
@@ -16,7 +16,7 @@ bwajes_plus_header('dashboard', 'Dashboard');
             {
               echo '<div class="ShowHide" style="background-color: #ccc;" id="Bar-msg">
               <div id="left" style="color: #111;"><div style="margin-top:4%;"><h4>
-              Welcome '.$_SESSION['user_data']['first_name'].'! Thanks for joining the bwajes+ family</h4></div>
+              Welcome '.$_SESSION['bwajes_plus_user_data']['first_name'].'! Thanks for joining the bwajes+ family</h4></div>
               </div>
               <div id="right">
                 <a href="#" id="hide-times-msg">X</a>

@@ -6,7 +6,7 @@ bwajes_plus_header('all-posts', 'Post');
 $host='http://localhost:9090/bwajesplus-app/';
 ?>
 <?php 
-    $id = $_SESSION['user_data']['id'];
+    $id = $_SESSION['bwajes_plus_user_data']['id'];
 
     if(isset($_GET['p']))
     {

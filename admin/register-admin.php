@@ -3,14 +3,11 @@
 include('includes/header.php');
 bwajes_plus_header('all-admins', 'Register admin');
 
-$id = $_SESSION['admin_data']['id'];
+$id = $_SESSION['bwajes_plus_admin_data']['id'];
 
 $admin = fetch_single_row($id, 'admin');
 ?>
-<?php 
-    $id = $_SESSION['admin_data']['id'];
-
-    $admin = fetch_single_row($id, 'admin');
+<?php
 
     if($admin['admin_type'] != 1)
     {
@@ -18,7 +15,6 @@ $admin = fetch_single_row($id, 'admin');
     }
 
     $admin_types = admin_type();
-    $admin = fetch_single_row($id, 'admin');
 ?>
 <div class="home-content">
       <div class="post-area">

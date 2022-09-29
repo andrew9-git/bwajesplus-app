@@ -7,10 +7,10 @@ function ckeditor($page = '')
   
 ?>
 <?php 
-    $id = $_SESSION['admin_data']['id'];
-    $username = $_SESSION['admin_data']['username'];
-    $first_name = $_SESSION['admin_data']['first_name'];
-    $last_name = $_SESSION['admin_data']['last_name'];
+    $id = $_SESSION['bwajes_plus_admin_data']['id'];
+    $username = $_SESSION['bwajes_plus_admin_data']['username'];
+    $first_name = $_SESSION['bwajes_plus_admin_data']['first_name'];
+    $last_name = $_SESSION['bwajes_plus_admin_data']['last_name'];
 
     $info = fetch_single_row($id, 'admin');
     $email = $info['email'];

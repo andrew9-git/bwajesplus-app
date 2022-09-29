@@ -3,7 +3,7 @@
 include('includes/header.php');
 bwajes_plus_header('all-countries', 'All countries');
 
-$id = $_SESSION['admin_data']['id'];
+$id = $_SESSION['bwajes_plus_admin_data']['id'];
 $admin = fetch_single_row($id, 'admin');
 
 $host='http://localhost:9090/bwajesplus-app/admin/';

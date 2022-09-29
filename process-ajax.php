@@ -736,7 +736,7 @@ if(isset($_POST['delete-user-id']))
                             {
                                 //redirect to register
     
-                                unset($_SESSION['is_user_logged_in']);
+                                unset($_SESSION['is_bwajes_plus_user_logged_in']);
                                 session_destroy();
                                 $msg = "<div class='card error'><div>Success!</div></div>";
                                 echo $msg;
@@ -757,7 +757,7 @@ if(isset($_POST['delete-user-id']))
                         {
                             //redirect to register
     
-                            unset($_SESSION['is_user_logged_in']);
+                            unset($_SESSION['is_bwajes_plus_user_logged_in']);
                             session_destroy();
                             $msg = "<div class='card error'><div>Success!</div></div>";
                             echo $msg;
@@ -778,7 +778,7 @@ if(isset($_POST['delete-user-id']))
                     {
                         //redirect to register
     
-                        unset($_SESSION['is_user_logged_in']);
+                        unset($_SESSION['is_bwajes_plus_user_logged_in']);
                         session_destroy();
                         $msg = "<div class='card error'><div>Success!</div></div>";
                         echo $msg;

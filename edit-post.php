@@ -17,7 +17,7 @@ $host='http://localhost:9090/bwajesplus-app/';
         redirect_to('logout');
       }
 
-      $user_id = $_SESSION['user_data']['id'];
+      $user_id = $_SESSION['bwajes_plus_user_data']['id'];
 
       $post_categories = post_category();
       $post_types = post_type();

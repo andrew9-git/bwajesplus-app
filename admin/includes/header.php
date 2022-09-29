@@ -9,10 +9,10 @@ function bwajes_plus_header($active, $page_name)
   $host  = url()[0];
   $host1 = url()[1];
 
-  $id = $_SESSION['admin_data']['id'];
-  $first_name = $_SESSION['admin_data']['first_name'];
-  $last_name = $_SESSION['admin_data']['last_name'];
-  $username = $_SESSION['admin_data']['username'];
+  $id = $_SESSION['bwajes_plus_admin_data']['id'];
+  $first_name = $_SESSION['bwajes_plus_admin_data']['first_name'];
+  $last_name = $_SESSION['bwajes_plus_admin_data']['last_name'];
+  $username = $_SESSION['bwajes_plus_admin_data']['username'];
   $duration = 3600; // 1 hour 
 
   $admin = fetch_single_row($id, 'admin');
@@ -384,7 +384,7 @@ function bwajes_plus_header($active, $page_name)
     }
     else
     {
-      $last_login_timestamp = $_SESSION['admin_data']['time'];
+      $last_login_timestamp = $_SESSION['bwajes_plus_admin_data']['time'];
       
       check_inactive_admin($last_login_timestamp, $duration);
     }

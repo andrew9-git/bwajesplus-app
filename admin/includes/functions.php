@@ -54,7 +54,7 @@ function csrf_token()
 //checking if the user has already logged in or not
 function admin_is_logged_in()
 {
-    if(isset($_SESSION['is_admin_logged_in']))
+    if(isset($_SESSION['is_bwajes_plus_admin_logged_in']))
     {
         return true;
     }

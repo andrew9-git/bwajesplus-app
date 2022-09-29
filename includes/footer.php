@@ -6,10 +6,10 @@ function ckeditor($page = '')
 ?>
 </section>
 <?php 
-    $id = $_SESSION['user_data']['id'];
-    $email = $_SESSION['user_data']['email'];
-    $first_name = $_SESSION['user_data']['first_name'];
-    $last_name = $_SESSION['user_data']['last_name'];
+    $id = $_SESSION['bwajes_plus_user_data']['id'];
+    $email = $_SESSION['bwajes_plus_user_data']['email'];
+    $first_name = $_SESSION['bwajes_plus_user_data']['first_name'];
+    $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
     $user = fetch_single_row($id, 'users');
 ?>
 <?php

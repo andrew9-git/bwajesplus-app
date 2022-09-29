@@ -6,10 +6,10 @@ $csrf = csrf_token();
 function bwajes_plus_header($active, $page_name)
 {
 
-  $id = $_SESSION['user_data']['id'];
-  $first_name = $_SESSION['user_data']['first_name'];
-  $last_name = $_SESSION['user_data']['last_name'];
-  $email = $_SESSION['user_data']['email'];
+  $id = $_SESSION['bwajes_plus_user_data']['id'];
+  $first_name = $_SESSION['bwajes_plus_user_data']['first_name'];
+  $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
+  $email = $_SESSION['bwajes_plus_user_data']['email'];
   $host = url();
   $duration = 3600; // 1 hour 
 ?>
@@ -161,7 +161,7 @@ function bwajes_plus_header($active, $page_name)
     }
     else
     {
-      $last_login_timestamp = $_SESSION['user_data']['time'];
+      $last_login_timestamp = $_SESSION['bwajes_plus_user_data']['time'];
       
       check_inactive_user($last_login_timestamp, $duration);
     }

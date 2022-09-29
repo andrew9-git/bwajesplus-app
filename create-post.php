@@ -5,7 +5,7 @@ bwajes_plus_header('create-post', 'Create post');
 
 ?>
     <?php 
-      $id = $_SESSION['user_data']['id'];
+      $id = $_SESSION['bwajes_plus_user_data']['id'];
       $post_categories = post_category();
       $post_types = post_type();
     ?>
