@@ -146,7 +146,20 @@ function fetch_users_not_login()
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM users WHERE id NOT IN (SELECT user_id FROM user_statistics) AND DATEDIFF(NOW(), created_at) >= 1";
+    $query = "SELECT * FROM users WHERE id NOT IN (SELECT user_id FROM user_statistics) AND password IS NOT NULL AND DATEDIFF(NOW(), created_at) >= 1";
+
+    $db->prep($query);
+    
+    $rows = $db->fetchMultiple();
+
+    return $rows;
+}
+
+function fetch_users_with_uncomplete_registration()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM users WHERE password IS NULL AND DATEDIFF(NOW(), created_at) >= 1";
 
     $db->prep($query);
     
