@@ -327,10 +327,11 @@ p.footer {
                                                 <td>
                                                     <div id="callout">
                                                         <ul class="social">
-                                                            <li><a href="#" target="_blank"><img src="<?php echo $host . 'images/facebook.png' ?>"></a></li>
-                                                            <li><a href="#" target="_blank"><img src="<?php echo $host . 'images/twitter.png' ?>"></a></li>
-                                                            <li><a href="#" target="_blank"><img src="<?php echo $host . 'images/instagram.png' ?>"></a></li>
-                                                            <li><a href="#" target="_blank"><img src="<?php echo $host . 'images/in.PNG' ?>"></a></li>
+                                                            <li><a href="https://facebook.com/profile.php?id=100086117185921" target="_blank"><img src="<?php echo $host . 'images/facebook.png' ?>"></a></li>
+                                                            <li><a href="https://twitter.com/_andadel" target="_blank"><img src="<?php echo $host . 'images/twitter.png' ?>"></a></li>
+                                                            <li><a href="https://www.instagram.com/_andadel/" target="_blank"><img src="<?php echo $host . 'images/instagram.png' ?>"></a></li>
+                                                            <li><a href="https://www.youtube.com/channel/UCEQpktFAS6vlFMfVskVsmBA" target="_blank"><img src="<?php echo $host . 'images/youtube.png' ?>"></a></li>
+                                                            <li><a href="https://www.linkedin.com/company/andadel" target="_blank"><img src="<?php echo $host . 'images/in.PNG' ?>"></a></li>
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -722,10 +723,11 @@ function email_template($message='', $website=1, $id=1, $table_name="", $email="
                                         <td>
                                             <div id="callout">
                                                 <ul class="social">
-                                                    <li><a href="#" target="_blank"><img src="' . $host . 'images/facebook.png"></a></li>
-                                                    <li><a href="#" target="_blank"><img src="' . $host . 'images/twitter.png"></a></li>
-                                                    <li><a href="#" target="_blank"><img src="' . $host . 'images/instagram.png"></a></li>
-                                                    <li><a href="#" target="_blank"><img src="' . $host . 'images/in.PNG"></a></li>
+                                                    <li><a href="https://facebook.com/profile.php?id=100086117185921" target="_blank"><img src="' . $host . 'images/facebook.png"></a></li>
+                                                    <li><a href="https://twitter.com/_andadel" target="_blank"><img src="' . $host . 'images/twitter.png"></a></li>
+                                                    <li><a href="https://www.instagram.com/_andadel/" target="_blank"><img src="' . $host . 'images/instagram.png"></a></li>
+                                                    <li><a href="https://www.youtube.com/channel/UCEQpktFAS6vlFMfVskVsmBA" target="_blank"><img src="' . $host . 'images/youtube.png"></a></li>
+                                                    <li><a href="https://www.linkedin.com/company/andadel" target="_blank"><img src="' . $host . 'images/in.PNG"></a></li>
                                                 </ul>
                                             </div>
                                         </td>
