@@ -114,7 +114,7 @@ $host = url()[0];
               </div>
             </div>
             <div class="card-footer">
-              <a href="<?php echo url()[1].'post/'.$post['id'] . '/' . urlencode($post['title']) . '/'; ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
+              <a href="<?php echo url()[1].'post/'.$post['id'] . '/' . urlencode($post['title']); ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
             </div>
             <?php }
         else

@@ -3,6 +3,8 @@
 include('includes/header.php');
 bwajes_plus_header('create-post', 'Create post');
 
+$host = url()[0];
+
 ?>
     <?php 
       $id = $_SESSION['bwajes_plus_user_data']['id'];

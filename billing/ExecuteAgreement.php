@@ -82,7 +82,7 @@ include('billingFunctions.php');
         }
 
         $end_date = date('Y-m-d H:i:s', strtotime("+{$interval} {$month}", strtotime($start_date)));
-        $user_id = $_SESSION['user_data']['id'];
+        $user_id = $_SESSION['bwajes_plus_user_data']['id'];
 
         //if interval is 12, add 1 to number of private posts allowed
         if($interval == 12)
@@ -118,16 +118,16 @@ include('billingFunctions.php');
                         'name' => 'Payment Service'
                     );
 
-                    $name = $_SESSION['user_data']['first_name']. ' ' . $_SESSION['user_data']['last_name'];
+                    $name = $_SESSION['bwajes_plus_user_data']['first_name']. ' ' . $_SESSION['bwajes_plus_user_data']['last_name'];
                     $add_address = array(
-                        'email' => $_SESSION['user_data']['email'],
+                        'email' => $_SESSION['bwajes_plus_user_data']['email'],
                         'name' => $name
                     );
 
                     $subject = 'Ads removal';
-                    $body_msg = 'Thank you ' . ucfirst(strtolower($_SESSION['user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
-                    $altbody = 'Thank you ' . ucfirst(strtolower($_SESSION['user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
-                    $body = email_template($body_msg, 0, 1, encryption('users'), $_SESSION['user_data']['email']);
+                    $body_msg = 'Thank you ' . ucfirst(strtolower($_SESSION['bwajes_plus_user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $altbody = 'Thank you ' . ucfirst(strtolower($_SESSION['bwajes_plus_user_data']['first_name'])). '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts. This subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $body = email_template($body_msg, 0, 1, encryption('users'), $_SESSION['bwajes_plus_user_data']['email']);
 
                     $data = array(
                         'subject' => $subject,
@@ -180,15 +180,15 @@ include('billingFunctions.php');
                         'name' => 'bwajes+'
                     );
 
-                    $name = $_SESSION['user_data']['first_name']. ' ' . $_SESSION['user_data']['last_name'];
+                    $name = $_SESSION['bwajes_plus_user_data']['first_name']. ' ' . $_SESSION['bwajes_plus_user_data']['last_name'];
                     $add_address = array(
-                        'email' => $_SESSION['user_data']['email'],
+                        'email' => $_SESSION['bwajes_plus_user_data']['email'],
                         'name' => $name
                     );
 
                     $subject = 'Ads removal';
-                    $body_msg = 'Thank you ' . $_SESSION['user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
-                    $altbody = 'Thank you ' . $_SESSION['user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $body_msg = 'Thank you ' . $_SESSION['bwajes_plus_user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
+                    $altbody = 'Thank you ' . $_SESSION['bwajes_plus_user_data']['first_name']. '. we\'ve recieved your payment of '.$value.' for ads removal on all your posts.\r\nThis subscription will be due for renewal on '.date("F jS, Y", strtotime($end_date));
                     $body = email_template($body_msg, 0);
 
                     $data = array(

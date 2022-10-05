@@ -64,23 +64,7 @@ bwajes_plus_header('settings', 'Settings');
                 </div>
                 <div class="form-group">
                   <label for="bio">Bio</label>
-                  <textarea name="bio" class="form-control form_data" rows="5" id="bio"><?php if($user['bio'] != NULL){ echo $user['bio']; } ?></textarea>
-                </div>
-                <div class="form-group publish" id="public-bio">
-                  <div class="tooltip-container">
-                      <div><span>Publish</span> <i class='bx bx-help-circle tooltip'></i></div>
-                      <div class="tooltip">Publish to make your bio "public"</div>
-                  </div>
-                  <div class="form-check-inline">
-                      <label class="form-check-label">
-                          <input type="radio" class="form-check-input form_data" value="1" name="public" checked> Yes
-                      </label>
-                  </div>
-                  <div class="form-check-inline">
-                      <label class="form-check-label">
-                          <input type="radio" class="form-check-input form_data" value="0" name="public"> No
-                      </label>
-                  </div>
+                  <textarea name="bio" class="form-control" rows="5" id="bio"><?php if($user['bio'] != NULL){ echo $user['bio']; } ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="website">Website</label>
@@ -232,14 +216,11 @@ bwajes_plus_header('settings', 'Settings');
 
       for(let i = 0; i < form_element.length; i++)
       {
-        if(form_element[i].type == "radio" && form_element[i].name == 'public')
-        {
-          form_data.append(form_element[i].name, document.querySelector('.form-check-input:checked').value);
-        }
-        else{
-          form_data.append(form_element[i].name, form_element[i].value);
-        }   
+        form_data.append(form_element[i].name, form_element[i].value);
       }
+      let bio = CKEDITOR.instances['bio'].getData();
+            
+      form_data.append('bio', bio);
 
       let xhr = new XMLHttpRequest();
       
@@ -428,69 +409,72 @@ bwajes_plus_header('settings', 'Settings');
     document.addEventListener('DOMContentLoaded', () => {
 
       let form = document.getElementById('delete_user_form');
-      let delete_user_button = document.getElementById('delete_user');
-      let delete_user_messages = document.getElementById('delete_user_messages');
-      form.addEventListener('submit', delete_user);
-
-      function delete_user(e)
+      if(form)
       {
-        e.preventDefault();
-        delete_user_button.disabled = true;
+        let delete_user_button = document.getElementById('delete_user');
+        let delete_user_messages = document.getElementById('delete_user_messages');
+        form.addEventListener('submit', delete_user);
 
-        let del_usr_btn_bg_col = delete_user_button.style.backgroundColor;
-        let del_usr_btn_border = delete_user_button.style.border;
-        let del_usr_btn_cursor = delete_user_button.style.cursor;
-
-        if(delete_user_button.disabled == true)
+        function delete_user(e)
         {
-            delete_user_button.style.backgroundColor = 'grey';
-            delete_user_button.style.border = 'grey';
-            delete_user_button.style.cursor = 'not-allowed';
+          e.preventDefault();
+          delete_user_button.disabled = true;
+
+          let del_usr_btn_bg_col = delete_user_button.style.backgroundColor;
+          let del_usr_btn_border = delete_user_button.style.border;
+          let del_usr_btn_cursor = delete_user_button.style.cursor;
+
+          if(delete_user_button.disabled == true)
+          {
+              delete_user_button.style.backgroundColor = 'grey';
+              delete_user_button.style.border = 'grey';
+              delete_user_button.style.cursor = 'not-allowed';
+          }
+
+          let form_element = document.getElementsByClassName('form_data_delete');
+
+          let form_data = new FormData();
+
+          for(let i = 0; i < form_element.length; i++)
+          {
+            form_data.append(form_element[i].name, form_element[i].value);          
+          }
+
+          let xhr = new XMLHttpRequest();
+          
+          xhr.open('POST', 'process-ajax');
+          // const boundary = '---------------------------' + Date.now().toString(16);
+          // xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary=' + boundary);
+
+          xhr.onload = function()
+          {
+              if(this.status == 200)
+              {
+                  delete_user_button.disabled = false;
+
+                  if(delete_user_button.disabled == false)
+                  {
+                      delete_user_button.style.backgroundColor = del_usr_btn_bg_col;
+                      delete_user_button.style.border = del_usr_btn_border;
+                      delete_user_button.style.cursor = del_usr_btn_cursor;
+                  }
+
+                  let response = xhr.responseText;
+                  const pattern = /Success!/;
+                  let regex = pattern.test(response);
+                  if(regex === true)
+                  {
+                    form.reset();
+                    let url = '<?php echo url()[1].'register' ?>';
+                    window.location.href = url;
+                  }
+                  delete_user_messages.innerHTML = response;
+                
+              }
+          }
+          
+          xhr.send(form_data);
         }
-
-        let form_element = document.getElementsByClassName('form_data_delete');
-
-        let form_data = new FormData();
-
-        for(let i = 0; i < form_element.length; i++)
-        {
-          form_data.append(form_element[i].name, form_element[i].value);          
-        }
-
-        let xhr = new XMLHttpRequest();
-        
-        xhr.open('POST', 'process-ajax');
-        // const boundary = '---------------------------' + Date.now().toString(16);
-        // xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary=' + boundary);
-
-        xhr.onload = function()
-        {
-            if(this.status == 200)
-            {
-                delete_user_button.disabled = false;
-
-                if(delete_user_button.disabled == false)
-                {
-                    delete_user_button.style.backgroundColor = del_usr_btn_bg_col;
-                    delete_user_button.style.border = del_usr_btn_border;
-                    delete_user_button.style.cursor = del_usr_btn_cursor;
-                }
-
-                let response = xhr.responseText;
-                const pattern = /Success!/;
-                let regex = pattern.test(response);
-                if(regex === true)
-                {
-                  form.reset();
-                  let url = <?php echo url()[1].'register' ?>;
-                  window.location.href = url;
-                }
-                delete_user_messages.innerHTML = response;
-              
-            }
-        }
-        
-        xhr.send(form_data);
       }
     });
   </script>

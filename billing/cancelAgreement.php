@@ -27,7 +27,7 @@ if(isset($_POST['user-id']))
     paypal_config($apiContext);
 
 
-    // $user_id = $_SESSION['user_data']['id'];
+    // $user_id = $_SESSION['bwajes_plus_user_data']['id'];
     $user_id = $_POST['user-id'];
 
     $row = fetch_single_row_in_payment($user_id, 'user_id');

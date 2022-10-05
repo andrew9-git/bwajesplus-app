@@ -287,7 +287,10 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                         //   console.log(response);
                           window.location.href = response;
                         }
-                        cancel_subscription_messages.innerHTML = response;
+                        else
+                        {
+                            cancel_subscription_messages.innerHTML = response;
+                        }
                         // console.log(response);
                     }
                 }

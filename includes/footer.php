@@ -83,8 +83,9 @@ function ckeditor($page = '')
       <div class="card-body">
         <div class="delete-account-container">
           <div>
-            <div class="delete-account-notification-wrapper">
+            <?php  $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');if($count > 0){ ?>
             <?php  $sub = active_subscription($id);if($sub['state'] == 'Cancelled'){ ?>
+            <div class="delete-account-notification-wrapper">
               <i class="bx bx-alarm-exclamation delete-notification"></i> <span class="delete-account-notification-text">Deleting your account will</span>
             </div>
             <div>
@@ -141,6 +142,58 @@ function ckeditor($page = '')
                 </div>
             </div>
             <?php } ?>
+            <?php }else{ ?>
+            <div class="delete-account-notification-wrapper">
+              <i class="bx bx-alarm-exclamation delete-notification"></i> <span class="delete-account-notification-text">Deleting your account will</span>
+            </div>
+            <div>
+              <ul class="delete-account-notification-list">
+                <li>Erase your account from bwajes+</li>
+                <li>Delete all your posts</li>
+              </ul>
+            </div>
+            <form id="delete_user_form">
+                <div id="delete_user_messages">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-id" value="<?php echo $id; ?>" id="delete-user-id">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-first-name" value="<?php echo $first_name; ?>" id="delete-user-first-name">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-last-name" value="<?php echo $last_name; ?>" id="delete-user-last-name">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-email" value="<?php echo $email; ?>" id="delete-user-email">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-gender" value="<?php echo $user['gender']; ?>" id="delete-user-gender">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-phone" value="<?php echo $user['phone']; ?>" id="delete-user-phone">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-website" value="<?php echo $user['website']; ?>" id="delete-user-website">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-birth-date" value="<?php echo $user['birthdate']; ?>" id="delete-user-birth-date">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-address" value="<?php echo $user['address']; ?>" id="delete-user-address">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-city" value="<?php echo $user['city']; ?>" id="delete-user-city">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-state" value="<?php echo $user['state']; ?>" id="delete-user-state">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control form_data_delete" name="delete-user-country" value="<?php echo $user['country']; ?>" id="delete-user-country">
+                </div>
+                <button name="send-mail" id="delete_user" class="btn btn-danger">Delete</button>
+            </form>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -177,7 +230,7 @@ function ckeditor($page = '')
             <label for="support">Choose Support Department*</label>
             <select class="form-control form_data" name="department" id="department">
               <option value="S">Select department</option>
-              <option value="support@bwajes-plus.andadel.com">General Support</option>
+              <option value="reciever@bwajes-plus.andadel.com">General Support</option>
               <option value="it@bwajes-plus.andadel.com">IT Support</option>
               <option value="admin@bwajes-plus.andadel.com">Adminstration Support</option>
               <option value="billing@bwajes-plus.andadel.com">Billing Support</option>

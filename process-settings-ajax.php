@@ -14,7 +14,6 @@ if(isset($_POST['bio']))
     $gender        = trim($_POST['gender']);
     $phone         = trim($_POST['phone']); 
     $bio           = trim($_POST['bio']);
-    $public        = trim($_POST['public']);
     $website       = trim($_POST['website']); 
     $birth_date    = trim($_POST['birth-date']);
     $address       = trim($_POST['address']); 
@@ -136,6 +135,10 @@ if(isset($_POST['bio']))
         {
             $errors[] = 'Please ensure that your birth date is valid';
         }
+        elseif($birth_date == date('Y-m-d'))
+        {
+            $errors[] = 'Please ensure that your birth date is in the past';
+        }
     }
     else
     {
@@ -218,7 +221,6 @@ if(isset($_POST['bio']))
             'gender'        => $gender,
             'phone'         => $phone,
             'bio'           => $bio,
-            'public'        => $public,
             'website'       => $website,
             'birthdate'     => $birth_date,
             'address'       => $address,

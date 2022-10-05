@@ -777,7 +777,7 @@ function ratings(array $value)
 function update_user($value)
 {
     $db = new dbase();
-    $query = "UPDATE users SET first_name = :first_name, last_name = :last_name, business_name = :business_name, gender = :gender, phone = :phone, bio = :bio, public = :public, website = :website, birthdate = :birthdate, address = :address, city = :city, state = :state, country = :country, updated_at = NOW() WHERE id = :id";
+    $query = "UPDATE users SET first_name = :first_name, last_name = :last_name, business_name = :business_name, gender = :gender, phone = :phone, bio = :bio, website = :website, birthdate = :birthdate, address = :address, city = :city, state = :state, country = :country, updated_at = NOW() WHERE id = :id";
     $db->prep($query);
 
     $db->bindvalue(':id', $value['id'], 'int');
@@ -787,7 +787,6 @@ function update_user($value)
     $db->bindvalue(':gender', $value['gender'], 'str');
     $db->bindvalue(':phone', $value['phone'], 'str');
     $db->bindvalue(':bio', $value['bio'], 'str');
-    $db->bindvalue(':public', $value['public'], 'int');
     $db->bindvalue(':website', $value['website'], 'str');
     $db->bindvalue(':birthdate', $value['birthdate'], 'str');
     $db->bindvalue(':address', $value['address'], 'str');
