@@ -86,7 +86,9 @@ if(isset($_POST['query']))
 		$values = array(
 			'user_id'		=>	$user_id,
 			'title'		    =>	'%' . $condition . '%',
-			'description'	=>	'%' . $condition . '%'
+			'description'	=>	'%' . $condition . '%',
+			'category'	    =>	'%' . $condition . '%',
+			'type'	        =>	'%' . $condition . '%'
 		);
 
         $total_data = count_post_a($values);

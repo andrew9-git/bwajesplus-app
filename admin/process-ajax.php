@@ -4100,9 +4100,9 @@ if(isset($_POST['open_rate_query']))
 
 		foreach($open_rates as $open_rate)
 		{
-			$rate_open = (float) (($open_rate["no_of_mails_opened"] / $open_rate["no_of_mails_recieved"]) * 100);
+			$rate_open = (float) ($open_rate['open_rate'] * 100);
 
-			$rate_open = number_format($rate_open, 2, '.', '');
+			$rate_open = number_format($rate_open, 2);
 
 			$data[] = array(
 				'id'	=>	$open_rate["id"],
@@ -4120,14 +4120,16 @@ if(isset($_POST['open_rate_query']))
 
 		foreach($open_rates as $open_rate)
 		{
-			$rate_open = ($open_rate["no_of_mails_opened"] / $open_rate["no_of_mails_recieved"]) * 100;
+			$rate_open = (float) ($open_rate['open_rate'] * 100);
+
+			$rate_open = number_format($rate_open, 2);
 
 			$data[] = array(
 				'id'	=>	$open_rate["id"],
 				'email'	=>	$open_rate["email"],
 				'no_of_mails_recieved'	=>	$open_rate["no_of_mails_recieved"],
 				'no_of_mails_opened'	=>	$open_rate["no_of_mails_opened"],
-				'open_rate'	=>	$rate_open
+				'open_rate'	=>	$rate_open."%"
 			);
 		}
 	}
@@ -5099,7 +5101,8 @@ if(isset($_POST['admin_query']))
 		$values = array(
 			'first_name' =>	'%' . $condition . '%',
 			'last_name'	 =>	'%' . $condition . '%',
-			'username'	 =>	'%' . $condition . '%'
+			'username'	 =>	'%' . $condition . '%',
+			'type'	     =>	'%' . $condition . '%'
 		);
 
         $total_data = count_admin_a($values);
@@ -6524,7 +6527,9 @@ if(isset($_POST['all_post_query']))
 
 		$values = array(
 			'title'       =>	'%' . $condition . '%',
-			'description' =>	'%' . $condition . '%'
+			'description' =>	'%' . $condition . '%',
+			'category'    =>	'%' . $condition . '%',
+			'type'        =>	'%' . $condition . '%'
 		);
 
         $total_data = count_posts_a($values, 0);

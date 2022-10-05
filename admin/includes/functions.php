@@ -1577,7 +1577,7 @@ function search_open_rates_with_wildcard($value, $offset, $limit)
 {
     $db = new dbase();
 
-    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE sent_to_email = email AND email_status = 1) as no_of_mails_opened FROM email_tracking WHERE sent_to_email LIKE :sent_to_email GROUP BY sent_to_email ORDER BY id DESC";
+    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE sent_to_email = email AND email_status = 1) as no_of_mails_opened, ((SELECT COUNT(sent_to_email) FROM email_tracking WHERE email_status = 1 AND sent_to_email = email) / COUNT(sent_to_email)) as open_rate FROM email_tracking WHERE sent_to_email LIKE :sent_to_email GROUP BY sent_to_email ORDER BY open_rate DESC";
 
     $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
 
@@ -1608,7 +1608,7 @@ function search_open_rates($offset, $limit, $by='id')
 {
     $db = new dbase();
     
-    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE email_status = 1 AND sent_to_email = email) as no_of_mails_opened FROM email_tracking GROUP BY sent_to_email ORDER BY id DESC";
+    $query = "SELECT id, sent_to_email as email, COUNT(sent_to_email) as no_of_mails_recieved, (SELECT COUNT(sent_to_email) FROM email_tracking WHERE email_status = 1 AND sent_to_email = email) as no_of_mails_opened, ((SELECT COUNT(sent_to_email) FROM email_tracking WHERE email_status = 1 AND sent_to_email = email) / COUNT(sent_to_email)) as open_rate FROM email_tracking GROUP BY sent_to_email ORDER BY open_rate DESC";
     
     $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
 
@@ -1866,13 +1866,14 @@ function count_admin_a($value)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username ORDER BY id DESC";
+    $query = "SELECT COUNT(*) FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username OR admin_type IN (SELECT id FROM admin_type WHERE type LIKE :type) ORDER BY id DESC";
 
     $db->prep($query);
 
     $db->bindvalue(':first_name', $value['first_name'], 'str');
     $db->bindvalue(':last_name', $value['last_name'], 'str');
     $db->bindvalue(':username', $value['username'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
 
     $total_data = $db->fetchCol();
 
@@ -1883,7 +1884,7 @@ function search_admin_with_wildcard($value, $offset, $limit)
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username ORDER BY id DESC";
+    $query = "SELECT * FROM admin WHERE first_name LIKE :first_name OR last_name LIKE :last_name OR username LIKE :username OR admin_type IN (SELECT id FROM admin_type WHERE type LIKE :type) ORDER BY id DESC";
 
     $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
 
@@ -1892,6 +1893,7 @@ function search_admin_with_wildcard($value, $offset, $limit)
     $db->bindvalue(':first_name', $value['first_name'], 'str');
     $db->bindvalue(':last_name', $value['last_name'], 'str');
     $db->bindvalue(':username', $value['username'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
     
     $rows = $db->fetchMultiple();
 
@@ -2332,7 +2334,7 @@ function count_posts_a($value, $where=1)
     $db = new dbase();
 
     $query = "";
-    $query .= "SELECT COUNT(*) FROM posts WHERE (title LIKE :title OR description LIKE :description)";
+    $query .= "SELECT COUNT(*) FROM posts WHERE (title LIKE :title OR description LIKE :description OR category_id IN (SELECT id FROM post_category WHERE category LIKE :category) OR type_id IN (SELECT id FROM post_type WHERE type LIKE :type))";
     if($where == 1)
     {
         $query .= " AND user_id = :user_id";
@@ -2343,6 +2345,8 @@ function count_posts_a($value, $where=1)
 
     $db->bindvalue(':title', $value['title'], 'str');
     $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':category', $value['category'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
     if($where == 1)
     {
         $db->bindvalue(':user_id', $value['user_id'], 'int');
@@ -2358,7 +2362,7 @@ function search_posts_with_wildcard($value, $offset, $limit, $where=1)
     $db = new dbase();
 
     $query = "";
-    $query .= "SELECT * FROM posts WHERE (title LIKE :title OR description LIKE :description)";
+    $query .= "SELECT * FROM posts WHERE (title LIKE :title OR description LIKE :description OR category_id IN (SELECT id FROM post_category WHERE category LIKE :category) OR type_id IN (SELECT id FROM post_type WHERE type LIKE :type))";
     if($where == 1)
     {
         $query .= " AND user_id = :user_id";
@@ -2371,6 +2375,8 @@ function search_posts_with_wildcard($value, $offset, $limit, $where=1)
 
     $db->bindvalue(':title', $value['title'], 'str');
     $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':category', $value['category'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
     if($where == 1)
     {
         $db->bindvalue(':user_id', $value['user_id'], 'int');

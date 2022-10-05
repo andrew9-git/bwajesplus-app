@@ -28,7 +28,7 @@ $admin = fetch_single_row($id, 'admin');
                     </div>
                     <div class="search-button-wrapper">
                         <div class="form-group">
-                            <input type="search" class="form-control" placeholder="search for user here..." name="search" id="search" onkeyup="load_data(this.value);">
+                            <input type="search" class="form-control" placeholder="search for user here..." name="search" id="search">
                         </div>
                         <!-- <div class="form-group">
                             <input type="hidden" value="<?php //echo $id; ?>" class="form-control" name="user_id" id="search_user_id">
@@ -76,7 +76,14 @@ $admin = fetch_single_row($id, 'admin');
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        
         load_data();
+
+        let search = document.getElementById('search');
+
+        search.addEventListener('keyup', () => {
+          load_data(search.value);
+        });
 
         function load_data(query='', page_number = 1)
         {

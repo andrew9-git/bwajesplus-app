@@ -665,13 +665,15 @@ function count_post_a($value)
     $db = new dbase();
 
     $query = "SELECT COUNT(*) FROM posts WHERE (title LIKE :title 
-    OR description LIKE :description) AND user_id = :user_id ORDER BY id DESC";
+    OR description LIKE :description OR category_id IN (SELECT id FROM post_category WHERE category LIKE :category) OR type_id IN (SELECT id FROM post_type WHERE type LIKE :type)) AND user_id = :user_id ORDER BY id DESC";
 
     $db->prep($query);
 
     $db->bindvalue(':user_id', $value['user_id'], 'int');
     $db->bindvalue(':title', $value['title'], 'str');
     $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':category', $value['category'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
 
     $total_data = $db->fetchCol();
 
@@ -684,7 +686,7 @@ function search_post_with_wildcard($value, $offset, $limit)
 
     $query = "SELECT id, title, description 
     FROM posts WHERE (title LIKE :title 
-    OR description LIKE :description) AND user_id = :user_id ORDER BY id DESC";
+    OR description LIKE :description OR category_id IN (SELECT id FROM post_category WHERE category LIKE :category) OR type_id IN (SELECT id FROM post_type WHERE type LIKE :type)) AND user_id = :user_id ORDER BY id DESC";
 
     $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
 
@@ -693,6 +695,8 @@ function search_post_with_wildcard($value, $offset, $limit)
     $db->bindvalue(':user_id', $value['user_id'], 'int');
     $db->bindvalue(':title', $value['title'], 'str');
     $db->bindvalue(':description', $value['description'], 'str');
+    $db->bindvalue(':category', $value['category'], 'str');
+    $db->bindvalue(':type', $value['type'], 'str');
     
     $rows = $db->fetchMultiple();
 
