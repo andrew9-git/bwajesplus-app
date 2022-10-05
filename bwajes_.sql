@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2022 at 05:04 PM
+-- Generation Time: Oct 05, 2022 at 10:57 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -217,7 +217,13 @@ INSERT INTO `admin_sent_emails` (`id`, `set_from_name`, `set_from_email`, `subje
 (106, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-09-19 07:19:20'),
 (107, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-09-19 07:19:44'),
 (108, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-09-19 07:20:12'),
-(109, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-09-30 09:50:45');
+(109, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-09-30 09:50:45'),
+(110, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>\r\n\r\n<p>&nbsp;</p>', 4, '2022-10-04 17:21:59'),
+(111, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665000938_abstract.jpg\" style=\"height:413px; width:900px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:16:14'),
+(112, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001410_abstract.jpg\" style=\"height:344px; width:750px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:24:00'),
+(113, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001606_abstract.jpg\" style=\"height:344px; width:750px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:26:57'),
+(114, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001857_abstract.jpg\" style=\"height:292px; width:635px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:31:19'),
+(115, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665002102_author.jpg\" style=\"height:354px; width:632px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:35:25');
 
 -- --------------------------------------------------------
 
@@ -243,7 +249,7 @@ CREATE TABLE `admin_statistics` (
 
 INSERT INTO `admin_statistics` (`id`, `admin_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
 (14, 3, '2022-09-22 21:24:52', '2022-09-17 00:43:41', 'Chrome', 'Windows 10', 'Unknown', '2022-08-27 13:04:46', '2022-09-22 21:24:52'),
-(15, 4, '2022-09-30 09:50:17', '2022-09-29 11:55:38', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-09-30 09:50:17');
+(15, 4, '2022-10-05 19:58:04', '2022-10-05 15:57:34', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-10-05 19:58:04');
 
 -- --------------------------------------------------------
 
@@ -289,7 +295,7 @@ CREATE TABLE `affiliate_programmes` (
 --
 
 INSERT INTO `affiliate_programmes` (`id`, `url`, `name`, `image`, `shown`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(2, 'https://google.com', 'hostinger', 'Hosting24-blue.png', 1, 1, 1, '2022-08-08 17:46:45', '2022-08-08 17:46:45'),
+(2, 'https://google.com', 'hostinger', 'Hosting24-blue.png', 0, 1, 1, '2022-08-08 17:46:45', '2022-08-08 17:46:45'),
 (3, 'https://google.com', 'coursera', 'coursera.png', 0, 1, 1, '2022-08-08 18:57:23', '2022-08-08 18:57:23'),
 (7, 'http://localhost:9090/bwajesplus-app/admin/create-affiliate', 'New Definition 3.0', '1662380136_ground.jpg', 0, 3, 3, '2022-09-05 10:00:55', '2022-09-05 12:15:36');
 
@@ -325,15 +331,16 @@ INSERT INTO `comments` (`id`, `post_id`, `user_id`, `parent_id`, `first_name`, `
 (3, 34, 122, 0, 'Ugo', 'chizzy@gmail.com', NULL, 'Some bwajes+ comments', 1, 0, NULL, '2022-09-23 09:13:26', '2022-09-23 09:13:26'),
 (4, 34, 122, 3, 'Ngozi', 'andrewadelodun@gmail.com', 'http://localhost:9090/bwajesplus-app/settings', 'replying ugo', 1, 0, NULL, '2022-09-23 13:14:52', '2022-09-23 13:14:52'),
 (5, 34, 122, 4, 'Samuel', 'andrewadelodun@gmail.com', 'http://localhost:9090/bwajesplus-app/settings', 'Replying Ngozi', 1, 0, NULL, '2022-09-23 13:38:12', '2022-09-23 13:38:12'),
-(6, 34, 122, 2, 'Grace', 'grace419@gmail.com', NULL, 'Replying andrew', 0, 0, NULL, '2022-09-23 13:57:07', '2022-09-23 13:57:07'),
-(7, 34, 122, 6, 'Faruq', 'faruq698@gmail.com', NULL, 'Replying grace', 0, 0, NULL, '2022-09-23 14:00:22', '2022-09-23 14:00:22'),
-(8, 34, 122, 7, 'Kofo', 'andrewadelodun@gmail.com', NULL, 'Replying faruq', 0, 0, NULL, '2022-09-23 14:03:49', '2022-09-23 14:03:49'),
-(9, 32, 122, 1, 'Remi', 'remin8934@gmail.com', NULL, 'Replying Andrew', 0, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
-(10, 32, 122, 9, 'Theresa', 'the033@gmail.com', NULL, 'Replying Remi', 0, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
-(11, 32, 122, 0, 'Emmanuel', 'andreloun@gmail.com', NULL, 'Added a comment', 0, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
-(12, 32, 122, 10, 'Goodness', 'goodness@fmail.com', NULL, 'Replying Theresa', 0, 0, NULL, '2022-09-25 12:10:01', '2022-09-25 12:10:01'),
-(13, 32, 122, 9, 'Bello', 'bello@gmail.com', NULL, 'Is form reset working?', 0, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
-(14, 32, 122, 13, 'Shina', 'shina@gmail.com', NULL, 'Form reset should be working now', 0, 0, NULL, '2022-09-25 12:15:56', '2022-09-25 12:15:56');
+(6, 34, 122, 2, 'Grace', 'grace419@gmail.com', NULL, 'Replying andrew', 1, 0, NULL, '2022-09-23 13:57:07', '2022-09-23 13:57:07'),
+(7, 34, 122, 6, 'Faruq', 'faruq698@gmail.com', NULL, 'Replying grace', 1, 0, NULL, '2022-09-23 14:00:22', '2022-09-23 14:00:22'),
+(8, 34, 122, 7, 'Kofo', 'andrewadelodun@gmail.com', NULL, 'Replying faruq', 1, 0, NULL, '2022-09-23 14:03:49', '2022-09-23 14:03:49'),
+(9, 32, 122, 1, 'Remi', 'remin8934@gmail.com', NULL, 'Replying Andrew', 1, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
+(10, 32, 122, 9, 'Theresa', 'the033@gmail.com', NULL, 'Replying Remi', 1, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
+(11, 32, 122, 0, 'Emmanuel', 'andreloun@gmail.com', NULL, 'Added a comment', 1, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
+(12, 32, 122, 10, 'Goodness', 'goodness@fmail.com', NULL, 'Replying Theresa', 1, 0, NULL, '2022-09-25 12:10:01', '2022-09-25 12:10:01'),
+(13, 32, 122, 9, 'Bello', 'bello@gmail.com', NULL, 'Is form reset working?', 1, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
+(14, 32, 122, 13, 'Shina', 'shina@gmail.com', NULL, 'Form reset should be working now', 1, 0, NULL, '2022-09-25 12:15:56', '2022-09-25 12:15:56'),
+(15, 32, 122, 12, 'Samuel', 'andrewadelodun@gmail.com', NULL, 'compulsory comment', 0, 0, NULL, '2022-10-05 13:31:54', '2022-10-05 13:31:54');
 
 -- --------------------------------------------------------
 
@@ -590,7 +597,15 @@ INSERT INTO `deleted_users` (`id`, `user_id`, `first_name`, `last_name`, `email`
 (7, 99, 'ADELODUN', 'OLUWADAMILARE', 'andrelodun@gmail.com', 'F', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-09-18 16:38:54'),
 (8, 97, 'ADELODUN', 'OLUWADAMILARE', 'andrewadel@gmail.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-09-18 16:45:03'),
 (9, 127, 'my', 'php', 'reciever@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-09-18 17:40:15'),
-(10, 127, 'my', 'php', 'reciever@bwajes-plus.andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-09-18 17:41:11');
+(10, 127, 'my', 'php', 'reciever@bwajes-plus.andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-09-18 17:41:11'),
+(11, 135, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', '', '', NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 16:43:54'),
+(12, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 17:48:02'),
+(13, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:40:48'),
+(14, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:41:26'),
+(15, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:41:39'),
+(16, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:41:57'),
+(17, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:42:28'),
+(18, 136, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'M', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '2022-10-05 19:44:23');
 
 -- --------------------------------------------------------
 
@@ -655,7 +670,10 @@ INSERT INTO `email_list` (`id`, `first_name`, `email`, `source`, `unsubscribed`,
 (140, NULL, 'dun@gmail.com', 1, 0, NULL, '2022-09-30 09:54:39', '2022-09-30 09:54:39'),
 (141, NULL, 'd@gmail.com', 1, 0, NULL, '2022-09-30 11:54:25', '2022-09-30 11:54:25'),
 (142, 'user', 'duny@gmail.com', 1, 0, NULL, '2022-09-30 11:59:53', '2022-09-30 11:59:53'),
-(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42');
+(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42'),
+(144, 'Samuel', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-10-05 13:31:54', '2022-10-05 13:31:54'),
+(146, 'Andrew', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-10-05 16:14:58', '2022-10-05 16:14:58'),
+(148, 'Samuel', 'samuel@andadel.com', 1, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 19:50:52');
 
 -- --------------------------------------------------------
 
@@ -781,7 +799,7 @@ INSERT INTO `email_tracking` (`id`, `admin_sent_emails_id`, `sent_to_email`, `em
 (78, 86, 'reciever@andadel.com', '10c5d3fa2f72ed05b57814d014e6e200', 1, '2022-09-18 18:02:04', '2022-09-18 18:03:04'),
 (79, 87, 'sb-u75sf6477041@personal.example.com', '40b5831915dde2aef7035abb0b4edccb', 0, '2022-09-18 20:07:27', NULL),
 (80, 88, 'sb-u75sf6477041@personal.example.com', 'abfce634c63a1aa1fafbf7a6f3b878d3', 0, '2022-09-18 20:19:42', NULL),
-(81, 88, 'reciever@bwajes-plus.andadel.com', '39f5c0841d0028501a466eb53dad8b2b', 1, '2022-09-18 20:19:44', '2022-09-18 20:20:08'),
+(81, 88, 'reciever@bwajes-plus.andadel.com', '39f5c0841d0028501a466eb53dad8b2b', 1, '2022-09-18 20:19:44', '2022-10-05 17:30:44'),
 (82, 92, 'sb-u75sf6477041@personal.example.com', '94bf766d0fd6482ef892284b2bc22159', 0, '2022-09-19 07:00:10', NULL),
 (83, 92, 'reciever@bwajes-plus.andadel.com', 'b482ff5bbecb76898c66456308224a02', 1, '2022-09-19 07:00:13', '2022-09-19 07:00:30'),
 (84, 93, 'sb-u75sf6477041@personal.example.com', 'fb0ca72aa28c1681fb69b37537663c91', 0, '2022-09-19 07:05:46', NULL),
@@ -800,7 +818,7 @@ INSERT INTO `email_tracking` (`id`, `admin_sent_emails_id`, `sent_to_email`, `em
 (97, 99, 'andrewadelun@gmail.com', '24ebbd58c4425e65aa620fa7c255a177', 0, '2022-09-19 07:16:03', NULL),
 (98, 99, 'myphptestemail@gmail.com', '4b5c31104543539cc5c6e391900a1c90', 0, '2022-09-19 07:16:05', NULL),
 (99, 99, 'andrew12adelodun@gmail.com', '12e895c0a93f1a6527441eb63f2c07cb', 0, '2022-09-19 07:16:07', NULL),
-(100, 99, 'reciever@bwajes-plus.andadel.com', '2404a0a16c9f36f66b714cbbc7e3b128', 1, '2022-09-19 07:16:10', '2022-09-19 07:23:48'),
+(100, 99, 'reciever@bwajes-plus.andadel.com', '2404a0a16c9f36f66b714cbbc7e3b128', 1, '2022-09-19 07:16:10', '2022-10-05 17:30:37'),
 (101, 100, 'andrewadelodun001@gmail.com', '2fad8d2c7ad3b6613411b53a51e570f1', 0, '2022-09-19 07:16:54', NULL),
 (102, 100, 'andrewadelodun@gmail.com', '5068e4dc05890836c7f85bea6bd81532', 0, '2022-09-19 07:16:57', NULL),
 (103, 100, 'andrew12adelodun@gmail.com', '8502ac9b508061bd4b2909c156b1ff84', 0, '2022-09-19 07:16:59', NULL),
@@ -819,7 +837,52 @@ INSERT INTO `email_tracking` (`id`, `admin_sent_emails_id`, `sent_to_email`, `em
 (116, 109, 'andrewadelodun@gmail.com', '3953f9322155e9bfaa8b0786d5667651', 0, '2022-09-30 09:50:50', NULL),
 (117, 109, 'andrew12adelodun@gmail.com', '853ce0281c5ac015f79d1b295d100d07', 0, '2022-09-30 09:50:53', NULL),
 (118, 109, 'reciever@bwajes-plus.andadel.com', 'ad3a2bf028a5cb80fb3ae6d83b35233a', 1, '2022-09-30 09:50:56', '2022-09-30 09:51:21'),
-(119, 109, 'reciever@andadel.com', '53d3427664add24ffa8b0775e1524dd9', 1, '2022-09-30 09:50:58', '2022-09-30 09:51:36');
+(119, 109, 'reciever@andadel.com', '53d3427664add24ffa8b0775e1524dd9', 1, '2022-09-30 09:50:58', '2022-09-30 09:51:36'),
+(120, 110, 'andrewadelodun001@gmail.com', '4007ff5c2ef812d856e6c24a7a3ef570', 0, '2022-10-04 17:22:03', NULL),
+(121, 110, 'andrewadelodun@gmail.com', '7b1ce441ab7175f50510be877b4a2e50', 0, '2022-10-04 17:22:06', NULL),
+(122, 110, 'andrew12adelodun@gmail.com', '854d0f72dc676e82a7625bcf73d8cb46', 0, '2022-10-04 17:22:08', NULL),
+(123, 110, 'reciever@bwajes-plus.andadel.com', '885cd520cbb9d5c497246edf0861102f', 1, '2022-10-04 17:22:11', '2022-10-04 17:23:25'),
+(124, 110, 'dun@gmail.com', 'a16b18150fcc01808f0fc52242cc42ff', 0, '2022-10-04 17:22:14', NULL),
+(125, 110, 'd@gmail.com', 'ada548035a2fe67ab18f173246a6cf59', 0, '2022-10-04 17:22:16', NULL),
+(126, 110, 'duny@gmail.com', 'c186c4565648d29001ac42dc69165cf2', 0, '2022-10-04 17:22:19', NULL),
+(127, 110, 'reciever@andadel.com', '186ae7ad1628d22376154dc0107e5264', 1, '2022-10-04 17:22:22', '2022-10-04 17:23:22'),
+(128, 111, 'andrewadelodun001@gmail.com', '6f75bf020e25451491059cd200362ee3', 0, '2022-10-05 20:16:17', NULL),
+(129, 111, 'andrewadelodun@gmail.com', '542ac384753144c5d5b86ac1ab817a56', 0, '2022-10-05 20:16:19', NULL),
+(130, 111, 'andrew12adelodun@gmail.com', '06ff06e8c2745d5358b919d8a91dcc99', 0, '2022-10-05 20:16:22', NULL),
+(131, 111, 'reciever@bwajes-plus.andadel.com', 'fd4584ddf41f6276a2fef9f48ccf0ac1', 0, '2022-10-05 20:16:24', NULL),
+(132, 111, 'dun@gmail.com', '7a7fdf48799d720ec68db1e4bf4b352c', 0, '2022-10-05 20:16:27', NULL),
+(133, 111, 'd@gmail.com', '4677eb60ae5eed4b2a54c727f11a4140', 0, '2022-10-05 20:16:30', NULL),
+(134, 111, 'duny@gmail.com', 'd2a9c87f8ac9c2c2a00983bfa7935692', 0, '2022-10-05 20:16:32', NULL),
+(135, 111, 'reciever@andadel.com', '6c58fbaeca0cb778a44a64b631644c3e', 1, '2022-10-05 20:16:34', '2022-10-05 20:16:52'),
+(136, 111, 'samuel@andadel.com', '88158b54a396750cc9ac7e9e107967a1', 0, '2022-10-05 20:16:37', NULL),
+(137, 112, 'solataiwo@gmail.com', '19b77fcb31345ddd2f91555c9eb2c3b2', 0, '2022-10-05 20:24:03', NULL),
+(138, 113, 'andrewadelodun001@gmail.com', '0755b278099178b94910a73d8c2c03de', 0, '2022-10-05 20:26:59', NULL),
+(139, 113, 'andrewadelodun@gmail.com', 'd18e6c962d0b3b37603abea3ff3d8e28', 0, '2022-10-05 20:27:01', NULL),
+(140, 113, 'andrew12adelodun@gmail.com', '504c685af2f103533bdd27947162838e', 0, '2022-10-05 20:27:04', NULL),
+(141, 113, 'reciever@bwajes-plus.andadel.com', '32597feb716e0d6c053e2905f78dd3a8', 1, '2022-10-05 20:27:06', '2022-10-05 20:27:15'),
+(142, 113, 'dun@gmail.com', '318b8ca696afd88a90c4e46e27ffeb9b', 0, '2022-10-05 20:27:09', NULL),
+(143, 113, 'd@gmail.com', 'a349a22ebcce7582f2f6b000bccdb762', 0, '2022-10-05 20:27:11', NULL),
+(144, 113, 'duny@gmail.com', '7b2e977c18f0db480cf67f0743a03c1a', 0, '2022-10-05 20:27:14', NULL),
+(145, 113, 'reciever@andadel.com', 'a9cb85f3b26ac6204d4b75789132c317', 0, '2022-10-05 20:27:16', NULL),
+(146, 113, 'samuel@andadel.com', 'caacd2eee4b4b99a72fc298cfb8e9cfb', 0, '2022-10-05 20:27:22', NULL),
+(147, 114, 'andrewadelodun001@gmail.com', 'f4ea1147b0c97be55919d2c349f6e91c', 0, '2022-10-05 20:31:21', NULL),
+(148, 114, 'andrewadelodun@gmail.com', 'c8142c9e18ca0ef77c633f8e13235036', 0, '2022-10-05 20:31:24', NULL),
+(149, 114, 'andrew12adelodun@gmail.com', '15669fc0b9365fc14bb95ef7c0d4a92b', 0, '2022-10-05 20:31:26', NULL),
+(150, 114, 'reciever@bwajes-plus.andadel.com', 'f268a0618cf9fe621d9d693a3b810e88', 1, '2022-10-05 20:31:28', '2022-10-05 20:31:40'),
+(151, 114, 'dun@gmail.com', 'ba294c5cf8bea5514309969c24b7614a', 0, '2022-10-05 20:31:31', NULL),
+(152, 114, 'd@gmail.com', 'cf8cf96276e904e7bfa4b6327ceb7b82', 0, '2022-10-05 20:31:33', NULL),
+(153, 114, 'duny@gmail.com', '269879182b741c6444cf85e38c1bcaa8', 0, '2022-10-05 20:31:36', NULL),
+(154, 114, 'reciever@andadel.com', 'd4afb16785673c4b9d07e39f4f367b8d', 1, '2022-10-05 20:31:38', '2022-10-05 20:31:54'),
+(155, 114, 'samuel@andadel.com', 'cba0ad049ab303fc165d5051c12e63cd', 1, '2022-10-05 20:31:40', '2022-10-05 20:31:59'),
+(156, 115, 'andrewadelodun001@gmail.com', 'c9ff73d2019981ddfcea5610be3cd6e3', 0, '2022-10-05 20:35:28', NULL),
+(157, 115, 'andrewadelodun@gmail.com', '344a60db1add2b096aac7f818fdb0175', 0, '2022-10-05 20:35:30', NULL),
+(158, 115, 'andrew12adelodun@gmail.com', 'dd64694985f1da774c831ec7739e0865', 0, '2022-10-05 20:35:33', NULL),
+(159, 115, 'reciever@bwajes-plus.andadel.com', 'd2993247ccbfe6798c3b80f9b031353e', 1, '2022-10-05 20:35:35', '2022-10-05 20:35:42'),
+(160, 115, 'dun@gmail.com', '9bddccaf4c776bb56f0be6deea5b0494', 0, '2022-10-05 20:35:37', NULL),
+(161, 115, 'd@gmail.com', 'ebcb9e4e362b4509c1b490c0af797901', 0, '2022-10-05 20:35:40', NULL),
+(162, 115, 'duny@gmail.com', 'be11bfdf8882da609fe58e2331d596c5', 0, '2022-10-05 20:35:42', NULL),
+(163, 115, 'reciever@andadel.com', 'cbc350307ae9dd26183d4f6a1c88c877', 1, '2022-10-05 20:35:44', '2022-10-05 20:36:06'),
+(164, 115, 'samuel@andadel.com', '8306ec6293c560d09a99ece7b31d4f1e', 1, '2022-10-05 20:35:47', '2022-10-05 20:36:10');
 
 -- --------------------------------------------------------
 
@@ -968,7 +1031,8 @@ CREATE TABLE `payment_subscriptions` (
 INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `state`, `status`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `end_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
 (14, 122, 'I-6GGNUKSSUNVS', 1, 'Active', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', '2022-10-16 22:23:38', 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
 (16, 127, 'I-16X8GHAHSRVF', 1, 'Active', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', '2022-10-17 15:56:53', 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
-(23, 127, '', 1, 'Active', '', '3.22', '$3.22', '', 'reciever@bwajes-plus.andadel.com', '', '', NULL, '2022-08-10 07:05:56', '', 0, NULL, '2022-09-18 20:52:10', '2022-09-18 20:52:10');
+(23, 127, '', 1, 'Active', '', '3.22', '$3.22', '', 'reciever@bwajes-plus.andadel.com', '', '', NULL, '2022-08-10 07:05:56', '', 0, NULL, '2022-09-18 20:52:10', '2022-09-18 20:52:10'),
+(25, 136, 'I-U9LMAWJFLLRX', 1, 'Cancelled', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-10-05 20:31:45', '2022-11-05 20:31:45', 'paypal', 0, NULL, '2022-10-05 17:35:59', '2022-10-05 17:42:49');
 
 -- --------------------------------------------------------
 
@@ -1104,7 +1168,9 @@ INSERT INTO `ratings` (`id`, `user_id`, `rating`, `reason`, `suggestion`, `creat
 (9, 122, 5, NULL, NULL, '2022-08-09 10:32:57'),
 (11, 122, 4, NULL, NULL, '2022-08-09 10:33:16'),
 (12, 122, 5, NULL, NULL, '2022-08-09 10:33:32'),
-(13, 122, 3, NULL, NULL, '2022-08-09 10:34:44');
+(13, 122, 3, NULL, NULL, '2022-08-09 10:34:44'),
+(14, 122, 3, NULL, NULL, '2022-10-05 13:58:27'),
+(15, NULL, 3, 'i find yur site interesting', NULL, '2022-10-05 14:01:18');
 
 -- --------------------------------------------------------
 
@@ -1202,7 +1268,6 @@ CREATE TABLE `users` (
   `no_of_private_post_allowed` int(11) NOT NULL DEFAULT 10,
   `suspended` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `bio` text DEFAULT NULL,
-  `public` tinyint(1) NOT NULL DEFAULT 1,
   `website` varchar(255) DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -1220,16 +1285,17 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `business_name`, `gender`, `password`, `profile_image`, `phone`, `no_of_private_post_allowed`, `suspended`, `bio`, `public`, `website`, `birthdate`, `address`, `city`, `state`, `country`, `active`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(96, 'ADELODUN', 'OLUWADAMILARE', 'adelodun@gmail.com', 'Yes', 'M', '$2y$10$Ddcgip8GkrCYUGunfEsCv.eUCBYqFLmpzqSBSD4yQZehfZ3DoE4jq', NULL, NULL, 10, 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2022-08-01 17:57:40', '2022-06-30 19:43:59', '2022-06-30 20:43:59'),
-(109, 'Andrew', 'Adelodun', 'andrewadelodun001@gmail.com', 'Yes', 'M', '$2y$10$9y5MBWpVf7spEgWvkDNqHeZPaHA.CUCnnnEuglL78tyouLrkhfjSG', NULL, NULL, 10, 0, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-07-15 15:25:39', '2022-07-15 16:25:39'),
-(122, 'Andrew', 'Adelodun', 'andrewadelodun@gmail.com', 'Andadel', 'M', '$2y$10$B63crKXdlB64j/Rjv88JTeqpKzRHSqPaPOH2Ao7r8C3bILt30scw6', '1659524388_journal2.jpg', '+234 904 563 452', 17, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, 20, 0, 0, '2022-09-09 10:10:21', '2022-07-31 15:12:29', '2022-09-05 16:01:20'),
-(123, 'ADELODUN', 'OLUWADAMILARE', 'andrew12adelodun@gmail.com', 'Andadel', 'M', '$2y$10$iyjHDaYJdCIyXJuZ38/n4.rVdxeTxnEDAAuT2u21XPwzMT3hMrjR6', NULL, NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-09 10:26:29', '2022-09-09 11:26:29'),
-(127, 'ADELODUN', 'OLUWADAMILARE', 'reciever@bwajes-plus.andadel.com', 'U & E', 'M', '$2y$10$mE8/CPv/eU5Pp1Eq68EnRuwdbwbTDTW9V.zu1bwZatC.z1amZmMIK', '1663670611_lion.jpg', NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-12 14:22:10', '2022-09-20 11:43:31'),
-(131, '', '', 'dun@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 09:54:39', '2022-09-30 10:54:39'),
-(132, '', '', 'd@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:54:25', '2022-09-30 12:54:25'),
-(133, '', '', 'duny@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:59:53', '2022-09-30 12:59:53'),
-(134, NULL, NULL, 'reciever@andadel.com', '', NULL, NULL, NULL, NULL, 10, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 14:57:42');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `business_name`, `gender`, `password`, `profile_image`, `phone`, `no_of_private_post_allowed`, `suspended`, `bio`, `website`, `birthdate`, `address`, `city`, `state`, `country`, `active`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
+(96, 'ADELODUN', 'OLUWADAMILARE', 'adelodun@gmail.com', 'Yes', 'M', '$2y$10$Ddcgip8GkrCYUGunfEsCv.eUCBYqFLmpzqSBSD4yQZehfZ3DoE4jq', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2022-08-01 17:57:40', '2022-06-30 19:43:59', '2022-06-30 20:43:59'),
+(109, 'Andrew', 'Adelodun', 'andrewadelodun001@gmail.com', 'Yes', 'M', '$2y$10$9y5MBWpVf7spEgWvkDNqHeZPaHA.CUCnnnEuglL78tyouLrkhfjSG', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-07-15 15:25:39', '2022-07-15 16:25:39'),
+(122, 'Andrew', 'Adelodun', 'andrewadelodun@gmail.com', 'Andadel', 'M', '$2y$10$B63crKXdlB64j/Rjv88JTeqpKzRHSqPaPOH2Ao7r8C3bILt30scw6', '1659524388_journal2.jpg', '+234 904 563 452', 17, 0, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 0, '2022-09-09 10:10:21', '2022-07-31 15:12:29', '2022-09-05 16:01:20'),
+(123, 'ADELODUN', 'OLUWADAMILARE', 'andrew12adelodun@gmail.com', 'Andadel', 'M', '$2y$10$iyjHDaYJdCIyXJuZ38/n4.rVdxeTxnEDAAuT2u21XPwzMT3hMrjR6', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-09 10:26:29', '2022-09-09 11:26:29'),
+(127, 'ADELODUN', 'OLUWADAMILARE', 'reciever@bwajes-plus.andadel.com', 'U & E', 'M', '$2y$10$mE8/CPv/eU5Pp1Eq68EnRuwdbwbTDTW9V.zu1bwZatC.z1amZmMIK', '1663670611_lion.jpg', NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-12 14:22:10', '2022-09-20 11:43:31'),
+(131, '', '', 'dun@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 09:54:39', '2022-09-30 10:54:39'),
+(132, '', '', 'd@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:54:25', '2022-09-30 12:54:25'),
+(133, '', '', 'duny@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:59:53', '2022-09-30 12:59:53'),
+(134, NULL, NULL, 'reciever@andadel.com', '', NULL, NULL, NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 14:57:42'),
+(137, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'Masheyi LTD', 'M', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 20:50:52');
 
 -- --------------------------------------------------------
 
@@ -1254,7 +1320,8 @@ INSERT INTO `user_passwords` (`id`, `email`, `password`, `created_at`) VALUES
 (15, 'reciever@bwajes-plus.andadel.com', '$2y$10$OB5XbXGr3WHA5DEPrioNSuZOYBkmao4WS/tiCwOwvHVVUkx64xAA6', '2022-09-12 12:43:53'),
 (16, 'reciever@bwajes-plus.andadel.com', '$2y$10$tbF4qDepzAaLw6pRyvdBEuDKypb41OiLFg4AcOl8KoK5gHpKV1G8K', '2022-09-12 12:53:54'),
 (17, 'reciever@bwajes-plus.andadel.com', '$2y$10$mKkTcoCLDZ1JVbTU5ykgye92RO98cs5aggfzNOv00t1dNivsO9n9i', '2022-09-12 14:22:10'),
-(18, 'reciever@andadel.com', '$2y$10$UR2cdhINKqiXePEFYw7uAeTfqe/cPXqrG/fFlINJl/bDwXFs4Ooye', '2022-09-30 09:39:36');
+(18, 'reciever@andadel.com', '$2y$10$UR2cdhINKqiXePEFYw7uAeTfqe/cPXqrG/fFlINJl/bDwXFs4Ooye', '2022-09-30 09:39:36'),
+(22, 'samuel@andadel.com', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', '2022-10-05 19:51:24');
 
 -- --------------------------------------------------------
 
@@ -1284,7 +1351,12 @@ INSERT INTO `user_sent_emails` (`id`, `user_id`, `email`, `department`, `title`,
 (6, 127, 'reciever@bwajes-plus.andadel.com', 'myphptestemail@gmail.com', 'perspiciatis iusto accusantium ut', 'perspiciatis iusto accusantium ut perspiciatis iusto accusantium ut perspiciatis iusto accusantium ut', 1, '2022-09-14 16:28:09'),
 (7, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'support support support support', 'support support support support support support support support support support support support support support support support support support support support', 1, '2022-09-14 16:38:20'),
 (8, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'Title Message Title Message', 'Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message', 1, '2022-09-14 17:07:53'),
-(9, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'Choose Support Department', 'Choose Support Department Choose Support Department Choose Support Department Choose Support Department Choose Support Department', 1, '2022-09-14 17:09:43');
+(9, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'Choose Support Department', 'Choose Support Department Choose Support Department Choose Support Department Choose Support Department Choose Support Department', 1, '2022-09-14 17:09:43'),
+(10, NULL, 'samuel@andadel.com', 'support@bwajes-plus.andadel.com', 'history of messiin sport', 'i was trying to create a post but it was saying data not found', 1, '2022-10-05 13:48:07'),
+(11, 122, 'andrewadelodun@gmail.com', 'support@bwajes-plus.andadel.com', 'Some title Some title Some title', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:51:10'),
+(12, 122, 'andrewadelodun@gmail.com', 'sender@bwajes-plus.andadel.com', 'Some Message Some Message', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:55:26'),
+(13, 122, 'andrewadelodun@gmail.com', 'sender@bwajes-plus.andadel.com', 'Some Message Some Message', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:57:09'),
+(14, NULL, 'samuel@andadel.com', 'reciever@bwajes-plus.andadel.com', 'Some title Some title Some title', 'Some title Some title Some title Some title', 1, '2022-10-05 15:10:55');
 
 -- --------------------------------------------------------
 
@@ -1310,8 +1382,9 @@ CREATE TABLE `user_statistics` (
 
 INSERT INTO `user_statistics` (`id`, `user_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
 (6, 109, NULL, '2022-08-06 20:21:57', 'Chrome', 'Windows 10', 'Unknown', '2022-07-18 13:31:58', '2022-08-06 20:21:57'),
-(13, 122, '2022-09-29 09:25:14', '2022-09-29 09:26:19', 'Chrome', 'Windows 10', 'Unknown', '2022-07-31 15:12:36', '2022-09-29 09:26:19'),
-(16, 127, '2022-09-23 09:16:49', '2022-09-23 09:17:34', 'Chrome', 'Windows 10', 'Unknown', '2022-09-14 21:46:26', '2022-09-23 09:17:34');
+(13, 122, '2022-10-05 13:50:31', '2022-10-05 13:59:14', 'Chrome', 'Windows 10', 'Unknown', '2022-07-31 15:12:36', '2022-10-05 13:59:14'),
+(16, 127, '2022-09-23 09:16:49', '2022-09-23 09:17:34', 'Chrome', 'Windows 10', 'Unknown', '2022-09-14 21:46:26', '2022-09-23 09:17:34'),
+(19, 137, '2022-10-05 20:52:32', '2022-10-05 19:53:23', 'Chrome', 'Windows 10', 'Unknown', '2022-10-05 19:52:32', '2022-10-05 19:53:23');
 
 --
 -- Indexes for dumped tables
@@ -1440,8 +1513,7 @@ ALTER TABLE `payment_prices`
 -- Indexes for table `payment_subscriptions`
 --
 ALTER TABLE `payment_subscriptions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_user_id_payment` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `posts`
@@ -1552,7 +1624,7 @@ ALTER TABLE `admin_passwords`
 -- AUTO_INCREMENT for table `admin_sent_emails`
 --
 ALTER TABLE `admin_sent_emails`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `admin_statistics`
@@ -1576,7 +1648,7 @@ ALTER TABLE `affiliate_programmes`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -1588,13 +1660,13 @@ ALTER TABLE `countries`
 -- AUTO_INCREMENT for table `deleted_users`
 --
 ALTER TABLE `deleted_users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `email_list`
 --
 ALTER TABLE `email_list`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `email_list_source`
@@ -1606,7 +1678,7 @@ ALTER TABLE `email_list_source`
 -- AUTO_INCREMENT for table `email_tracking`
 --
 ALTER TABLE `email_tracking`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
 -- AUTO_INCREMENT for table `faqs`
@@ -1642,13 +1714,13 @@ ALTER TABLE `payment_prices`
 -- AUTO_INCREMENT for table `payment_subscriptions`
 --
 ALTER TABLE `payment_subscriptions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `post_category`
@@ -1672,7 +1744,7 @@ ALTER TABLE `post_type`
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `reports`
@@ -1690,25 +1762,25 @@ ALTER TABLE `subscriber_list`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
 
 --
 -- AUTO_INCREMENT for table `user_passwords`
 --
 ALTER TABLE `user_passwords`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `user_sent_emails`
 --
 ALTER TABLE `user_sent_emails`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user_statistics`
 --
 ALTER TABLE `user_statistics`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
@@ -1778,12 +1850,6 @@ ALTER TABLE `faqs`
 ALTER TABLE `legal`
   ADD CONSTRAINT `fk_ad_id` FOREIGN KEY (`created_by`) REFERENCES `admin` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_adm_id` FOREIGN KEY (`updated_by`) REFERENCES `admin` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
-
---
--- Constraints for table `payment_subscriptions`
---
-ALTER TABLE `payment_subscriptions`
-  ADD CONSTRAINT `fk_user_id_payment` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `posts`
