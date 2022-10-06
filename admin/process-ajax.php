@@ -429,14 +429,27 @@ if(isset($_POST['edit-admin-type']))
         $errors[] = 'Invalid website address is valid';
     }
 
+	if(!empty($birth_date) || $birth_date != "" || $birth_date != NULL)
+	{
+		$bd = explode('-', $birth_date);
+		$day = (int) $bd[2];
+		$month = (int) $bd[1];
+		$year = (int) $bd[0];
+
+		if(checkdate($month, $day, $year) == false)
+		{
+			$errors[] = 'Please ensure that your birth date is valid';
+		}
+	}
+
 	if(has_presence($birth_date) == false)
-    {
-        $errors[] = 'Birth date cannot be empty';
-    }
-    elseif(accepted_data_type($birth_date, 'name') == false)
-    {
-        $errors[] = 'Invalid birth date address is valid';
-    }
+	{
+		$errors[] = 'Birth date cannot be empty';
+	}
+	elseif(($birth_date == date('Y-m-d')) || ($year > date('Y')) || ($year == date('Y') && $month > date('m')) || ($year == date('Y') && $month == date('m') && $day > date('d')))
+	{
+		$errors[] = 'Please ensure that your birth date is in the past';
+	}
     
     if(has_presence($address) == false)
     {
@@ -676,14 +689,27 @@ if(isset($_POST['update-admin-type']))
         $errors[] = 'Invalid website address is valid';
     }
 
+	if(!empty($birth_date) || $birth_date != "" || $birth_date != NULL)
+	{
+		$bd = explode('-', $birth_date);
+		$day = (int) $bd[2];
+		$month = (int) $bd[1];
+		$year = (int) $bd[0];
+
+		if(checkdate($month, $day, $year) == false)
+		{
+			$errors[] = 'Please ensure that your birth date is valid';
+		}
+	}
+
 	if(has_presence($birth_date) == false)
-    {
-        $errors[] = 'Birth date cannot be empty';
-    }
-    elseif(accepted_data_type($birth_date, 'name') == false)
-    {
-        $errors[] = 'Invalid birth date address is valid';
-    }
+	{
+		$errors[] = 'Birth date cannot be empty';
+	}
+	elseif(($birth_date == date('Y-m-d')) || ($year > date('Y')) || ($year == date('Y') && $month > date('m')) || ($year == date('Y') && $month == date('m') && $day > date('d')))
+	{
+		$errors[] = 'Please ensure that your birth date is in the past';
+	}
     
     if(has_presence($address) == false)
     {
