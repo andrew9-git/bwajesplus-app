@@ -26,9 +26,11 @@ $host = url()[0];
             </div>
             <div class="card-body">
                 <div id="admin-profile-image-for-setting" class="my-profile-image">
-                  <div class="my-profile-image-edit-container">
+                    <?php if($admin['admin_type'] == 1){ ?>
+                    <div class="my-profile-image-edit-container">
                       <span id="photo" class="my-profile-image-edit"><i class="bx bx-camera profile"></i></span>
-                  </div>
+                    </div>
+                    <?php } ?>
                 </div>
                 <form id="update_settings_form" enctype="multipart/form-data">
                 <div id="update_settings_messages">
@@ -115,7 +117,7 @@ $host = url()[0];
                       <?php } ?>
                     </select>
                 </div>
-                <button name="update-admin" class="btn btn-primary" id="update_settings">Update</button>
+                <button name="update-admin" class="btn btn-primary" id="update_settings" <?php if($admin['admin_type'] != 1){echo 'disabled';} ?>>Update</button>
               </form>
             </div>
             <div class="card-footer">

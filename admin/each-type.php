@@ -13,10 +13,15 @@ if(isset($_GET['t']))
   $type_id = $_GET['t'];
 
   $type = fetch_single_row($type_id, 'post_type');
+
+  if($type == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

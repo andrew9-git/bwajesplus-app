@@ -15,10 +15,17 @@ $admin = fetch_single_row($id, 'admin');
     // $track = fetch_single_row($track_id, 'email_tracking');
 
     // $email = $track['sent_to_email'];
+
+    $admin_sent_email = fetch_single_row($mail_opened_id, 'admin_sent_emails');
+
+    if($admin_sent_email == false)
+    {
+      redirect_to($host.'logout');
+    }
   }
   else
   {
-    redirect_to('logout');
+    redirect_to($host.'logout');
   }
 ?>
 <div class="home-content">

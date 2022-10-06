@@ -14,11 +14,16 @@ $admin = fetch_single_row($id, 'admin');
 
     $track = fetch_single_row($track_id, 'email_tracking');
 
+    if($track == false)
+    {
+      redirect_to($host.'logout');
+    }
+
     $email = $track['sent_to_email'];
   }
   else
   {
-    redirect_to('logout');
+    redirect_to($host.'logout');
   }
 ?>
 <div class="home-content">

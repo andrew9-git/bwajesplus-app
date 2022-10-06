@@ -13,10 +13,15 @@ if(isset($_GET['af']))
   $affiliate_id = $_GET['af'];
 
   $affiliate = fetch_single_row($affiliate_id, 'affiliate_programmes');
+
+  if($affiliate == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

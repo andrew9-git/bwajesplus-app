@@ -136,12 +136,37 @@ $host = url()[0];
       if(isset($_POST['delete-affiliate']))
       {
         $affiliate_id = $_POST['delete-affiliate'];
-        $executed = delete_single_row($affiliate_id, 'affiliate_programmes');
-        if($executed)
+        $affiliate_programme = fetch_single_row($affiliate_id, 'affiliate_programmes');
+
+        $filename = 'affiliate_photos/' . $affiliate_programme['image'];
+        if (file_exists($filename) && !is_dir($filename))
         {
-          $url = $host . 'all-affiliates';
-          redirect_to($url);
+            $deleted = unlink($filename);
+            if (!$deleted)
+            {
+              $msg = "<div class='card erroor'><div>Something went wrong. Please try again</div></div>";
+              echo $msg;
+            }
+            else
+            {
+              $executed = delete_single_row($affiliate_id, 'affiliate_programmes');
+              if($executed)
+              {
+                $url = $host . 'all-affiliates';
+                redirect_to($url);
+              }
+            }
         }
+        else
+        {
+          $executed = delete_single_row($affiliate_id, 'affiliate_programmes');
+          if($executed)
+          {
+            $url = $host . 'all-affiliates';
+            redirect_to($url);
+          }
+        }
+        
       }
     ?>
 <?php

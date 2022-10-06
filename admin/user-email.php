@@ -14,10 +14,15 @@ if(isset($_GET['ues']))
   $user_email_id = $_GET['ues'];
 
   $user_email = fetch_single_row($user_email_id, 'user_sent_emails');
+
+  if($user_email == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

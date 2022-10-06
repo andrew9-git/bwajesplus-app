@@ -13,10 +13,14 @@ if(isset($_GET['c']))
   $category_id = $_GET['c'];
 
   $category = fetch_single_row($category_id, 'post_category');
+  if($category == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

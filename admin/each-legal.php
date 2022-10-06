@@ -20,10 +20,15 @@ if(isset($_GET['l']))
   $legal_id = $_GET['l'];
 
   $legal = fetch_single_row($legal_id, 'legal');
+
+  if($legal == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

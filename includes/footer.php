@@ -230,7 +230,7 @@ function ckeditor($page = '')
             <label for="support">Choose Support Department*</label>
             <select class="form-control form_data" name="department" id="department">
               <option value="S">Select department</option>
-              <option value="reciever@bwajes-plus.andadel.com">General Support</option>
+              <option value="support@bwajes-plus.andadel.com">General Support</option>
               <option value="it@bwajes-plus.andadel.com">IT Support</option>
               <option value="admin@bwajes-plus.andadel.com">Adminstration Support</option>
               <option value="billing@bwajes-plus.andadel.com">Billing Support</option>

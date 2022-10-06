@@ -10,10 +10,16 @@ $admin = fetch_single_row($id, 'admin');
 if(isset($_GET['r']))
 {
   $user_id = $_GET['r'];
+
+
+  if(fetch_single_row($user_id, 'users') == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

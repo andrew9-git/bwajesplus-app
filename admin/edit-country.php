@@ -13,10 +13,15 @@ if(isset($_GET['ctr']))
   $country_id = $_GET['ctr'];
 
   $country = fetch_single_row($country_id, 'countries');
+
+  if($country == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

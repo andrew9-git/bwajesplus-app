@@ -11,13 +11,23 @@ $host = url()[0];
         $post_id = $_GET['p'];
 
         $post = fetch_single_row($post_id, 'posts');
+
+        if($post == false)
+        {
+          redirect_to($host.'logout');
+        }
       }
       else
       {
-        redirect_to('logout');
+        redirect_to($host.'logout');
       }
 
       $user_id = $_SESSION['bwajes_plus_user_data']['id'];
+
+      if($user_id != $post['user_id'])
+      {
+        redirect_to($host.'logout');
+      }
 
       $post_categories = post_category();
       $post_types = post_type();

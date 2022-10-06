@@ -20,10 +20,15 @@ if(isset($_GET['ps']))
 
   $user_id = $payment_info['user_id'];
   $user_info = fetch_single_row($user_id, 'users');
+
+  if($user_info == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

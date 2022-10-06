@@ -10,10 +10,15 @@ $host = url()[0];
         $report_id = $_GET['r'];
 
         $report = fetch_single_row($report_id, 'reports');
+
+        if($report == false)
+        {
+          redirect_to($host.'logout');
+        }
       }
       else
       {
-        redirect_to('logout');
+        redirect_to($host.'logout');
       }
 
       $admin_id = $_SESSION['bwajes_plus_admin_data']['id'];

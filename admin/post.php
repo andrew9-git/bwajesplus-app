@@ -7,12 +7,17 @@ $host = url()[0];
 <?php
     if(isset($_GET['p']))
     {
-        $post_id = $_GET['p'];
-        $post_info = fetch_single_row($post_id, 'posts');
+      $post_id = $_GET['p'];
+      $post_info = fetch_single_row($post_id, 'posts');
+
+      if($post_info == false)
+      {
+        redirect_to($host.'logout');
+      }
     }
     else
     {
-      redirect_to('logout');
+      redirect_to($host.'logout');
     }
 
     $id = $_SESSION['bwajes_plus_admin_data']['id'];

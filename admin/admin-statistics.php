@@ -19,10 +19,15 @@ if(isset($_GET['a']))
 
   $admin_stat = fetch_single_row($admin_id, 'admin_statistics', 'admin_id');
 
+  if($admin_stat == false)
+  {
+    redirect_to($host.'logout');
+  }
+
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

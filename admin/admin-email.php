@@ -11,10 +11,15 @@ if(isset($_GET['aes']))
   $admin_email_id = $_GET['aes'];
 
   $admin_email = fetch_single_row($admin_email_id, 'admin_sent_emails');
+
+  if($admin_email == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 
 

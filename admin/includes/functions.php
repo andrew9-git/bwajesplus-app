@@ -1933,7 +1933,7 @@ function count_ratings_a($value)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(DISTINCT(user_id)) FROM ratings WHERE rating LIKE :rating OR reason LIKE :reason OR suggestion LIKE :suggestion ORDER BY rating DESC";
+    $query = "SELECT COUNT(DISTINCT(user_id)) FROM ratings WHERE rating = :rating OR reason LIKE :reason OR suggestion LIKE :suggestion ORDER BY rating DESC";
 
     $db->prep($query);
 
@@ -2475,7 +2475,7 @@ function payment_subscriptions($value='', $date_range=0, $unit=0, $user_id=0)
     if($unit == 1)
     {
         // $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
-        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", NOW(), created_at) <= ".$value['period'] ."";
+        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", created_at, NOW()) <= ".$value['period'] ."";
     }
 
     if($user_id != 0)

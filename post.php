@@ -10,13 +10,23 @@ $host = url()[0];
 
     if(isset($_GET['p']))
     {
-        $post_id = $_GET['p'];
+      $post_id = $_GET['p'];
 
-        $post = fetch_single_row($post_id, 'posts');
+      $post = fetch_single_row($post_id, 'posts');
+
+      if($post == false)
+      {
+        redirect_to($host.'logout');
+      }
     }
     else
     {
-      redirect_to('logout');
+      redirect_to($host.'logout');
+    }
+
+    if($id != $post['user_id'])
+    {
+      redirect_to($host.'logout');
     }
 ?>
     <div class="home-content">

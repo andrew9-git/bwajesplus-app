@@ -20,10 +20,15 @@ $host = url()[0];
     {
         $admin_id = $_GET['a'];
         $admin = fetch_single_row($admin_id, 'admin');
+
+        if($admin == false)
+        {
+          redirect_to($host.'logout');
+        }
     }
     else
     {
-      redirect_to('logout');
+      redirect_to($host.'logout');
     }
 
     $admin_types = admin_type();

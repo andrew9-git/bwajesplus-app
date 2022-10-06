@@ -10,10 +10,15 @@ if(isset($_GET['u']))
 
   $user_stat = fetch_single_row($user_id, 'user_statistics', 'user_id');
 
+  if($user_stat == false)
+  {
+    redirect_to($host.'logout');
+  }
+
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 
 $id = $_SESSION['bwajes_plus_admin_data']['id'];

@@ -36,6 +36,13 @@ if(isset($_POST['admin-type']))
     //error array
     $errors = array();
 
+	$count = db_row_count($email, 'email', 'admin', 'str');
+
+	if($count > 0)
+	{
+		$errors[] = 'User already exists';
+	}
+
     if(has_presence($first_name) == false)
     {
         $errors[] = 'First name cannot be empty';
@@ -96,36 +103,6 @@ if(isset($_POST['admin-type']))
         $errors[] = 'Please select a gender';
     }
 
-    if(isset($_FILES['admin-photo']['name']))
-    {
-        $admin_photo_name = $_FILES['admin-photo']['name'];
-        $admin_photo_size = $_FILES['admin-photo']['size'];
-    
-        $allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
-        $image_ext = pathinfo($admin_photo_name, PATHINFO_EXTENSION);
-    
-        if(!in_array($image_ext, $allowed_images))
-        {
-            $errors[] = 'The accepted admin photo types are png and jpg/jpeg only';
-        }
-        elseif($admin_photo_size > 1000000)
-        {
-            $errors[] = 'The accepted admin photo size should not be more than 1Mb';
-        }
-        else
-        {
-            $new_admin_photo_name = time() .'_' . $admin_photo_name;
-            $admin_photo_folder = 'profile_images/';
-            $tmp_admin_photo = $_FILES['admin-photo']['tmp_name'];
-        
-            move_uploaded_file($tmp_admin_photo, $admin_photo_folder .$new_admin_photo_name);
-        }
-    }
-    else
-    {
-        $errors[] = 'You must upload a photo for admin';
-    }
-
     if(has_presence($phone) == false)
     {
         $errors[] = 'Phone cannot be empty';
@@ -158,14 +135,27 @@ if(isset($_POST['admin-type']))
         $errors[] = 'Invalid website address is valid';
     }
 
+	if(!empty($birth_date) || $birth_date != "" || $birth_date != NULL)
+	{
+		$bd = explode('-', $birth_date);
+		$day = (int) $bd[2];
+		$month = (int) $bd[1];
+		$year = (int) $bd[0];
+
+		if(checkdate($month, $day, $year) == false)
+		{
+			$errors[] = 'Please ensure that your birth date is valid';
+		}
+	}
+
 	if(has_presence($birth_date) == false)
-    {
-        $errors[] = 'Birth date cannot be empty';
-    }
-    elseif(accepted_data_type($birth_date, 'name') == false)
-    {
-        $errors[] = 'Invalid birth date address is valid';
-    }
+	{
+		$errors[] = 'Birth date cannot be empty';
+	}
+	elseif(($birth_date == date('Y-m-d')) || ($year > date('Y')) || ($year == date('Y') && $month > date('m')) || ($year == date('Y') && $month == date('m') && $day > date('d')))
+	{
+		$errors[] = 'Please ensure that your birth date is in the past';
+	}
     
     if(has_presence($address) == false)
     {
@@ -222,6 +212,38 @@ if(isset($_POST['admin-type']))
     {
         $errors[] = 'Please select a country';
     }
+	else
+	{
+		if(isset($_FILES['admin-photo']['name']))
+		{
+			$admin_photo_name = $_FILES['admin-photo']['name'];
+			$admin_photo_size = $_FILES['admin-photo']['size'];
+		
+			$allowed_images = array('png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG');
+			$image_ext = pathinfo($admin_photo_name, PATHINFO_EXTENSION);
+		
+			if(!in_array($image_ext, $allowed_images))
+			{
+				$errors[] = 'The accepted admin photo types are png and jpg/jpeg only';
+			}
+			elseif($admin_photo_size > 1000000)
+			{
+				$errors[] = 'The accepted admin photo size should not be more than 1Mb';
+			}
+			else
+			{
+				$new_admin_photo_name = time() .'_' . $admin_photo_name;
+				$admin_photo_folder = 'profile_images/';
+				$tmp_admin_photo = $_FILES['admin-photo']['tmp_name'];
+			
+				move_uploaded_file($tmp_admin_photo, $admin_photo_folder .$new_admin_photo_name);
+			}
+		}
+		else
+		{
+			$errors[] = 'You must upload a photo for admin';
+		}
+	}
 
 
     if(empty($errors))
@@ -4359,6 +4381,10 @@ if(isset($_POST['mail_recieved_query']))
 			{
 				$how_long = $days . " days";
 			}
+			elseif($days == 0)
+			{
+				$how_long = "same day";
+			}
 			else
 			{
 				$how_long = $days . " day";
@@ -4416,6 +4442,10 @@ if(isset($_POST['mail_recieved_query']))
 			if($days > 1)
 			{
 				$how_long = $days . " days";
+			}
+			elseif($days == 0)
+			{
+				$how_long = "same day";
 			}
 			else
 			{
@@ -4640,6 +4670,10 @@ if(isset($_POST['mail_opened_query']))
 			{
 				$how_long = $days . " days";
 			}
+			elseif($days == 0)
+			{
+				$how_long = "same day";
+			}
 			else
 			{
 				$how_long = $days . " day";
@@ -4669,6 +4703,10 @@ if(isset($_POST['mail_opened_query']))
 			if($days > 1)
 			{
 				$how_long = $days . " days";
+			}
+			elseif($days == 0)
+			{
+				$how_long = "same day";
 			}
 			else
 			{

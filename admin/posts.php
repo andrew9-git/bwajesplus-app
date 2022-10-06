@@ -7,11 +7,16 @@ $host = url()[0];
 <?php
     if(isset($_GET['u']))
     {
-        $user_id = $_GET['u'];
+      $user_id = $_GET['u'];
+
+      if(fetch_single_row($user_id, 'users') == false)
+      {
+        redirect_to($host.'logout');
+      }
     }
     else
     {
-      redirect_to('logout');
+      redirect_to($host.'logout');
     }
 
     $id = $_SESSION['bwajes_plus_admin_data']['id'];

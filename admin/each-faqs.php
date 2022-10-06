@@ -13,10 +13,16 @@ if(isset($_GET['f']))
   $faq_id = $_GET['f'];
 
   $faq = fetch_single_row($faq_id, 'faqs');
+
+  if($faq == false)
+  {
+    redirect_to($host.'logout');
+  }
+
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

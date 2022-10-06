@@ -9,10 +9,15 @@ $host = url()[0];
     {
         $get_user_id = $_GET['u'];
         $user_info = fetch_single_row($get_user_id, 'users');
+
+        if($user_info == false)
+        {
+            redirect_to($host.'logout');
+        }
     }
     else
     {
-      redirect_to('logout');
+      redirect_to($host.'logout');
     }
 
     $id = $_SESSION['bwajes_plus_admin_data']['id'];

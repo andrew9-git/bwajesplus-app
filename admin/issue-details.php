@@ -13,10 +13,15 @@ if(isset($_GET['id']))
   $issue_id = $_GET['id'];
 
   $issue = fetch_single_row($issue_id, 'issues');
+
+  if($issue == false)
+  {
+    redirect_to($host.'logout');
+  }
 }
 else
 {
-  redirect_to('logout');
+  redirect_to($host.'logout');
 }
 ?>
 

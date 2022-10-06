@@ -131,11 +131,12 @@ if(isset($_POST['bio']))
         $day = (int) $bd[2];
         $month = (int) $bd[1];
         $year = (int) $bd[0];
+        
         if(checkdate($month, $day, $year) == false)
         {
             $errors[] = 'Please ensure that your birth date is valid';
         }
-        elseif($birth_date == date('Y-m-d'))
+        elseif(($birth_date == date('Y-m-d')) || ($year > date('Y')) || ($year == date('Y') && $month > date('m')) || ($year == date('Y') && $month == date('m') && $day > date('d')))
         {
             $errors[] = 'Please ensure that your birth date is in the past';
         }
