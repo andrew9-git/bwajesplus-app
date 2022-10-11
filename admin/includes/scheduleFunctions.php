@@ -60,6 +60,55 @@ function send_mail(array $set_from, array $add_address, array $data=array(), arr
     // }
 }
 
+function paypal_context($id, $secret)
+{
+    $apiContext = new \PayPal\Rest\ApiContext(
+        new \PayPal\Auth\OAuthTokenCredential(
+            $id,     // ClientID
+            $secret      // ClientSecret
+        )
+    );
+    return $apiContext;
+}
+
+function paypal_config($apiContext)
+{
+    $apiContext->setConfig(
+        array(
+        'log.LogEnabled' => true,
+        'log.FileName' => 'PayPal.log',
+        'log.LogLevel' => 'DEBUG'
+        )
+    );
+}
+
+function paypal($value)
+{
+
+    require('../../vendor/autoload.php');
+
+    $secret_id = 'AT7HaJrDpit6eDrFtPtdC7_v-qZE9fydQDxZBCZw-YKc0Xk23xVPDqhpRzJ62JltKHdnj7FOUcnTDu2N';
+
+    $secret_key = 'EKYM7jeg21Y8Xkj5eF1saUIU_LwHjsTKe1x-1VqJKFEzPvUFDimAJh-7EWx9HOgCaelPIgQonv3S0Tz3';
+
+    $apiContext = paypal_context($secret_id, $secret_key);
+
+    // paypal_config($apiContext);
+
+    $agreement = new \PayPal\Api\Agreement();
+    $agreement = $agreement->get($value['agreement_id'], $apiContext);
+    $agreementDetails = $agreement->getAgreementDetails();
+    $last_date = date('Y-m-d H:i:s', strtotime($agreementDetails->getLastPaymentDate()));
+    $interval = $value['interval_value'];
+    $end_date = date('Y-m-d H:i:s', strtotime("+$interval month", strtotime($last_date)));
+
+    return array(
+        'agreement'        => $agreement,
+        'agreementDetails' => $agreementDetails,
+        'end_date'         => $end_date,
+    );
+}
+
 function url()
 {
     $host='http://localhost:9090/bwajes/';
@@ -189,6 +238,19 @@ function fetch_single_row($value, $table_name, $column_name = 'id', $type='int')
     $db->prep($query);
     $db->bindvalue(':value', $value, $type);
     $row = $db->fetchSingle();
+    return $row;
+}
+
+function fetch_users_from_payment_subscriptions()
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM payment_subscriptions";
+
+    $db->prep($query);
+
+    $row = $db->fetchMultiple();
+
     return $row;
 }
 

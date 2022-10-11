@@ -19,10 +19,9 @@ if($admin['admin_type'] != 1)
         if($admin['suspended'] != 1)
         {
       ?>
-      <div style="display: flex;justify-content:center;align-items:center;gap:10px;">
+      <!-- <div style="display: flex;justify-content:center;align-items:center;gap:10px;">
           <div class="card">
             <div class="card-header" style="display: flex;align-items:center;justify-content:center;gap:2rem">
-                <!-- <h4 class="admin-head">All</h4> -->
                 <div id="filter_using">
                   <form action="">
                       <div class="form-wrapper">
@@ -83,23 +82,23 @@ if($admin['admin_type'] != 1)
             <div class="card-body">
               <div class="info-body">
                 <?php 
-                $amount = 0;
+                // $amount = 0;
 
-                $payments = payment_subscriptions();
+                // $payments = payment_subscriptions();
             
-                foreach($payments as $payment)
-                {
-                  $amount += $payment['amount'];
-                }
+                // foreach($payments as $payment)
+                // {
+                //   $amount += $payment['amount'];
+                // }
                 
                 ?>
-                <h4 class="message-body">$<span id="price"><?php echo $amount; ?></span></h4>
+                <h4 class="message-body">$<span id="price"><?php //echo $amount; ?></span></h4>
                 <i class="bx bx-money"></i>
               </div>
             </div>
             <div class="card-footer"></div>
           </div>
-        </div><br>
+        </div><br> -->
         <div class="card">
           <div class="card-header">
           <form action="">
@@ -191,114 +190,114 @@ if($admin['admin_type'] != 1)
 </div>
 <script language="JavaScript" type="text/javascript">
   document.addEventListener('DOMContentLoaded', () => {
-    let filter_using_select = document.getElementById('filter-using');
-    let date_range = document.getElementById('date_range');
-    let payment_periods = document.getElementById('payment_periods');
+    // let filter_using_select = document.getElementById('filter-using');
+    // let date_range = document.getElementById('date_range');
+    // let payment_periods = document.getElementById('payment_periods');
 
-    date_range.style.display = "none";
-    payment_periods.style.display = "none";
+    // date_range.style.display = "none";
+    // payment_periods.style.display = "none";
 
-    filter_using_select.addEventListener('change', () => {
+    // filter_using_select.addEventListener('change', () => {
 
-      for(let i = 0; i < filter_using_select.options.length; i++)
-      {
-        if(filter_using_select.options[i].selected == true && filter_using_select.options[i].value == "date-range")
-        {
-          date_range.style.display = "block";
-        }
-        else if(filter_using_select.options[i].selected == false && filter_using_select.options[i].value == "date-range")
-        {
-          date_range.style.display = "none";
-        }
-        else if(filter_using_select.options[i].selected == true && filter_using_select.options[i].value == "payment-periods")
-        {
-          payment_periods.style.display = "block";
-        }
-        else if(filter_using_select.options[i].selected == false && filter_using_select.options[i].value == "payment-periods")
-        {
-          payment_periods.style.display = "none";
-        }
-      }
-    });
+    //   for(let i = 0; i < filter_using_select.options.length; i++)
+    //   {
+    //     if(filter_using_select.options[i].selected == true && filter_using_select.options[i].value == "date-range")
+    //     {
+    //       date_range.style.display = "block";
+    //     }
+    //     else if(filter_using_select.options[i].selected == false && filter_using_select.options[i].value == "date-range")
+    //     {
+    //       date_range.style.display = "none";
+    //     }
+    //     else if(filter_using_select.options[i].selected == true && filter_using_select.options[i].value == "payment-periods")
+    //     {
+    //       payment_periods.style.display = "block";
+    //     }
+    //     else if(filter_using_select.options[i].selected == false && filter_using_select.options[i].value == "payment-periods")
+    //     {
+    //       payment_periods.style.display = "none";
+    //     }
+    //   }
+    // });
 
-    let to = document.getElementById('to');
-    to.addEventListener('change', () => {
-      let price = document.getElementById('price');
-      let from_error = document.getElementById('from-error');
+    // let to = document.getElementById('to');
+    // to.addEventListener('change', () => {
+    //   let price = document.getElementById('price');
+    //   let from_error = document.getElementById('from-error');
 
-      let form_element = document.getElementsByClassName('form_data_range');
+    //   let form_element = document.getElementsByClassName('form_data_range');
 
-      let form_data = new FormData();
+    //   let form_data = new FormData();
 
-      for(let i = 0; i < form_element.length; i++)
-      {
-          form_data.append(form_element[i].name, form_element[i].value);
-      }
+    //   for(let i = 0; i < form_element.length; i++)
+    //   {
+    //       form_data.append(form_element[i].name, form_element[i].value);
+    //   }
 
-      let xhr = new XMLHttpRequest();
+    //   let xhr = new XMLHttpRequest();
       
-      xhr.open('POST', 'process-ajax');
+    //   xhr.open('POST', 'process-ajax');
 
-      xhr.onload = function()
-      {
-        if(this.status == 200)
-        {
-          let response = xhr.responseText;
-          const pattern = /choose/;
-          let regex = pattern.test(response);
-          if(regex === true)
-          {
-            from_error.innerHTML = response;
-          }
-          else
-          {
-            from_error.innerHTML = "";
-            price.innerHTML = response;
-          }
-        }
-      }
-      xhr.send(form_data);
-    });
+    //   xhr.onload = function()
+    //   {
+    //     if(this.status == 200)
+    //     {
+    //       let response = xhr.responseText;
+    //       const pattern = /choose/;
+    //       let regex = pattern.test(response);
+    //       if(regex === true)
+    //       {
+    //         from_error.innerHTML = response;
+    //       }
+    //       else
+    //       {
+    //         from_error.innerHTML = "";
+    //         price.innerHTML = response;
+    //       }
+    //     }
+    //   }
+    //   xhr.send(form_data);
+    // });
 
-    let periods = document.getElementById('payment-periods');
-    periods.addEventListener('change', () => {
+    // let periods = document.getElementById('payment-periods');
+    // periods.addEventListener('change', () => {
 
-      let price = document.getElementById('price');
-      let periods_error = document.getElementById('periods-error');
+    //   let price = document.getElementById('price');
+    //   let periods_error = document.getElementById('periods-error');
 
-      let form_element = document.getElementsByClassName('form_data_periods');
+    //   let form_element = document.getElementsByClassName('form_data_periods');
 
-      let form_data = new FormData();
+    //   let form_data = new FormData();
 
-      for(let i = 0; i < form_element.length; i++)
-      {
-          form_data.append(form_element[i].name, form_element[i].value);
-      }
+    //   for(let i = 0; i < form_element.length; i++)
+    //   {
+    //       form_data.append(form_element[i].name, form_element[i].value);
+    //   }
 
-      let xhr = new XMLHttpRequest();
+    //   let xhr = new XMLHttpRequest();
       
-      xhr.open('POST', 'process-ajax');
+    //   xhr.open('POST', 'process-ajax');
 
-      xhr.onload = function()
-      {
-        if(this.status == 200)
-        {
-          let response = xhr.responseText;
-          const pattern = /period/;
-          let regex = pattern.test(response);
-          if(regex === true)
-          {
-            periods_error.innerHTML = response;
-          }
-          else
-          {
-            periods_error.innerHTML = "";
-            price.innerHTML = response;
-          }
-        }
-      }
-      xhr.send(form_data);
-    });
+    //   xhr.onload = function()
+    //   {
+    //     if(this.status == 200)
+    //     {
+    //       let response = xhr.responseText;
+    //       const pattern = /period/;
+    //       let regex = pattern.test(response);
+    //       if(regex === true)
+    //       {
+    //         periods_error.innerHTML = response;
+    //       }
+    //       else
+    //       {
+    //         periods_error.innerHTML = "";
+    //         price.innerHTML = response;
+    //       }
+    //     }
+    //   }
+    //   xhr.send(form_data);
+    // });
 
     //search-payment
     let search_payment = document.getElementById('search-payment');

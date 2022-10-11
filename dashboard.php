@@ -7,6 +7,8 @@ bwajes_plus_header('dashboard', 'Dashboard');
     <?php 
       $id = $_SESSION['bwajes_plus_user_data']['id'];
       $user_statistics = fetch_single_row($id, 'user_statistics', 'user_id');
+
+      $end_date = paypal($id)['end_date'];
     ?>
     <div class="home-content">
       <div class="post-area">
@@ -24,7 +26,7 @@ bwajes_plus_header('dashboard', 'Dashboard');
             </div><br>';  
             }
 
-            afiliate_programme_codes_wrapper($id);
+            afiliate_programme_codes_wrapper($id, $end_date);
 
           ?>
             <!-- suspended user should not see content on this page

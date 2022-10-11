@@ -76,6 +76,56 @@ function check_inactive_admin($last_login_timestamp, $duration, $url='http://loc
     }
 }
 
+function paypal_context($id, $secret)
+{
+    $apiContext = new \PayPal\Rest\ApiContext(
+        new \PayPal\Auth\OAuthTokenCredential(
+            $id,     // ClientID
+            $secret      // ClientSecret
+        )
+    );
+    return $apiContext;
+}
+
+function paypal_config($apiContext)
+{
+    $apiContext->setConfig(
+        array(
+        'log.LogEnabled' => true,
+        'log.FileName' => 'PayPal.log',
+        'log.LogLevel' => 'DEBUG'
+        )
+    );
+}
+
+function paypal($user_id)
+{
+    $row = fetch_single_row_in_payment($user_id, 'user_id');
+
+    require('../vendor/autoload.php');
+
+    $secret_id = 'AT7HaJrDpit6eDrFtPtdC7_v-qZE9fydQDxZBCZw-YKc0Xk23xVPDqhpRzJ62JltKHdnj7FOUcnTDu2N';
+
+    $secret_key = 'EKYM7jeg21Y8Xkj5eF1saUIU_LwHjsTKe1x-1VqJKFEzPvUFDimAJh-7EWx9HOgCaelPIgQonv3S0Tz3';
+
+    $apiContext = paypal_context($secret_id, $secret_key);
+
+    // paypal_config($apiContext);
+
+    $agreement = new \PayPal\Api\Agreement();
+    $agreement = $agreement->get($row['agreement_id'], $apiContext);
+    $agreementDetails = $agreement->getAgreementDetails();
+    $last_date = date('Y-m-d H:i:s', strtotime($agreementDetails->getLastPaymentDate()));
+    $interval = $row['interval_value'];
+    $end_date = date('Y-m-d H:i:s', strtotime("+$interval month", strtotime($last_date)));
+
+    return array(
+        'agreement'        => $agreement,
+        'agreementDetails' => $agreementDetails,
+        'end_date'         => $end_date,
+    );
+}
+
 //generating username for admin
 function username($first_name)
 {
@@ -1511,17 +1561,9 @@ function select_distinct_emails($table_name="", $group_to_send_to="")
     {
         $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
     }
-    elseif($group_to_send_to == "payers")
+    elseif($group_to_send_to == "payers" || $group_to_send_to == "payers-1" || $group_to_send_to == "payers-2")
     {
-        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
-    }
-    elseif($group_to_send_to == "payers-1")
-    {
-        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0 AND end_date > NOW()";
-    }
-    elseif($group_to_send_to == "payers-2")
-    {
-        $query = "SELECT DISTINCT email FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0 AND end_date <= NOW()";
+        $query = "SELECT DISTINCT email, user_id FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
     }
     elseif($group_to_send_to == "payers-3")
     {
@@ -2460,45 +2502,45 @@ function post_category()
 }
 
 //getting all payment subscriptions
-function payment_subscriptions($value='', $date_range=0, $unit=0, $user_id=0)
-{
-    $db = new dbase();
+// function payment_subscriptions($value='', $date_range=0, $unit=0, $user_id=0)
+// {
+//     $db = new dbase();
 
-    $query = "";
-    $query .= "SELECT * FROM payment_subscriptions";
+//     $query = "";
+//     $query .= "SELECT * FROM payment_subscriptions";
 
-    if($date_range == 1)
-    {
-        $query .= " WHERE created_at BETWEEN :from AND :to";
-    }
+//     if($date_range == 1)
+//     {
+//         $query .= " WHERE created_at BETWEEN :from AND :to";
+//     }
 
-    if($unit == 1)
-    {
-        // $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
-        $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", created_at, NOW()) <= ".$value['period'] ."";
-    }
+//     if($unit == 1)
+//     {
+//         // $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", '".$value['past']."', NOW()) <= ".$value['period'] ."";
+//         $query .= " WHERE TIMESTAMPDIFF(".$value['unit'].", created_at, NOW()) <= ".$value['period'] ."";
+//     }
 
-    if($user_id != 0)
-    {
-        $query .= " WHERE user_id = :user_id";
-    }
+//     if($user_id != 0)
+//     {
+//         $query .= " WHERE user_id = :user_id";
+//     }
     
-    $db->prep($query);
+//     $db->prep($query);
 
-    if($date_range == 1)
-    {
-        $db->bindvalue(':from', $value['from'], 'str');
-        $db->bindvalue(':to', $value['to'], 'str');
-    }
+//     if($date_range == 1)
+//     {
+//         $db->bindvalue(':from', $value['from'], 'str');
+//         $db->bindvalue(':to', $value['to'], 'str');
+//     }
 
-    if($user_id != 0)
-    {
-        $db->bindvalue(':user_id', $user_id, 'int');
-    }
+//     if($user_id != 0)
+//     {
+//         $db->bindvalue(':user_id', $user_id, 'int');
+//     }
 
-    $rows = $db->fetchMultiple();
-    return $rows;
-}
+//     $rows = $db->fetchMultiple();
+//     return $rows;
+// }
 
 function count_payment_subscriptions_a($value)
 {
@@ -2673,6 +2715,18 @@ function delete_from_email_list($email, $source)
     $execute = $db->execute();
 
     return $execute;
+}
+
+//getting a single row in payment table
+function fetch_single_row_in_payment($value, $column_name = 'id', $type='int', $by='id', $order='DESC', $limit=1)
+{
+    $db = new dbase();
+
+    $query = "SELECT * FROM payment_subscriptions WHERE $column_name = :value ORDER BY $by $order LIMIT $limit";
+    $db->prep($query);
+    $db->bindvalue(':value', $value, $type);
+    $row = $db->fetchSingle();
+    return $row;
 }
 // End database queries
 

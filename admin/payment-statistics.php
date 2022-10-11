@@ -21,7 +21,7 @@ if(isset($_GET['ps']))
   $user_id = $payment_info['user_id'];
   $user_info = fetch_single_row($user_id, 'users');
 
-  if($user_info == false)
+  if($payment_info == false)
   {
     redirect_to($host.'logout');
   }
@@ -46,17 +46,15 @@ else
                 <div class="card-body">
                     <div class="info-body">
                     <?php 
-                        $amount = 0;
 
-                        $payments = payment_subscriptions('', 0, 0, $user_id);
-                    
-                        foreach($payments as $payment)
-                        {
-                        $amount += $payment['amount'];
-                        }
-                        $count = db_row_count($user_id, 'user_id', 'payment_subscriptions');
+                        $agreement = paypal($user_id)['agreement'];
+                        $agreementDetails = paypal($user_id)['agreementDetails'];
+                        $end_date = paypal($user_id)['end_date'];
+
+                        $cycles_completed = $agreementDetails->getCyclesCompleted();
+
                         ?>
-                        <h4 class="message-body">$<?php echo $amount; ?></h4>
+                        <h4 class="message-body">$<?php echo $payment_info['amount'] * $cycles_completed; ?></h4>
                         <i class="bx bx-money"></i>
                     </div>
                 </div>
@@ -68,7 +66,7 @@ else
                 </div>
                 <div class="card-body">
                     <div class="info-body">
-                        <h4 class="message-body"><?php echo $count; ?></h4>
+                        <h4 class="message-body"><?php echo $cycles_completed; ?></h4>
                         <i class="bx bx-spreadsheet"></i>
                     </div>
                 </div>
@@ -89,6 +87,14 @@ else
                     <?php if(isset($user_info['first_name']) && isset($user_info['last_name']))
                     {
                         echo ucfirst(strtolower($user_info['first_name'])) . " " . ucfirst(strtolower($user_info['last_name']));
+                    }
+                    else
+                    {
+                      $deleted_user = fetch_single_row($user_id, 'deleted_users', 'user_id');
+                      if(isset($deleted_user['first_name']) && isset($deleted_user['last_name']))
+                      {
+                          echo '<b>DELETED: </b>'.ucfirst(strtolower($deleted_user['first_name'])) . " " . ucfirst(strtolower($deleted_user['last_name']));
+                      }
                     } ?>
                   </div>
                   <h4>Payment's name:</h4>
@@ -103,6 +109,14 @@ else
                     <?php if(isset($user_info['email']))
                     {
                         echo $user_info['email'];
+                    }
+                    else
+                    {
+                      $deleted_user = fetch_single_row($user_id, 'deleted_users', 'user_id');
+                      if(isset($deleted_user['email']))
+                      {
+                          echo '<b>DELETED: </b>'.$deleted_user['email'];
+                      }
                     } ?>
                   </div>
                   <h4>Payment's Email:</h4>
@@ -128,10 +142,9 @@ else
                   </div>
                   <h4>State:</h4>
                   <div>
-                    <?php if(isset($payment_info['state']))
-                    {
-                        echo $payment_info['state'];
-                    } ?>
+                    <?php 
+                        echo $agreement->getState();
+                     ?>
                   </div>
                   <h4>Amount:</h4>
                   <div>
@@ -164,10 +177,9 @@ else
                   </div>
                   <h4>Expires:</h4>
                   <div>
-                    <?php if(isset($payment_info['end_date']))
-                    {
-                        echo date("F jS, Y", strtotime($payment_info['end_date']));
-                    } ?> 
+                    <?php 
+                        echo date("F jS, Y", strtotime($end_date));
+                     ?> 
                   </div>
                   <h4>Created at:</h4>
                   <div>

@@ -4053,24 +4053,87 @@ if(isset($_POST['post-master']))
 					'altbody' => $altbody
 				);
 
-				$mail_response = send_mail($set_from, $add_address, $data);
-				if($mail_response !== true)
+				if($group_to_send_to == "payers-1")
 				{
-					echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+					$id = $group_email['user_id'];
+					$end_date = paypal($id)['end_date'];
+
+					//unexpired subscription
+					if(date('Y-m-d H:i:s') < $end_date)
+					{
+						$mail_response = send_mail($set_from, $add_address, $data);
+						if($mail_response !== true)
+						{
+							echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+						}
+						else
+						{
+							//insert into email tracking table
+							$values = array(
+								'admin_sent_emails_id' => $lastId,
+								'sent_to_email'        => $sent_to_email,
+								'email_track_code'     => $code
+							);
+		
+							$executed = insert_into_email_tracking($values);
+							if($executed)
+							{
+								$no_of_email_sent += 1;
+							}
+						}
+					}
+				}
+				elseif($group_to_send_to == "payers-2")
+				{
+					$id = $group_email['user_id'];
+					$end_date = paypal($id)['end_date'];
+					
+					//expired subscription
+					if(date('Y-m-d H:i:s') >= $end_date)
+					{
+						$mail_response = send_mail($set_from, $add_address, $data);
+						if($mail_response !== true)
+						{
+							echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+						}
+						else
+						{
+							//insert into email tracking table
+							$values = array(
+								'admin_sent_emails_id' => $lastId,
+								'sent_to_email'        => $sent_to_email,
+								'email_track_code'     => $code
+							);
+		
+							$executed = insert_into_email_tracking($values);
+							if($executed)
+							{
+								$no_of_email_sent += 1;
+							}
+						}
+					}
 				}
 				else
 				{
-					//insert into email tracking table
-					$values = array(
-						'admin_sent_emails_id' => $lastId,
-						'sent_to_email'        => $sent_to_email,
-						'email_track_code'     => $code
-					);
-
-					$executed = insert_into_email_tracking($values);
-					if($executed)
+					$mail_response = send_mail($set_from, $add_address, $data);
+					if($mail_response !== true)
 					{
-						$no_of_email_sent += 1;
+						echo "<div class='card error'><div>" . $mail_response . "</div></div>";
+					}
+					else
+					{
+						//insert into email tracking table
+						$values = array(
+							'admin_sent_emails_id' => $lastId,
+							'sent_to_email'        => $sent_to_email,
+							'email_track_code'     => $code
+						);
+	
+						$executed = insert_into_email_tracking($values);
+						if($executed)
+						{
+							$no_of_email_sent += 1;
+						}
 					}
 				}
 	
@@ -6781,187 +6844,187 @@ if(isset($_POST['all_post_query']))
 	echo json_encode($output);
 }
 
-if(isset($_POST['to']))
-{
-	$to = trim($_POST['to']);
-	$from = trim($_POST['from']);
+// if(isset($_POST['to']))
+// {
+// 	$to = trim($_POST['to']);
+// 	$from = trim($_POST['from']);
 
-	if($from == '')
-	{
-		echo 'please choose a date';
-	}
-	else
-	{
-		$amount = 0;
+// 	if($from == '')
+// 	{
+// 		echo 'please choose a date';
+// 	}
+// 	else
+// 	{
+// 		$amount = 0;
 
-		$values = array(
-			'from' => $from,
-			'to'   => $to
-		);
-		$payments = payment_subscriptions($values, 1);
+// 		$values = array(
+// 			'from' => $from,
+// 			'to'   => $to
+// 		);
+// 		$payments = payment_subscriptions($values, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-}
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// }
 
-if(isset($_POST['payment-periods']))
-{
-	$payment_periods = trim($_POST['payment-periods']);
+// if(isset($_POST['payment-periods']))
+// {
+// 	$payment_periods = trim($_POST['payment-periods']);
 
-	if($payment_periods == 'S')
-	{
-		echo 'select a period';
-	}
-	elseif($payment_periods == '10y')
-	{
-		$amount = 0;
+// 	if($payment_periods == 'S')
+// 	{
+// 		echo 'select a period';
+// 	}
+// 	elseif($payment_periods == '10y')
+// 	{
+// 		$amount = 0;
 
-		// $dt = new DateTime(date("Y-m-d"));
-		// $dt->modify("-10 year");
+// 		// $dt = new DateTime(date("Y-m-d"));
+// 		// $dt->modify("-10 year");
 
-		// $past = $dt->format('Y-m-d');
-		$unit = "YEAR";
-		$period = 10;
+// 		// $past = $dt->format('Y-m-d');
+// 		$unit = "YEAR";
+// 		$period = 10;
 
-		$values = array(
-			// 'past'   => $past,
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			// 'past'   => $past,
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '5y')
-	{
-		$amount = 0;
-		$unit = "YEAR";
-		$period = 5;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '5y')
+// 	{
+// 		$amount = 0;
+// 		$unit = "YEAR";
+// 		$period = 5;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '1y')
-	{
-		$amount = 0;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '1y')
+// 	{
+// 		$amount = 0;
 
-		$unit = "YEAR";
-		$period = 1;
+// 		$unit = "YEAR";
+// 		$period = 1;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '6m')
-	{
-		$amount = 0;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '6m')
+// 	{
+// 		$amount = 0;
 
-		$unit = "MONTH";
-		$period = 6;
+// 		$unit = "MONTH";
+// 		$period = 6;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '3m')
-	{
-		$amount = 0;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '3m')
+// 	{
+// 		$amount = 0;
 
-		$unit = "MONTH";
-		$period = 3;
+// 		$unit = "MONTH";
+// 		$period = 3;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '1m')
-	{
-		$amount = 0;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '1m')
+// 	{
+// 		$amount = 0;
 
-		$unit = "MONTH";
-		$period = 1;
+// 		$unit = "MONTH";
+// 		$period = 1;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
-	elseif($payment_periods == '1d')
-	{
-		$amount = 0;
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
+// 	elseif($payment_periods == '1d')
+// 	{
+// 		$amount = 0;
 
-		$unit = "DAY";
-		$period = 1;
+// 		$unit = "DAY";
+// 		$period = 1;
 
-		$values = array(
-			'unit'   => $unit,
-			'period' => $period
-		);
+// 		$values = array(
+// 			'unit'   => $unit,
+// 			'period' => $period
+// 		);
 
-		$payments = payment_subscriptions($values, 0, 1);
+// 		$payments = payment_subscriptions($values, 0, 1);
 
-		foreach($payments as $payment)
-		{
-			$amount += $payment['amount'];
-		}
-		echo $amount;
-	}
+// 		foreach($payments as $payment)
+// 		{
+// 			$amount += $payment['amount'];
+// 		}
+// 		echo $amount;
+// 	}
 	
-}
+// }
 
 if(isset($_POST['payment_query']))
 {

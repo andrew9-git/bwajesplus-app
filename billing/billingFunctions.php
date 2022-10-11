@@ -1,8 +1,5 @@
 <?php
 
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-
 include('../includes/db.php');
 include('./billing-email.php');
 include('../includes/email-template.php');
@@ -117,14 +114,12 @@ function payment_subscriptions(array $value)
 {
     $db = new dbase();
 
-    $query = "INSERT INTO payment_subscriptions(user_id, agreement_id, interval_value, state, status, amount, amount_with_currency, payer_id, email, first_name, last_name, start_date, end_date, payment_method) VALUES(:user_id, :agreement_id, :interval_value, :state, :status, :amount, :amount_with_currency, :payer_id, :email, :first_name, :last_name, :start_date, :end_date, :payment_method)";
+    $query = "INSERT INTO payment_subscriptions(user_id, agreement_id, interval_value, amount, amount_with_currency, payer_id, email, first_name, last_name, start_date, payment_method) VALUES(:user_id, :agreement_id, :interval_value, :amount, :amount_with_currency, :payer_id, :email, :first_name, :last_name, :start_date, :payment_method)";
     $db->prep($query);
 
     $db->bindvalue(':user_id', $value['user_id'], 'int');
     $db->bindvalue(':agreement_id', $value['agreement_id'], 'str');
     $db->bindvalue(':interval_value', $value['interval_value'], 'int');
-    $db->bindvalue(':state', $value['state'], 'str');
-    $db->bindvalue(':status', $value['status'], 'str');
     $db->bindvalue(':amount', $value['amount'], 'str');
     $db->bindvalue(':amount_with_currency', $value['amount_with_currency'], 'str');
     $db->bindvalue(':payer_id', $value['payer_id'], 'str');
@@ -132,7 +127,6 @@ function payment_subscriptions(array $value)
     $db->bindvalue(':first_name', $value['first_name'], 'str');
     $db->bindvalue(':last_name', $value['last_name'], 'str');
     $db->bindvalue(':start_date', $value['start_date'], 'str');
-    $db->bindvalue(':end_date', $value['end_date'], 'str');
     $db->bindvalue(':payment_method', $value['payment_method'], 'str');
 
     $execute = $db->execute();
@@ -150,20 +144,6 @@ function fetch_single_row_in_payment($value, $column_name = 'id', $type='int', $
     $db->bindvalue(':value', $value, $type);
     $row = $db->fetchSingle();
     return $row;
-}
-
-//update number of private posts allowed
-function update_state($id)
-{
-    $db = new dbase();
-    $query = "UPDATE payment_subscriptions SET state = 'Cancelled', updated_at = NOW() WHERE id = :id";
-    $db->prep($query);
-
-    $db->bindvalue(':id', $id, 'int');
-
-    $execute = $db->execute();
-    
-    return $execute;
 }
 
 ?>

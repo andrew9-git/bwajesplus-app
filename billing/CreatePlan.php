@@ -1,22 +1,5 @@
 <?php
 
-use PayPal\Api\ChargeModel;//
-use PayPal\Api\Currency;
-use PayPal\Api\MerchantPreferences;
-use PayPal\Api\Patch;
-use PayPal\Api\PatchRequest;
-use PayPal\Api\PaymentDefinition;
-use PayPal\Api\Plan;
-use PayPal\Common\PayPalModel;
-// use PayPal\Exception\PayPalConnectionException;
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-// use PayPal\Api\Transaction;
-// use PayPal\Api\RedirectUrls;
-// use PayPal\Api\Agreement;
-// use PayPal\Api\Payer;
-// use PayPal\Api\ShippingAddress;
-
 include('billingFunctions.php');
 
 
@@ -51,22 +34,22 @@ if(isset($_POST['interval']))
     
         $apiContext = paypal_context($id, $secret);
     
-        paypal_config($apiContext);
+        // paypal_config($apiContext);
     
-        $plan = new Plan();
+        $plan = new \PayPal\Api\Plan();
     
         $plan->setName('Ad removal')
         ->setDescription('Removing ads on all user\'s posts')
         ->setType('INFINITE');
     
-        $paymentDefinition = new PaymentDefinition();
+        $paymentDefinition = new \PayPal\Api\PaymentDefinition();
     
         $paymentDefinition->setName('Regular payments for all ads on user\'s posts to be removed')
         ->setType('REGULAR')
         ->setFrequency('MONTH')
         ->setFrequencyInterval("$interval")
         // ->setCycles("12")
-        ->setAmount(new Currency(array('value' => $amount, 'currency' => 'USD')));
+        ->setAmount(new \PayPal\Api\Currency(array('value' => $amount, 'currency' => 'USD')));
         
         //Charge Models
     
@@ -76,7 +59,7 @@ if(isset($_POST['interval']))
     
         // $paymentDefinition->setChargeModels(array($chargeModel));
     
-        $merchantPreferences = new MerchantPreferences();
+        $merchantPreferences = new \PayPal\Api\MerchantPreferences();
         $baseUrl = url()[0];
         // $baseUrl = getBaseUrl();
     
@@ -98,18 +81,18 @@ if(isset($_POST['interval']))
     
             try
             {
-                $patch = new Patch();
-                $value = new PayPalModel('{"state":"ACTIVE"}');
+                $patch = new \PayPal\Api\Patch();
+                $value = new \PayPal\Common\PayPalModel('{"state":"ACTIVE"}');
                 $patch->setOp('replace')
                 ->setPath('/')
                 ->setValue($value);
-                $patchRequest = new PatchRequest();
+                $patchRequest = new \PayPal\Api\PatchRequest();
                 $patchRequest->addPatch($patch);
-                $createdPlan = Plan::get($output->getId(), $apiContext);
+                $createdPlan = \PayPal\Api\Plan::get($output->getId(), $apiContext);
     
                 $createdPlan->update($patchRequest, $apiContext);
                 
-                $plan = Plan::get($createdPlan->getId(), $apiContext);
+                $plan = \PayPal\Api\Plan::get($createdPlan->getId(), $apiContext);
     
                 require_once('CreateBillingAgreementWithPayPal.php');
                 // require_once('../remove-ads.php');

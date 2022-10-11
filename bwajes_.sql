@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2022 at 10:57 PM
+-- Generation Time: Oct 11, 2022 at 09:49 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -59,9 +59,12 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `first_name`, `last_name`, `email`, `username`, `admin_type`, `gender`, `password`, `profile_image`, `phone`, `suspended`, `bio`, `website`, `birthdate`, `address`, `city`, `state`, `country`, `active`, `registered_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (1, 'Andrew', 'Adelodun', 'andrewadelodun@gmail.com', 'retr64554df', 1, 'M', '$2y$10$dvaOr7240Hs/3YPl26YJtuOrDoLkaMIZPRnClRGacpjLSbqxRxB5m', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, '2022-08-08 17:46:00', '2022-08-25 14:35:39'),
-(2, 'Seun', 'Lanre', 'seunlanre@gmail.com', 'B+seuqczlv', 2, 'M', '$2y$10$QU2Z/0h12R80dk/XiHiViuqWC3JBhEqWk5t9jSrWfNKg9PF3rzqe6', '1661292510_business.jpg', '+2349045634567', 0, '<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, laboriosam tenetur iste molestiae voluptatum quod vel quas, recusandae veniam, iure nemo odit aliquam ipsam ex deleniti nisi quam esse illo pariatur dolorum nobis aut? Maiores, veniam? Recusandae culpa modi labore et quos temporibus? Eligendi deleniti quam explicabo, quibusdam modi nostrum non temporibus quo tempore architecto consectetur repudiandae asperiores! Quam facilis fuga possimus, aperiam architecto dolorum cupiditate provident ipsum. Modi iure perferendis distinctio blanditiis hic recusandae maxime sunt sapiente laborum magni ratione accusamus, quasi similique voluptas, repellat minus inventore repudiandae? Quisquam maiores explicabo consectetur, ipsam quidem omnis tempore nulla nihil ullam, esse dolorem at libero. Nulla ipsum doloribus sunt consequuntur quasi ea corporis eveniet illo minima quisquam, placeat eius aliquam nostrum?</p>', 'http://localhost:9090/bwajesplus-app/admin/register-admin', NULL, '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', NULL, 0, 1, 0, '2022-08-23 22:08:30', '2022-08-23 23:08:30'),
-(3, 'Niyi', 'Sola', 'niyisola@gmail.com', 'B+niyawhim', 1, 'M', '$2y$10$k4RK/lYe03gvAzHJ0BmzvOIRhvOg.PTmkQ1wF17ZABoXZ50z0mV.K', '1663375352_dog.jpg', '+2347045533567', 0, '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic veritatis nemo veniam fugit placeat quaerat unde, quos necessitatibus tenetur doloremque ipsum omnis laborum mollitia optio quasi dignissimos, adipisci esse quod reprehenderit ullam? Beatae dolore et similique ullam! Veniam tenetur, dolore tempore, hic consequuntur earum nisi ex natus fugiat quod ullam quaerat, obcaecati vero maxime accusamus aut esse. Adipisci nesciunt ducimus debitis quis dolorum saepe maiores corporis nihil accusamus, accusantium, consequuntur totam maxime tempore deserunt ut voluptas corrupti. Nobis minima laboriosam voluptates. Quidem earum minus quas rem mollitia rerum, nostrum fugiat dolore at quod laboriosam quaerat aliquam. Eaque perferendis illo labore?</p>', 'http://localhost:9090/bwajesplus-app/settings', '1999-07-13', '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', 130, 1, 1, 3, '2022-08-23 22:28:41', '2022-09-17 01:42:32'),
-(4, 'Ngozi', 'Chidera', 'chidera@gmail.com', 'B+ngovdrbz', 1, 'F', '$2y$10$/I9mPf8xsFqLaUKzR0ct6.TJn/3C6WyMOSnIsF9mJJ7W3gMLDBOAq', '1663285200_ankara.jpg', '+2349047434567', 0, '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1663284932_blogging.jpeg\" style=\"height:130px; width:200px\" />Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dignissimos sunt recusandae velit, voluptatem quas sapiente quis veniam iusto dolorum dicta aliquid, numquam dolor! Atque voluptate libero magni necessitatibus reiciendis, fuga laudantium. Repellendus porro exercitationem, ipsam mollitia omnis quasi consequuntur veniam rem facilis nam qui consequatur excepturi quia quidem hic iusto impedit dolorem expedita voluptatum earum illum. Aut, laborum reprehenderit! Quis voluptatum similique ipsum voluptates consectetur voluptatem mollitia cum rerum ad, explicabo neque repellat sit alias voluptatibus necessitatibus aspernatur architecto distinctio, porro vero! Aperiam soluta eligendi quos. Ab voluptates aut maiores repellendus sint, officiis eaque unde laborum beatae molestias, molestiae necessitatibus qui iusto reiciendis laboriosam illo incidunt nihil consequatur. Rerum praesentium, impedit, quos itaque a quasi ut voluptatem debitis neque eveniet mollitia architecto tempore quaerat vitae fuga ipsum! Quas nulla porro expedita&nbsp;</p>', 'http://localhost:9090/bwajesplus-app/admin/register-admin', '1995-02-14', '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', 130, 1, 3, 4, '2022-09-15 23:40:00', '2022-09-17 01:53:36');
+(2, 'Seun', 'Lanre', 'seunlanre@gmail.com', 'B+seuqczlv', 2, 'M', '$2y$10$QU2Z/0h12R80dk/XiHiViuqWC3JBhEqWk5t9jSrWfNKg9PF3rzqe6', '1661292510_business.jpg', '+2349045634567', 0, '<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. A, laboriosam tenetur iste molestiae voluptatum quod vel quas, recusandae veniam, iure nemo odit aliquam ipsam ex deleniti nisi quam esse illo pariatur dolorum nobis aut? Maiores, veniam? Recusandae culpa modi labore et quos temporibus? Eligendi deleniti quam explicabo, quibusdam modi nostrum non temporibus quo tempore architecto consectetur repudiandae asperiores! Quam facilis fuga possimus, aperiam architecto dolorum cupiditate provident ipsum. Modi iure perferendis distinctio blanditiis hic recusandae maxime sunt sapiente laborum magni ratione accusamus, quasi similique voluptas, repellat minus inventore repudiandae? Quisquam maiores explicabo consectetur, ipsam quidem omnis tempore nulla nihil ullam, esse dolorem at libero. Nulla ipsum doloribus sunt consequuntur quasi ea corporis eveniet illo minima quisquam, placeat eius aliquam nostrum?</p>', 'http://localhost:9090/bwajesplus-app/admin/register-admin', NULL, '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', NULL, 0, 1, 6, '2022-08-23 22:08:30', '2022-08-23 23:08:30'),
+(3, 'Niyi', 'Sola', 'niyisola@gmail.com', 'B+niyawhim', 1, 'M', '$2y$10$k4RK/lYe03gvAzHJ0BmzvOIRhvOg.PTmkQ1wF17ZABoXZ50z0mV.K', '1663375352_dog.jpg', '+2347045533567', 0, '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic veritatis nemo veniam fugit placeat quaerat unde, quos necessitatibus tenetur doloremque ipsum omnis laborum mollitia optio quasi dignissimos, adipisci esse quod reprehenderit ullam? Beatae dolore et similique ullam! Veniam tenetur, dolore tempore, hic consequuntur earum nisi ex natus fugiat quod ullam quaerat, obcaecati vero maxime accusamus aut esse. Adipisci nesciunt ducimus debitis quis dolorum saepe maiores corporis nihil accusamus, accusantium, consequuntur totam maxime tempore deserunt ut voluptas corrupti. Nobis minima laboriosam voluptates. Quidem earum minus quas rem mollitia rerum, nostrum fugiat dolore at quod laboriosam quaerat aliquam. Eaque perferendis illo labore?</p>', 'http://localhost:9090/bwajesplus-app/settings', '1999-07-13', '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', 130, 0, 1, 3, '2022-08-23 22:28:41', '2022-09-17 01:42:32'),
+(4, 'Ngozi', 'Chidera', 'chidera@gmail.com', 'B+ngovdrbz', 1, 'F', '$2y$10$AkFHKLWDnf2uIZmsNQfjYeUdgCCpwsAITD6QEq2MxTPpF./boGoi.', '1663285200_ankara.jpg', '+2349047434567', 0, '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665055048_business4.jpg\" style=\"height:168px; width:300px\" /></p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti dignissimos sunt recusandae velit, voluptatem quas sapiente quis veniam iusto dolorum dicta aliquid, numquam dolor! Atque voluptate libero magni necessitatibus reiciendis, fuga laudantium. Repellendus porro exercitationem, ipsam mollitia omnis quasi consequuntur veniam rem facilis nam qui consequatur excepturi quia quidem hic iusto impedit dolorem expedita voluptatum earum illum. Aut, laborum reprehenderit! Quis voluptatum similique ipsum voluptates consectetur voluptatem mollitia cum rerum ad, explicabo neque repellat sit alias voluptatibus necessitatibus aspernatur architecto distinctio, porro vero! Aperiam soluta eligendi quos. Ab voluptates aut maiores repellendus sint, officiis eaque unde laborum beatae molestias, molestiae necessitatibus qui iusto reiciendis laboriosam illo incidunt nihil consequatur. Rerum praesentium, impedit, quos itaque a quasi ut voluptatem debitis neque eveniet mollitia architecto tempore quaerat vitae fuga ipsum! Quas nulla porro expedita&nbsp;</p>', 'http://localhost:9090/bwajesplus-app/admin/register-admin', '1995-02-14', '4, Moshalasi Street, Off Ade-Adenaike Street, Irawo Bus Stop', 'Ikorodu', 'Lagos', 130, 1, 3, 6, '2022-09-15 23:40:00', '2022-10-06 12:18:26'),
+(5, 'Basic', 'Test', 'basic-test@bwajes-plus.andadel.com', 'B+basuhpmr', 2, 'F', '$2y$10$hMlYdS.RHTyVc04GmVTSourQNDWq7lOQxwaARYgxVrMpupVm9hgwO', '1665043821_author (1).jpg', '+2349045634567', 0, '<p>This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;This is the testing account for basic admin&nbsp;</p>', 'http://localhost:9090/bwajesplus-app/basic', '2022-10-02', '3, Basic Way', 'Toronto', 'Ontario', 36, 0, 4, 6, '2022-10-06 08:10:21', '2022-10-06 13:18:58'),
+(6, 'Super', 'Test', 'super-test@bwajes-plus.andadel.com', 'B+supqlphi', 1, 'F', '$2y$10$btdsMsh0NZPefcf9VsnREO0c/9lgY75Wia9AB.i6zgTQxkgmgDSKe', '1665045457_blogging2.jpg', '+2349045634567', 0, '<p>This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;This is the testing account for super admin&nbsp;</p>', 'http://localhost:9090/bwajesplus-app/super', '2022-09-12', '3, Super Way', 'Toronto', 'Ontario', 36, 1, 4, 4, '2022-10-06 08:37:37', '2022-10-06 09:37:37'),
+(8, 'Andrew', 'Adelodun', 'andrewadelodun2@gmail.com', 'B+andwezrj', 2, 'M', '$2y$10$IqznPiQyJGW5031qI6g6fOPUE78i75RdRPOOeXD/3Exo.jueRL4ee', '1665059560_error-404.png', '+34545456', 0, '<p>andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;andrewadelodun@gmail.com&nbsp;</p>', 'http://localhost:9090/bwajesplus-app/admin/register-admin', '2022-09-26', '3, frhgjgh', 'ltyys', 'sdsds', 19, 0, 6, 6, '2022-10-06 12:32:40', '2022-10-06 13:32:40');
 
 -- --------------------------------------------------------
 
@@ -84,7 +87,10 @@ INSERT INTO `admin_passwords` (`id`, `email`, `password`, `created_at`) VALUES
 (1, 'seunlanre@gmail.com', '$2y$10$QU2Z/0h12R80dk/XiHiViuqWC3JBhEqWk5t9jSrWfNKg9PF3rzqe6', '2022-08-23 22:08:30'),
 (2, 'niyisola@gmail.com', '$2y$10$k4RK/lYe03gvAzHJ0BmzvOIRhvOg.PTmkQ1wF17ZABoXZ50z0mV.K', '2022-08-23 22:28:41'),
 (3, 'chidera@gmail.com', '$2y$10$TLcKTB9K6akCvuyfMTQE4eJjfjK5Egi/NcgVP0.K1dLD9tHmSKHRW', '2022-09-15 23:40:00'),
-(4, 'chidera@gmail.com', '$2y$10$/I9mPf8xsFqLaUKzR0ct6.TJn/3C6WyMOSnIsF9mJJ7W3gMLDBOAq', '2022-09-17 00:53:36');
+(4, 'chidera@gmail.com', '$2y$10$/I9mPf8xsFqLaUKzR0ct6.TJn/3C6WyMOSnIsF9mJJ7W3gMLDBOAq', '2022-09-17 00:53:36'),
+(5, 'basic-test@bwajes-plus.andadel.com', '$2y$10$hMlYdS.RHTyVc04GmVTSourQNDWq7lOQxwaARYgxVrMpupVm9hgwO', '2022-10-06 08:10:21'),
+(6, 'super-test@bwajes-plus.andadel.com', '$2y$10$btdsMsh0NZPefcf9VsnREO0c/9lgY75Wia9AB.i6zgTQxkgmgDSKe', '2022-10-06 08:37:37'),
+(7, 'andrewadelodun2@gmail.com', '$2y$10$IqznPiQyJGW5031qI6g6fOPUE78i75RdRPOOeXD/3Exo.jueRL4ee', '2022-10-06 12:32:40');
 
 -- --------------------------------------------------------
 
@@ -139,7 +145,6 @@ INSERT INTO `admin_sent_emails` (`id`, `set_from_name`, `set_from_email`, `subje
 (30, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;Some body&nbsp;</p>', 3, '2022-09-11 12:39:23'),
 (31, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 12:40:18'),
 (32, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 12:41:06'),
-(33, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 12:42:12'),
 (34, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 12:43:11'),
 (35, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 13:04:58'),
 (36, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', 'a<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 3, '2022-09-11 13:06:47'),
@@ -223,7 +228,20 @@ INSERT INTO `admin_sent_emails` (`id`, `set_from_name`, `set_from_email`, `subje
 (112, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001410_abstract.jpg\" style=\"height:344px; width:750px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:24:00'),
 (113, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001606_abstract.jpg\" style=\"height:344px; width:750px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:26:57'),
 (114, 'bwajes+', 'myphptestemail@gmail.com', 'Some billing Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665001857_abstract.jpg\" style=\"height:292px; width:635px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:31:19'),
-(115, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665002102_author.jpg\" style=\"height:354px; width:632px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:35:25');
+(115, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p><img alt=\"\" src=\"http://localhost:9090/bwajesplus-app/admin/upload_photos/1665002102_author.jpg\" style=\"height:354px; width:632px\" /></p>\r\n\r\n<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-05 20:35:25'),
+(116, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:10:51'),
+(117, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:17:49'),
+(118, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:30:19'),
+(119, 'bwajes+', 'myphptestemail@gmail.com', 'bwajes+ Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:31:15'),
+(120, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:31:54'),
+(121, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:36:21'),
+(122, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:39:51'),
+(123, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:40:53'),
+(124, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:53:47'),
+(125, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:56:11'),
+(126, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:58:59'),
+(127, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 13:04:03'),
+(128, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 13:05:27');
 
 -- --------------------------------------------------------
 
@@ -248,8 +266,12 @@ CREATE TABLE `admin_statistics` (
 --
 
 INSERT INTO `admin_statistics` (`id`, `admin_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
-(14, 3, '2022-09-22 21:24:52', '2022-09-17 00:43:41', 'Chrome', 'Windows 10', 'Unknown', '2022-08-27 13:04:46', '2022-09-22 21:24:52'),
-(15, 4, '2022-10-05 19:58:04', '2022-10-05 15:57:34', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-10-05 19:58:04');
+(14, 3, '2022-10-06 12:25:02', '2022-10-06 12:25:27', 'Chrome', 'Windows 10', 'Unknown', '2022-08-27 13:04:46', '2022-10-06 12:25:27'),
+(15, 4, '2022-10-11 17:11:06', '2022-10-11 17:10:36', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-10-11 17:11:06'),
+(16, 5, '2022-10-07 10:36:22', '2022-10-07 10:37:15', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:35:59', '2022-10-07 10:37:15'),
+(17, 6, '2022-10-06 13:44:36', '2022-10-06 13:44:35', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:37:52', '2022-10-06 13:44:36'),
+(18, 2, '2022-10-06 12:26:04', '2022-10-06 12:26:14', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 12:24:37', '2022-10-06 12:26:14'),
+(19, 8, '2022-10-06 13:33:13', '2022-10-06 12:35:06', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 12:33:14', '2022-10-06 12:35:06');
 
 -- --------------------------------------------------------
 
@@ -296,8 +318,7 @@ CREATE TABLE `affiliate_programmes` (
 
 INSERT INTO `affiliate_programmes` (`id`, `url`, `name`, `image`, `shown`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
 (2, 'https://google.com', 'hostinger', 'Hosting24-blue.png', 0, 1, 1, '2022-08-08 17:46:45', '2022-08-08 17:46:45'),
-(3, 'https://google.com', 'coursera', 'coursera.png', 0, 1, 1, '2022-08-08 18:57:23', '2022-08-08 18:57:23'),
-(7, 'http://localhost:9090/bwajesplus-app/admin/create-affiliate', 'New Definition 3.0', '1662380136_ground.jpg', 0, 3, 3, '2022-09-05 10:00:55', '2022-09-05 12:15:36');
+(3, 'https://google.com', 'coursera', 'coursera.png', 0, 1, 1, '2022-08-08 18:57:23', '2022-08-08 18:57:23');
 
 -- --------------------------------------------------------
 
@@ -327,13 +348,6 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `post_id`, `user_id`, `parent_id`, `first_name`, `email`, `website`, `comment`, `status`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
 (1, 32, 122, 0, 'Andrew', 'andrewadelodun@gmail.com', NULL, 'Description Description Description Description comment', 1, 0, NULL, '2022-07-31 17:04:32', '2022-07-31 17:04:32'),
-(2, 34, 122, 0, 'Andrew', 'andrewadelodun@gmail.com', 'http://localhost:9090/bwajesplus-app/settings', 'Please first name cannot be empty\r\nPlease email cannot be empty\r\nPlease comments cannot be empty', 1, 0, NULL, '2022-09-22 23:25:16', '2022-09-22 23:25:16'),
-(3, 34, 122, 0, 'Ugo', 'chizzy@gmail.com', NULL, 'Some bwajes+ comments', 1, 0, NULL, '2022-09-23 09:13:26', '2022-09-23 09:13:26'),
-(4, 34, 122, 3, 'Ngozi', 'andrewadelodun@gmail.com', 'http://localhost:9090/bwajesplus-app/settings', 'replying ugo', 1, 0, NULL, '2022-09-23 13:14:52', '2022-09-23 13:14:52'),
-(5, 34, 122, 4, 'Samuel', 'andrewadelodun@gmail.com', 'http://localhost:9090/bwajesplus-app/settings', 'Replying Ngozi', 1, 0, NULL, '2022-09-23 13:38:12', '2022-09-23 13:38:12'),
-(6, 34, 122, 2, 'Grace', 'grace419@gmail.com', NULL, 'Replying andrew', 1, 0, NULL, '2022-09-23 13:57:07', '2022-09-23 13:57:07'),
-(7, 34, 122, 6, 'Faruq', 'faruq698@gmail.com', NULL, 'Replying grace', 1, 0, NULL, '2022-09-23 14:00:22', '2022-09-23 14:00:22'),
-(8, 34, 122, 7, 'Kofo', 'andrewadelodun@gmail.com', NULL, 'Replying faruq', 1, 0, NULL, '2022-09-23 14:03:49', '2022-09-23 14:03:49'),
 (9, 32, 122, 1, 'Remi', 'remin8934@gmail.com', NULL, 'Replying Andrew', 1, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
 (10, 32, 122, 9, 'Theresa', 'the033@gmail.com', NULL, 'Replying Remi', 1, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
 (11, 32, 122, 0, 'Emmanuel', 'andreloun@gmail.com', NULL, 'Added a comment', 1, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
@@ -362,7 +376,7 @@ CREATE TABLE `countries` (
 --
 
 INSERT INTO `countries` (`id`, `country`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(4, 'Afghanistan', 3, 3, '2022-09-05 14:44:16', '2022-09-05 14:44:16'),
+(4, 'Afghanistan', 3, 6, '2022-09-05 14:44:16', '2022-10-06 10:36:11'),
 (5, 'Albania', 3, 3, '2022-09-05 14:44:24', '2022-09-05 14:44:24'),
 (6, 'Algeria', 3, 3, '2022-09-05 14:44:36', '2022-09-05 14:44:36'),
 (7, 'Andorra', 3, 3, '2022-09-05 14:44:50', '2022-09-05 14:44:50'),
@@ -629,51 +643,9 @@ CREATE TABLE `email_list` (
 --
 
 INSERT INTO `email_list` (`id`, `first_name`, `email`, `source`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(96, 'ADELODUN', 'adelodun@gmail.com', 1, 0, NULL, '2022-06-30 19:43:59', '2022-06-30 19:43:59'),
-(97, 'ADELODUN', 'andrewadel@gmail.com', 1, 0, NULL, '2022-06-30 19:51:28', '2022-06-30 19:51:28'),
-(98, 'ADELODUN', 'who@gmail.com', 1, 0, NULL, '2022-07-01 15:01:35', '2022-07-01 15:01:35'),
-(101, 'Andrew', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-04 19:14:05', '2022-07-04 19:14:05'),
-(102, 'Andrew', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-06 18:08:41', '2022-07-06 18:08:41'),
-(103, 'ADELODUN', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-06 19:19:27', '2022-07-06 19:19:27'),
-(104, 'Andrew', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-08 16:11:17', '2022-07-08 16:11:17'),
-(105, 'Andrew', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-08 20:50:41', '2022-07-08 20:50:41'),
-(106, 'Andrew', 'andrewadelodun@gmail.com', 1, 0, NULL, '2022-07-08 21:03:13', '2022-07-08 21:03:13'),
-(107, 'Andrew', 'andrewadelodun001@gmail.com', 1, 0, NULL, '2022-07-08 21:17:15', '2022-07-08 21:17:15'),
-(108, 'Andrew', 'andrewadelun@gmail.com', 1, 0, NULL, '2022-07-13 07:33:30', '2022-07-13 07:33:30'),
-(109, 'Andrew', 'andrewadelodun001@gmail.com', 1, 0, NULL, '2022-07-15 15:25:29', '2022-07-15 15:25:29'),
-(113, 'My', 'myphptestemail@gmail.com', 1, 0, NULL, '2022-07-22 07:35:16', '2022-07-22 07:35:16'),
-(114, 'My', 'myphptestemail@gmail.com', 1, 0, NULL, '2022-07-22 07:57:05', '2022-07-22 07:57:05'),
-(115, 'My', 'myphptestemail@gmail.com', 1, 0, NULL, '2022-07-22 08:00:58', '2022-07-22 08:00:58'),
-(116, 'My', 'myphptestemail@gmail.com', 1, 0, NULL, '2022-07-22 08:44:28', '2022-07-22 08:44:28'),
-(117, 'my', 'myphptestemail@gmail.com', 1, 0, NULL, '2022-07-29 21:47:32', '2022-07-29 21:47:32'),
-(118, 'ADELODUN', 'andrew12adelodun@gmail.com', 1, 0, NULL, '2022-09-09 10:26:28', '2022-09-09 10:26:28'),
-(119, 'ADELODUN', 'reciever@bwajes-plus.andadel.com', 1, 0, NULL, '2022-09-12 12:40:42', '2022-09-12 12:40:42'),
-(120, 'ADELODUN', 'reciever@bwajes-plus.andadel.com', 1, 0, NULL, '2022-09-12 12:43:52', '2022-09-12 12:43:52'),
-(121, 'ADELODUN', 'reciever@bwajes-plus.andadel.com', 1, 0, NULL, '2022-09-12 12:53:54', '2022-09-12 12:53:54'),
 (122, 'ADELODUN', 'reciever@bwajes-plus.andadel.com', 1, 0, NULL, '2022-09-12 14:22:09', '2022-09-12 14:22:09'),
-(123, NULL, 'solataiwo@gmail.com', 2, 0, NULL, '2022-09-20 15:12:50', '2022-09-20 15:12:50'),
-(125, 'Lambert', 'feedback@gmail.com', 4, 0, NULL, '2022-09-21 20:17:46', '2022-09-21 20:17:46'),
-(126, 'Ugo', 'chizzy@gmail.com', 3, 0, NULL, '2022-09-23 09:13:26', '2022-09-23 09:13:26'),
-(127, 'Ngozi', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-09-23 13:14:52', '2022-09-23 13:14:52'),
-(128, 'Samuel', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-09-23 13:38:12', '2022-09-23 13:38:12'),
-(129, 'Grace', 'grace419@gmail.com', 3, 0, NULL, '2022-09-23 13:57:07', '2022-09-23 13:57:07'),
-(130, 'Faruq', 'faruq698@gmail.com', 3, 0, NULL, '2022-09-23 14:00:22', '2022-09-23 14:00:22'),
-(131, 'Kofo', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-09-23 14:03:49', '2022-09-23 14:03:49'),
-(132, 'Remi', 'remin8934@gmail.com', 3, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
-(133, 'Theresa', 'the033@gmail.com', 3, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
-(134, 'Emmanuel', 'andreloun@gmail.com', 3, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
-(135, 'Goodness', 'goodness@fmail.com', 3, 0, NULL, '2022-09-25 12:10:00', '2022-09-25 12:10:00'),
 (136, 'Bello', 'bello@gmail.com', 3, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
-(137, 'Shina', 'shina@gmail.com', 3, 0, NULL, '2022-09-25 12:15:55', '2022-09-25 12:15:55'),
-(138, 'Goodness', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 09:08:43', '2022-09-30 09:08:43'),
-(139, NULL, 'dun@gmail.com', 1, 0, NULL, '2022-09-30 09:49:34', '2022-09-30 09:49:34'),
-(140, NULL, 'dun@gmail.com', 1, 0, NULL, '2022-09-30 09:54:39', '2022-09-30 09:54:39'),
-(141, NULL, 'd@gmail.com', 1, 0, NULL, '2022-09-30 11:54:25', '2022-09-30 11:54:25'),
-(142, 'user', 'duny@gmail.com', 1, 0, NULL, '2022-09-30 11:59:53', '2022-09-30 11:59:53'),
-(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42'),
-(144, 'Samuel', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-10-05 13:31:54', '2022-10-05 13:31:54'),
-(146, 'Andrew', 'andrewadelodun@gmail.com', 3, 0, NULL, '2022-10-05 16:14:58', '2022-10-05 16:14:58'),
-(148, 'Samuel', 'samuel@andadel.com', 1, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 19:50:52');
+(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42');
 
 -- --------------------------------------------------------
 
@@ -882,7 +854,80 @@ INSERT INTO `email_tracking` (`id`, `admin_sent_emails_id`, `sent_to_email`, `em
 (161, 115, 'd@gmail.com', 'ebcb9e4e362b4509c1b490c0af797901', 0, '2022-10-05 20:35:40', NULL),
 (162, 115, 'duny@gmail.com', 'be11bfdf8882da609fe58e2331d596c5', 0, '2022-10-05 20:35:42', NULL),
 (163, 115, 'reciever@andadel.com', 'cbc350307ae9dd26183d4f6a1c88c877', 1, '2022-10-05 20:35:44', '2022-10-05 20:36:06'),
-(164, 115, 'samuel@andadel.com', '8306ec6293c560d09a99ece7b31d4f1e', 1, '2022-10-05 20:35:47', '2022-10-05 20:36:10');
+(164, 115, 'samuel@andadel.com', '8306ec6293c560d09a99ece7b31d4f1e', 1, '2022-10-05 20:35:47', '2022-10-05 20:36:10'),
+(165, 116, 'adelodun@gmail.com', '723bf672793f9c4e5be700d8bf9f6693', 0, '2022-10-11 12:10:55', NULL),
+(166, 116, 'andrewadel@gmail.com', '2f3652b60d6d318511a625e2d5aa0a78', 0, '2022-10-11 12:10:57', NULL),
+(167, 116, 'who@gmail.com', '5c068e1ae8efdb8794d4746825317fd2', 0, '2022-10-11 12:11:00', NULL),
+(168, 116, 'andrewadelodun@gmail.com', '7b7dd372f8d94f88c349c3cfc2b28167', 0, '2022-10-11 12:11:02', NULL),
+(169, 116, 'andrewadelodun@gmail.com', 'd94f1328049b4e36f276ba37be30cc85', 0, '2022-10-11 12:11:05', NULL),
+(170, 116, 'andrewadelodun001@gmail.com', 'ed4407040eae7bedb093aa1793eca3ec', 0, '2022-10-11 12:11:07', NULL),
+(171, 116, 'andrewadelun@gmail.com', '4006502c286a1150ee307ef4e843d580', 0, '2022-10-11 12:11:10', NULL),
+(172, 116, 'myphptestemail@gmail.com', 'a7b5e9efbef68df73e3bb54892bd7573', 0, '2022-10-11 12:11:12', NULL),
+(173, 116, 'andrew12adelodun@gmail.com', '6043ad6dc5248868f90efde3b4e5d051', 0, '2022-10-11 12:11:14', NULL),
+(174, 116, 'reciever@bwajes-plus.andadel.com', '5e77b5d2f27588ca1ab9f407dfddfca5', 1, '2022-10-11 12:11:17', '2022-10-11 13:48:13'),
+(175, 116, 'solataiwo@gmail.com', '2613afe67e97d91bd8870e774808555b', 0, '2022-10-11 12:11:19', NULL),
+(176, 116, 'feedback@gmail.com', 'f0872e59abf25deb0848dfd0f1846d85', 0, '2022-10-11 12:11:22', NULL),
+(177, 116, 'chizzy@gmail.com', '272d6606d66c421f6f9ec5049935c93b', 0, '2022-10-11 12:11:24', NULL),
+(178, 116, 'andrewadelodun@gmail.com', 'ce15390dbe16055abe1e94c7900eefea', 0, '2022-10-11 12:11:27', NULL),
+(179, 116, 'andrewadelodun@gmail.com', 'e93a36dd945ecf3e823b9dee950279c5', 0, '2022-10-11 12:11:29', NULL),
+(180, 116, 'grace419@gmail.com', '4212d3819f0b635a216efccaf1d9daa0', 0, '2022-10-11 12:11:32', NULL),
+(181, 116, 'faruq698@gmail.com', 'c34cfb73d36811d755ccbe30002b8a82', 0, '2022-10-11 12:11:34', NULL),
+(182, 116, 'andrewadelodun@gmail.com', '6871133058666ff52479cafc4228cfe5', 0, '2022-10-11 12:11:37', NULL),
+(183, 116, 'remin8934@gmail.com', 'ef9bee358eb05a0ecc3214d08303ece3', 0, '2022-10-11 12:11:39', NULL),
+(184, 116, 'the033@gmail.com', '29e473e872bbb08296cce773c2bf6cf2', 0, '2022-10-11 12:11:41', NULL),
+(185, 116, 'andreloun@gmail.com', '05dde6238f506e2ae51c90995e6a5051', 0, '2022-10-11 12:11:47', NULL),
+(186, 116, 'goodness@fmail.com', 'b8e6d26765e67dfef26c5f33f18e701d', 0, '2022-10-11 12:11:49', NULL),
+(187, 116, 'bello@gmail.com', '6771e5b927ee8fde975fa02ab09c4b0d', 0, '2022-10-11 12:11:52', NULL),
+(188, 116, 'shina@gmail.com', '18cf527cfca2577be486c62ec465bdb5', 0, '2022-10-11 12:11:54', NULL),
+(189, 116, 'reciever@andadel.com', 'd4e40d27a243dd34d77cc17f21acb2af', 0, '2022-10-11 12:11:57', NULL),
+(190, 116, 'dun@gmail.com', 'f03a521f07dcc596767fb181014f8d95', 0, '2022-10-11 12:11:59', NULL),
+(191, 116, 'd@gmail.com', '3cad73ae0d73e186ad87de919c2d7184', 0, '2022-10-11 12:12:02', NULL),
+(192, 116, 'duny@gmail.com', '422ecbd9ee655dee1c3ac70cbc7f7b2d', 0, '2022-10-11 12:12:04', NULL),
+(193, 116, 'reciever@andadel.com', 'eb35e3d7815e38078c5a867b938ed4ea', 0, '2022-10-11 12:12:07', NULL),
+(194, 116, 'samuel@andadel.com', 'c3d2b8113b60184137ad859adf1108bf', 0, '2022-10-11 12:12:09', NULL),
+(195, 117, 'reciever@bwajes-plus.andadel.com', 'b3ddac7d3390455c4a8486e9bc2b100f', 1, '2022-10-11 12:17:52', '2022-10-11 13:48:17'),
+(196, 117, 'andrewadelodun@gmail.com', '0c23fb3bb85203d09e5fdbe8bebac7d5', 0, '2022-10-11 12:17:54', NULL),
+(197, 117, 'andrewadelodun@gmail.com', '637c8aa1a42125797d7510673994202b', 0, '2022-10-11 12:17:57', NULL),
+(198, 117, 'grace419@gmail.com', 'e09a38d0ab0feebe08ae7ecf3d6b09b2', 0, '2022-10-11 12:17:59', NULL),
+(199, 117, 'faruq698@gmail.com', '28b0fdedf0f4b89df426d366f02cde1e', 0, '2022-10-11 12:18:02', NULL),
+(200, 117, 'andrewadelodun@gmail.com', 'c454a8d2a9b9143b2a2a17f64ee77e2c', 0, '2022-10-11 12:18:04', NULL),
+(201, 117, 'remin8934@gmail.com', '98607a4716e74257a7dda56dec7fd5f6', 0, '2022-10-11 12:18:06', NULL),
+(202, 117, 'the033@gmail.com', 'd706bc9ac32ebd4cfde48eb2f467e531', 0, '2022-10-11 12:18:09', NULL),
+(203, 117, 'andreloun@gmail.com', '2f032f1ddcb7302a814b0aa68b6e6e7d', 0, '2022-10-11 12:18:11', NULL),
+(204, 117, 'goodness@fmail.com', '0a65ad6c5536f3d85d9a195e5cc4d2c3', 0, '2022-10-11 12:18:13', NULL),
+(205, 117, 'bello@gmail.com', '00b839a7679ef328c1430bfc2655f096', 0, '2022-10-11 12:18:16', NULL),
+(206, 117, 'shina@gmail.com', '47633f0b775a51081fa05b6dc7514498', 0, '2022-10-11 12:18:19', NULL),
+(207, 117, 'reciever@andadel.com', '69b7204ee6f65dd322fc9d8ae4f8a639', 0, '2022-10-11 12:18:22', NULL),
+(208, 117, 'dun@gmail.com', 'd2d1622b1a30c282004e29c10296f1e5', 0, '2022-10-11 12:18:25', NULL),
+(209, 117, 'd@gmail.com', 'eabe02fde517b48af295ddc0788d8111', 0, '2022-10-11 12:18:28', NULL),
+(210, 117, 'duny@gmail.com', 'd1594f3eba36d83820f956445b7c2da9', 0, '2022-10-11 12:18:30', NULL),
+(211, 117, 'reciever@andadel.com', '25b2fa27fe11bf5e780f18f56dfceafc', 0, '2022-10-11 12:18:32', NULL),
+(212, 117, 'andrewadelodun@gmail.com', 'dabb6d8b81a798b6379cf723ac2b8100', 0, '2022-10-11 12:18:35', NULL),
+(213, 117, 'samuel@andadel.com', '4f1c5904f66add20597ab0dac7b1d736', 0, '2022-10-11 12:18:37', NULL),
+(214, 118, 'andrewadelodun@gmail.com', '38f7b46076ae6a8ede06e126ab754935', 0, '2022-10-11 12:30:22', NULL),
+(215, 118, 'reciever@bwajes-plus.andadel.com', '9574149355ab2cfa7fcd01aa28310a5a', 1, '2022-10-11 12:30:24', '2022-10-11 13:48:11'),
+(216, 118, 'samuel@andadel.com', '77f1b96f35da01f4e24ac247b0beb293', 0, '2022-10-11 12:30:26', NULL),
+(217, 119, 'sb-u75sf6477041@personal.example.com', '32aa7b9130013b765413984c3965bddb', 0, '2022-10-11 12:31:18', NULL),
+(218, 119, 'reciever@bwajes-plus.andadel.com', '2a644f1ce67a3f582b8bab8e2911866a', 1, '2022-10-11 12:31:20', '2022-10-11 13:48:08'),
+(219, 121, 'sb-u75sf6477041@personal.example.com', '3f50ea8a3a4d77c60689a27c86afce8f', 0, '2022-10-11 12:36:28', NULL),
+(220, 122, 'sb-u75sf6477041@personal.example.com', 'b0319e61b0fc2f3afb2f8e514e5c7ea6', 0, '2022-10-11 12:39:56', NULL),
+(221, 122, 'sb-u75sf6477041@personal.example.com', 'd592334327d25709bbb9244d94985eac', 0, '2022-10-11 12:40:00', NULL),
+(222, 122, 'sb-u75sf6477041@personal.example.com', 'e63fa814dc934f3ec0ef15af756943e7', 0, '2022-10-11 12:40:05', NULL),
+(223, 124, 'sb-u75sf6477041@personal.example.com', '9d56fb740d7b05e2818a9b63d921f6b7', 0, '2022-10-11 12:53:52', NULL),
+(224, 124, 'sb-u75sf6477041@personal.example.com', 'e4ac75517f66cb01704b0db485491417', 0, '2022-10-11 12:53:56', NULL),
+(225, 124, 'sb-u75sf6477041@personal.example.com', '187c650fdcc54a974db40a43458fb211', 0, '2022-10-11 12:54:01', NULL),
+(226, 125, 'samuel@andadel.com', 'afd67e777b8791b2196abc4f1f5e3263', 0, '2022-10-11 12:56:17', NULL),
+(227, 125, 'reciever@bwajes-plus.andadel.com', '6f0d7aebf2c29eb4312370124c0546a7', 1, '2022-10-11 12:56:21', '2022-10-11 13:48:03'),
+(228, 125, 'sb-u75sf6477041@personal.example.com', '1a1b7fe099677e9b55866681451ea793', 0, '2022-10-11 12:56:26', NULL),
+(229, 126, 'sb-u75sf6477041@personal.example.com', '3d8c38c876ac4c006530898c7597f89a', 0, '2022-10-11 12:59:04', NULL),
+(230, 126, 'sb-u75sf6477041@personal.example.com', '5184808d0cb26df97e53b3f469a58e1e', 0, '2022-10-11 12:59:08', NULL),
+(231, 126, 'reciever@bwajes-plus.andadel.com', '2db44e2a621d96c8e39db03f6ad0a22f', 1, '2022-10-11 12:59:12', '2022-10-11 13:48:04'),
+(232, 127, 'sb-u75sf6477041@personal.example.com', 'bf44c514f07e8a33c78cb73483c531bf', 0, '2022-10-11 13:04:08', NULL),
+(233, 127, 'sb-u75sf6477041@personal.example.com', '6ecf6366a634cb5024b50209d637dbd0', 0, '2022-10-11 13:04:13', NULL),
+(234, 127, 'reciever@bwajes-plus.andadel.com', '934e342edaf7cc975da7bb938709eb8b', 1, '2022-10-11 13:04:18', '2022-10-11 13:48:05'),
+(235, 128, 'reciever@bwajes-plus.andadel.com', '8cb2dc616447e1c16ded1b73d2ca006a', 1, '2022-10-11 13:05:30', '2022-10-11 13:47:52'),
+(236, 128, 'bello@gmail.com', '7d199483f787788e5be4504257f9d6ff', 0, '2022-10-11 13:05:32', NULL),
+(237, 128, 'reciever@andadel.com', '9977ff3cb397c3539079c2cb18db6a1a', 0, '2022-10-11 13:05:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -1007,8 +1052,6 @@ CREATE TABLE `payment_subscriptions` (
   `user_id` int(11) UNSIGNED NOT NULL,
   `agreement_id` varchar(255) NOT NULL,
   `interval_value` tinyint(2) NOT NULL,
-  `state` varchar(20) NOT NULL,
-  `status` varchar(20) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
   `amount_with_currency` varchar(255) NOT NULL,
   `payer_id` varchar(255) NOT NULL,
@@ -1016,7 +1059,6 @@ CREATE TABLE `payment_subscriptions` (
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
-  `end_date` timestamp NULL DEFAULT NULL,
   `payment_method` varchar(20) NOT NULL,
   `unsubscribed` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `unsubscribed_date` timestamp NULL DEFAULT NULL,
@@ -1028,11 +1070,10 @@ CREATE TABLE `payment_subscriptions` (
 -- Dumping data for table `payment_subscriptions`
 --
 
-INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `state`, `status`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `end_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(14, 122, 'I-6GGNUKSSUNVS', 1, 'Active', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', '2022-10-16 22:23:38', 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
-(16, 127, 'I-16X8GHAHSRVF', 1, 'Active', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', '2022-10-17 15:56:53', 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
-(23, 127, '', 1, 'Active', '', '3.22', '$3.22', '', 'reciever@bwajes-plus.andadel.com', '', '', NULL, '2022-08-10 07:05:56', '', 0, NULL, '2022-09-18 20:52:10', '2022-09-18 20:52:10'),
-(25, 136, 'I-U9LMAWJFLLRX', 1, 'Cancelled', 'verified', '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-10-05 20:31:45', '2022-11-05 20:31:45', 'paypal', 0, NULL, '2022-10-05 17:35:59', '2022-10-05 17:42:49');
+INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
+(14, 122, 'I-6GGNUKSSUNVS', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
+(16, 127, 'I-16X8GHAHSRVF', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
+(26, 137, 'I-YNDUGTF3S680', 3, '39.17', 'USD 39.17', 'PMTGPWSLBTFEL', 'reciever@bwajes-plus.andadel.com', 'John', 'Doe', '2022-10-10 21:03:37', 'paypal', 0, NULL, '2022-10-10 18:04:54', '2022-10-10 18:07:41');
 
 -- --------------------------------------------------------
 
@@ -1061,7 +1102,7 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`id`, `title`, `description`, `post`, `cover_photo`, `suspended`, `user_id`, `category_id`, `type_id`, `published`, `created_at`, `updated_at`) VALUES
 (32, 'Description Description Description title', 'Description Description Description Description', '<table>\r\n	<tbody>\r\n		<tr>\r\n			<td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.</td>\r\n		</tr>\r\n		<tr>\r\n			<td>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas feugiat consequat diam. Maecenas metus. Vivamus diam purus, cursus a, commodo non, facilisis vitae, nulla. Aenean dictum lacinia tortor. Nunc iaculis, nibh non iaculis aliquam, orci felis euismod neque, sed ornare massa mauris sed velit. Nulla pretium mi et risus. Fusce mi pede, tempor id, cursus ac, ullamcorper nec, enim. Sed tortor. Curabitur molestie. Duis velit augue, condimentum at, ultrices a, luctus ut, orci. Donec pellentesque egestas eros. Integer cursus, augue in cursus faucibus, eros pede bibendum sem, in tempus tellus justo quis ligula. Etiam eget tortor. Vestibulum rutrum, est ut placerat elementum, lectus nisl aliquam velit, tempor aliquam eros nunc nonummy metus. In eros metus, gravida a, gravida sed, lobortis id, turpis. Ut ultrices, ipsum at venenatis fringilla, sem nulla lacinia tellus, eget aliquet turpis mauris non enim. Nam turpis. Suspendisse lacinia. Curabitur ac tortor ut ipsum egestas elementum. Nunc imperdiet gravida mauris.</td>\r\n		</tr>\r\n	</tbody>\r\n</table>', '1659286979_attract.jpg', 0, 122, 2, 3, 1, '2022-07-31 17:02:59', '2022-07-31 17:02:59'),
-(34, 'Diego Maradona description in create post web page', 'Diego Maradona description in create post web page', '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti aliquid odio beatae pariatur ratione, cupiditate modi unde voluptatem, vitae deleniti mollitia, praesentium quis harum ad aspernatur corporis quae repudiandae et adipisci. Laudantium adipisci velit molestiae sapiente nobis quae excepturi corrupti nam reprehenderit vel labore, recusandae, facere autem sed cum voluptate officiis qui quam debitis harum ea fugit impedit at? Aliquam perferendis et nemo praesentium perspiciatis, voluptatum ea. Suscipit eum ipsa odio exercitationem dolores rem sapiente soluta ex, obcaecati provident dolore nesciunt omnis iste, molestias libero natus praesentium maxime porro? Voluptas quibusdam qui omnis fugiat quas voluptate ipsam neque delectus ducimus reiciendis, voluptatibus quis repellat doloremque adipisci corporis reprehenderit rem vel. Facere nostrum nisi reiciendis assumenda dicta tempora eaque inventore a libero aperiam veritatis, ex exercitationem animi sequi, numquam consectetur ipsum sapiente alias nemo culpa ea quo? Cumque facilis natus, provident nostrum error dicta. Est ad debitis quaerat quidem pariatur dolorum cumque, totam sit alias, necessitatibus temporibus amet illum eveniet illo minima delectus eius ut nobis sint, sapiente rerum quasi! Nobis aliquid quisquam magni dignissimos iste dolorem debitis optio, itaque ab nihil nam, quo quaerat provident asperiores harum. Natus cupiditate tenetur veritatis repellendus. Fugiat quam iure similique, perspiciatis, quae porro architecto corporis reiciendis illo sequi dolor necessitatibus praesentium ex ad debitis est sit obcaecati, magnam accusamus id eveniet natus libero. Quibusdam nulla impedit eum aut corrupti, aliquam nesciunt! Sapiente molestiae rem totam alias doloribus vitae commodi voluptates odit! Obcaecati aspernatur hic dignissimos nesciunt est ullam illum placeat! Earum maiores, magnam ducimus, adipisci odio, dolorem dolor modi quis odit at fuga! Corporis aliquam at animi dolores fuga, dolorum eum atque fugiat neque corrupti accusamus, sit esse impedit ipsam amet perspiciatis vitae pariatur expedita! Quia reprehenderit, exercitationem expedita dicta voluptates cupiditate! Quaerat minus placeat maxime impedit error alias odit numquam magnam temporibus sequi eligendi nihil ipsa unde vel similique et, animi ea? Vero exercitationem laborum delectus aliquam quibusdam, accusamus quaerat ipsum, fugit iure optio numquam tenetur possimus illo, molestiae dolorem accusantium voluptas porro corrupti odit rerum repudiandae. Modi aperiam consequuntur eaque, temporibus fugiat, atque quis nesciunt repellendus delectus dolorum eius iusto repellat perspiciatis non dolore nemo possimus natus, officia velit. Necessitatibus odio dolores, ipsa quae eaque veritatis eveniet nihil rerum libero adipisci nulla commodi facilis fuga delectus cumque! Deserunt quas delectus enim suscipit dicta quam facilis accusamus, eligendi soluta animi similique ad. Quod quas modi necessitatibus in eaque fugiat, debitis facilis obcaecati ipsum ad consequatur? Quas, similique possimus incidunt dignissimos aliquid veritatis nihil. Accusamus laborum beatae quaerat impedit earum nihil repellat quibusdam ipsum temporibus! Sint nihil molestiae iusto ipsa incidunt sed ut voluptas dignissimos possimus expedita laborum fugit excepturi adipisci cum amet sunt, porro voluptatibus, quas illum! Accusamus excepturi rem quam soluta dolore doloremque harum, labore perferendis similique libero sint autem nam fugit inventore assumenda quod, pariatur numquam deleniti nemo ipsum placeat possimus repudiandae? Nihil nemo molestias, voluptates quod facere earum quia, libero provident quas similique, tenetur harum molestiae in quasi. Ipsa magni repellendus assumenda eos dignissimos expedita veritatis ab similique dolorum rem facilis explicabo asperiores, neque sed hic doloribus dicta est sint quia labore excepturi mollitia natus placeat. Dolore laborum sequi dignissimos? Quae soluta atque quas esse optio, eius sequi dolore non officiis consequatur laboriosam molestiae sint. Vitae ex possimus cupiditate harum repellendus doloremque doloribus, cumque earum ratione culpa, iste repellat, temporibus sed nisi voluptates? Quaerat eaque in inventore! Tenetur molestiae inventore quae ducimus id dolore perspiciatis consectetur eaque dolorum porro recusandae, fuga cupiditate animi blanditiis suscipit necessitatibus ut delectus modi ad nisi tempore non? Labore architecto at iure repellendus earum, dolorem ea animi aspernatur. Recusandae rem aliquid rerum nihil eligendi, consequatur culpa facere, quos fuga quod officia sunt natus sed excepturi itaque. Maiores ab eligendi recusandae suscipit quod quis error cum saepe placeat, explicabo, voluptas enim maxime laborum aliquid! Optio, consequuntur omnis unde nam ducimus repellendus libero? A, pariatur illo! Corporis provident itaque harum quam quidem, laboriosam voluptates ipsam id ea vitae quas reiciendis illum ad dolores iste, placeat ut, qui libero voluptatum facilis veniam suscipit sapiente! Quo, numquam eaque sit asperiores maiores possimus iure corrupti praesentium dolorem impedit vero beatae nobis cupiditate. Nihil doloremque repellat pariatur, sunt earum veniam maxime debitis fugiat excepturi aspernatur ullam cum sequi omnis atque sapiente alias ducimus tenetur, reiciendis numquam architecto nesciunt qui? Sit debitis in amet consectetur facere voluptas deserunt nostrum! Reprehenderit iure quia atque! Voluptatibus omnis labore doloremque ad quod dolorem aliquid, dignissimos quibusdam aspernatur consectetur nemo. Delectus cumque, quasi corporis aperiam minus officiis, reprehenderit impedit ipsum at eos enim quidem nobis qui officia quo non sapiente excepturi architecto? Omnis dolorum facilis officiis reiciendis incidunt esse debitis perferendis, saepe blanditiis unde dicta commodi itaque in laudantium veniam perspiciatis provident magni doloribus sint officia numquam iusto quis rerum repellat. Eum et facere dolor tempora illo deleniti libero quia accusamus rem nulla exercitationem dignissimos ut, architecto vel sit temporibus! Consequuntur in ipsam, esse fugiat voluptates quis omnis dolorum sed voluptate perspiciatis! In, quidem ea magni veritatis nobis dolorem nostrum dolores labore rem vel, excepturi libero ab tenetur cumque? Earum et ut, libero, id harum aspernatur magni rem aperiam, ipsa deleniti dolores beatae? Magnam est recusandae quos, sint nisi sunt exercitationem magni harum fugit reiciendis. Harum incidunt eveniet dicta in deleniti qui sit laboriosam? Suscipit ipsam distinctio consectetur doloribus beatae nesciunt aut cumque. Totam, neque odio? Exercitationem omnis earum aperiam, nemo ratione nulla dolorum tempore. Velit fuga iste dolorum obcaecati eligendi aspernatur, iusto doloremque. Placeat cumque tempora sapiente asperiores dolores nihil labore enim nostrum amet assumenda. Velit, delectus obcaecati omnis repellat, culpa fuga atque perferendis facilis voluptatem doloribus amet ipsam mollitia magnam necessitatibus sequi deserunt ut itaque! Eos consequuntur a natus quam. Fugiat unde illo adipisci, in exercitationem non laudantium nostrum consectetur velit deleniti laborum laboriosam odit, quis ut architecto voluptates natus, quidem fugit tenetur pariatur officia sit quasi saepe. Soluta amet quidem sequi, error accusantium corrupti magni architecto nisi illo id quisquam voluptatum vel iusto mollitia veritatis quia, animi nesciunt, quas optio deserunt autem temporibus. Asperiores eveniet doloribus vel laudantium unde dolore quam voluptatem officia!</p>', '1659445048_attract.jpg', 0, 122, 2, 12, 1, '2022-08-02 12:57:28', '2022-08-02 12:57:28');
+(41, 'The new age', 'The new age description of the next generation', '<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos doloribus aspernatur cumque deleniti labore hic! Harum provident nam laudantium dolor, totam est impedit omnis voluptatum rem laborum ipsam officiis rerum, quidem recusandae assumenda neque dicta iure! Iste voluptates eaque, sapiente dolore provident dolorum? Dolor, incidunt. Reprehenderit tempora quia enim nulla omnis possimus quo iusto doloribus aliquid accusantium eos, rem quos dolores deserunt officiis eaque error. Nulla suscipit tempore atque impedit nemo ipsam est explicabo maxime repellat eligendi officiis totam molestiae, omnis vel repellendus ratione quibusdam similique, placeat eaque tenetur. Voluptates veniam perspiciatis hic omnis quasi reiciendis tempore et quos! Ex aliquam, ea placeat dolor adipisci in maxime maiores harum, quis porro recusandae tenetur. Quis repellat ab porro laboriosam minima rem consectetur facere eum a amet dolorem sequi beatae vel fugit blanditiis, illo magni nobis. Neque, corporis incidunt! Nisi vitae, temporibus doloribus fugit, tenetur hic inventore molestias corrupti aperiam ad accusamus dolor, suscipit placeat debitis ab voluptates ratione fuga eum culpa expedita beatae corporis recusandae. Perspiciatis sapiente, tenetur eligendi possimus, fuga reprehenderit cum sed ipsa facere a dolore itaque fugit pariatur fugiat voluptatem veniam aliquid commodi distinctio non alias in cupiditate, similique minus. Suscipit deleniti hic veniam id cupiditate. Veritatis libero est deserunt, ea cupiditate nemo, mollitia facilis sint dolores totam officia. Corporis iure inventore recusandae quos eaque assumenda sint quibusdam molestiae, vel ipsum cum hic mollitia. Voluptatibus quia facere sunt omnis adipisci exercitationem, dignissimos, quidem modi, consectetur tempore harum a excepturi vero architecto? Placeat aspernatur, rerum autem a aliquam reprehenderit atque veritatis quae laudantium veniam temporibus enim velit corporis facere. Illum impedit quibusdam ducimus, dignissimos omnis quas! Libero odio neque dignissimos quia corrupti quidem facilis totam dicta, provident praesentium atque deleniti, repudiandae excepturi temporibus obcaecati eos culpa voluptates nihil iste nemo accusantium repellendus nisi sint aperiam! Sit officiis unde dolorem accusamus sapiente mollitia rerum reiciendis. Reiciendis sit mollitia alias nihil ipsa natus ullam nam qui voluptates cumque, molestiae ut ducimus cupiditate id similique optio tempore eum quas unde? Earum saepe quaerat ipsum iste, nesciunt porro laudantium, neque itaque, ad maxime eos. Porro repudiandae voluptatem adipisci quia accusantium doloremque corrupti ipsa necessitatibus minus ea pariatur consectetur, libero distinctio voluptatibus possimus est eos in? Distinctio, aperiam architecto mollitia vel sit quos voluptatum amet cumque ex ut nihil eligendi natus cum nam enim cupiditate ipsam reiciendis, incidunt provident at. Possimus quo quas nam nobis delectus reprehenderit sequi, nisi, quos dolore minima omnis dolores dolorem, necessitatibus eius mollitia illo modi quisquam repellendus. Dolores at doloremque quaerat nesciunt libero modi qui accusantium ab atque quas dolore eos ipsam vitae exercitationem, reiciendis totam provident voluptatibus soluta ut! Dolor cupiditate tenetur id atque quisquam vero perferendis! Deleniti accusamus sint dolorem, earum veritatis reiciendis quam ullam blanditiis ducimus aliquid placeat officiis a dolores excepturi eligendi illo hic at, voluptas nulla modi sed necessitatibus. Tempora provident placeat delectus labore incidunt cum nulla ratione explicabo hic, nam, reprehenderit veritatis tempore dignissimos adipisci facilis, nobis ducimus! Velit dolorum eveniet, est odio delectus libero impedit distinctio iusto quas repudiandae ullam atque nostrum magni, ex quia dignissimos nisi repellendus, beatae sapiente necessitatibus! Vel, veritatis rem! Eius omnis modi velit culpa nisi commodi! Similique, sint, eaque itaque neque consectetur doloribus esse dicta corporis ipsam quas voluptate rerum deserunt possimus, velit rem nobis accusamus ea reprehenderit voluptatem. Numquam, ratione! Fugit praesentium odit quod quo, ab nobis impedit totam error exercitationem inventore officia est enim recusandae illum officiis! Earum saepe voluptatem vero itaque ex id dignissimos? Pariatur, suscipit obcaecati voluptatum corporis dicta, totam officia rerum beatae distinctio hic tenetur soluta voluptas impedit quod consequuntur ratione earum sit maxime, perspiciatis debitis provident sapiente tempora voluptate. Provident, molestias libero doloribus corrupti laudantium animi dolore. Obcaecati ex quam debitis quae beatae magnam. Est, deleniti ipsam. Ullam consectetur repudiandae ipsa voluptates quia ut corporis est, eos libero labore tenetur at assumenda commodi accusamus quidem exercitationem? Distinctio beatae, animi facilis exercitationem praesentium tenetur asperiores nisi error aut odit quis sequi vel possimus nesciunt consequuntur fugit dicta magni voluptate perferendis soluta. Vitae consequatur laborum quia tempore ut nam ducimus consectetur itaque ipsam, non voluptas optio minus atque accusamus dolore nobis maxime odit ipsum esse earum ipsa commodi accusantium voluptatem. Ipsam et voluptates assumenda quasi dolores, fuga reprehenderit nihil magni fugiat. Quos minus nostrum assumenda rerum, perferendis illum amet recusandae distinctio beatae aspernatur exercitationem molestiae consectetur similique officia autem sunt velit temporibus? Reiciendis dolores vitae perspiciatis quisquam laudantium, labore voluptates, nostrum adipisci ea odit unde optio asperiores enim beatae. Delectus nostrum autem vitae exercitationem explicabo. Veritatis sit sapiente numquam rerum consectetur! Blanditiis, corporis alias nihil soluta ducimus, maxime esse commodi incidunt impedit, est saepe! Vel aperiam molestias voluptate quo eum cumque unde, aut dolorem, quaerat reprehenderit alias animi, soluta voluptatibus accusantium deleniti. Sequi quod, nobis architecto beatae, itaque incidunt sed maiores tempora quam vero atque eveniet exercitationem sapiente! Explicabo dicta debitis velit architecto officiis consequatur, quidem omnis modi aliquid quod eum ad voluptates. Soluta maiores tempore ducimus, ipsam laudantium animi eligendi. Inventore magnam, molestias eveniet commodi, nihil sunt tempore, quo veritatis tempora voluptatum ut provident nam adipisci consequatur laudantium tenetur quos eum. Non, magnam? Rerum aspernatur assumenda aliquid eligendi ipsa quod dicta perferendis commodi deleniti! Quidem illum adipisci quibusdam asperiores rerum sint harum a corrupti perferendis iure reprehenderit libero quae, illo quaerat deserunt optio et eos consectetur placeat delectus ab eveniet! Ipsum animi deleniti culpa aliquam cumque. Molestiae laudantium at qui, cupiditate praesentium animi. Ipsa aliquam, quae temporibus eos magnam nostrum. Nisi accusamus in enim, officia necessitatibus voluptatibus, ipsa quidem nobis molestiae, suscipit facere fugiat aperiam dolores natus voluptas beatae explicabo quos eveniet neque ducimus. Esse maiores ullam corporis accusamus ea quaerat? Fuga illum sequi error sunt vel dicta, nobis doloribus dignissimos perferendis iure inventore eum ipsum quos explicabo repudiandae officiis maxime earum repellat blanditiis ad eos amet sapiente non ea. Cupiditate repudiandae inventore cum mollitia at earum rem, corporis ullam alias sed maiores minus quod quidem dolorem suscipit. Quod similique nulla in itaque iure laudantium provident pariatur commodi possimus. Recusandae numquam, nesciunt esse laudantium dolores aperiam corrupti mollitia dolor dolorum maiores fugit!</p>', '1665424658_bright.jpg', 0, 137, 6, 13, 1, '2022-10-10 17:57:38', '2022-10-10 17:57:38');
 
 -- --------------------------------------------------------
 
@@ -1160,17 +1201,10 @@ CREATE TABLE `ratings` (
 --
 
 INSERT INTO `ratings` (`id`, `user_id`, `rating`, `reason`, `suggestion`, `created_at`) VALUES
-(1, NULL, 2, NULL, NULL, '2022-07-28 14:13:37'),
-(2, NULL, 2, 'Because it takes a lot of time in creating a post!', 'You need to reduce the time used in creating a post', '2022-07-28 14:20:03'),
-(3, NULL, 3, 'select * from ratings', NULL, '2022-07-28 14:23:22'),
-(4, NULL, 4, NULL, NULL, '2022-07-28 14:24:37'),
-(6, NULL, 2, NULL, NULL, '2022-07-31 12:52:14'),
-(9, 122, 5, NULL, NULL, '2022-08-09 10:32:57'),
 (11, 122, 4, NULL, NULL, '2022-08-09 10:33:16'),
 (12, 122, 5, NULL, NULL, '2022-08-09 10:33:32'),
 (13, 122, 3, NULL, NULL, '2022-08-09 10:34:44'),
-(14, 122, 3, NULL, NULL, '2022-10-05 13:58:27'),
-(15, NULL, 3, 'i find yur site interesting', NULL, '2022-10-05 14:01:18');
+(14, 122, 3, NULL, NULL, '2022-10-05 13:58:27');
 
 -- --------------------------------------------------------
 
@@ -1194,9 +1228,7 @@ INSERT INTO `reported_posts` (`report_id`, `post_id`, `end_user_ip`, `status`, `
 (1, 32, '34.6787.44', 1, '2022-08-31 14:24:31'),
 (2, 32, '::1', 1, '2022-09-22 20:56:02'),
 (8, 32, '2435.44.43', 1, '2022-08-31 14:25:30'),
-(1, 32, '::1', 1, '2022-09-22 21:01:34'),
-(6, 34, '::1', 1, '2022-09-22 21:05:15'),
-(9, 34, '::1', 1, '2022-09-22 21:07:09');
+(1, 32, '::1', 1, '2022-09-22 21:01:34');
 
 -- --------------------------------------------------------
 
@@ -1286,15 +1318,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `business_name`, `gender`, `password`, `profile_image`, `phone`, `no_of_private_post_allowed`, `suspended`, `bio`, `website`, `birthdate`, `address`, `city`, `state`, `country`, `active`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(96, 'ADELODUN', 'OLUWADAMILARE', 'adelodun@gmail.com', 'Yes', 'M', '$2y$10$Ddcgip8GkrCYUGunfEsCv.eUCBYqFLmpzqSBSD4yQZehfZ3DoE4jq', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2022-08-01 17:57:40', '2022-06-30 19:43:59', '2022-06-30 20:43:59'),
-(109, 'Andrew', 'Adelodun', 'andrewadelodun001@gmail.com', 'Yes', 'M', '$2y$10$9y5MBWpVf7spEgWvkDNqHeZPaHA.CUCnnnEuglL78tyouLrkhfjSG', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-07-15 15:25:39', '2022-07-15 16:25:39'),
 (122, 'Andrew', 'Adelodun', 'andrewadelodun@gmail.com', 'Andadel', 'M', '$2y$10$B63crKXdlB64j/Rjv88JTeqpKzRHSqPaPOH2Ao7r8C3bILt30scw6', '1659524388_journal2.jpg', '+234 904 563 452', 17, 0, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 0, '2022-09-09 10:10:21', '2022-07-31 15:12:29', '2022-09-05 16:01:20'),
-(123, 'ADELODUN', 'OLUWADAMILARE', 'andrew12adelodun@gmail.com', 'Andadel', 'M', '$2y$10$iyjHDaYJdCIyXJuZ38/n4.rVdxeTxnEDAAuT2u21XPwzMT3hMrjR6', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-09 10:26:29', '2022-09-09 11:26:29'),
 (127, 'ADELODUN', 'OLUWADAMILARE', 'reciever@bwajes-plus.andadel.com', 'U & E', 'M', '$2y$10$mE8/CPv/eU5Pp1Eq68EnRuwdbwbTDTW9V.zu1bwZatC.z1amZmMIK', '1663670611_lion.jpg', NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-12 14:22:10', '2022-09-20 11:43:31'),
-(131, '', '', 'dun@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 09:54:39', '2022-09-30 10:54:39'),
-(132, '', '', 'd@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:54:25', '2022-09-30 12:54:25'),
-(133, '', '', 'duny@gmail.com', '', '', '', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 11:59:53', '2022-09-30 12:59:53'),
-(134, NULL, NULL, 'reciever@andadel.com', '', NULL, NULL, NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 14:57:42'),
 (137, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'Masheyi LTD', 'M', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 20:50:52');
 
 -- --------------------------------------------------------
@@ -1321,7 +1346,16 @@ INSERT INTO `user_passwords` (`id`, `email`, `password`, `created_at`) VALUES
 (16, 'reciever@bwajes-plus.andadel.com', '$2y$10$tbF4qDepzAaLw6pRyvdBEuDKypb41OiLFg4AcOl8KoK5gHpKV1G8K', '2022-09-12 12:53:54'),
 (17, 'reciever@bwajes-plus.andadel.com', '$2y$10$mKkTcoCLDZ1JVbTU5ykgye92RO98cs5aggfzNOv00t1dNivsO9n9i', '2022-09-12 14:22:10'),
 (18, 'reciever@andadel.com', '$2y$10$UR2cdhINKqiXePEFYw7uAeTfqe/cPXqrG/fFlINJl/bDwXFs4Ooye', '2022-09-30 09:39:36'),
-(22, 'samuel@andadel.com', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', '2022-10-05 19:51:24');
+(22, 'samuel@andadel.com', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', '2022-10-05 19:51:24'),
+(23, 'duny@gmail.com', '$2y$10$4Xnhx9G8hj.XxEcCATNoeesvTFpVgjaNV7pLsD3p8ENHk4Ly0Msvy', '2022-10-09 17:07:00'),
+(24, 'duny@gmail.com', '$2y$10$vbA1h77T3Yq5hNnoEtazMu0qFN2GJZCNh7GSFLlC0.l3Zs2g3vR/O', '2022-10-09 17:15:15'),
+(25, 'duny@gmail.com', '$2y$10$GF35KCfn0k3PpMwScI/h3uvDyl1iKHa4AcXDyW/4kpAXvK1/3cJK6', '2022-10-09 17:18:17'),
+(26, 'duny@gmail.com', '$2y$10$YQT08IJfr7KIxPSM76filO6bNVOwyGuyPhUVfF7CZzrxwRjCxG1/m', '2022-10-09 17:19:56'),
+(27, 'duny@gmail.com', '$2y$10$jf.9i036HIGeT5e5ZBbAgeOBrgplRiEOI/.82HDYzzwfa0mNw2v7e', '2022-10-09 17:21:21'),
+(28, 'duny@gmail.com', '$2y$10$eBSNlY8H3mqdDC1Ixev2f.WM3IHrwhlwbVgdH51NlDG7QJ4WSldjW', '2022-10-09 17:29:26'),
+(29, 'duny@gmail.com', '$2y$10$Cb1IUecAEWHXeld1NL2Nyu/bRYgbgihm6KTqhsX2iT1AUqP53OOgu', '2022-10-09 17:30:38'),
+(30, 'duny@gmail.com', '$2y$10$FmvOeVunN6gqqQ1vYab4c.dNrzL1MbOj9fNCGBWdipqm2Q.DILpxm', '2022-10-09 17:34:00'),
+(31, 'duny@gmail.com', '$2y$10$GUdZI5yPhHiXfKEvu0lY4OAIKK8XmTjZK/E804N4jmLBe6syiSjua', '2022-10-09 17:35:33');
 
 -- --------------------------------------------------------
 
@@ -1345,18 +1379,14 @@ CREATE TABLE `user_sent_emails` (
 --
 
 INSERT INTO `user_sent_emails` (`id`, `user_id`, `email`, `department`, `title`, `message`, `status`, `created_at`) VALUES
-(1, NULL, 'andrewadelodun@gmail.com', 'myphptestemail@gmail.com', 'The greatest subject of all time', 'The greatest messageof all time The greatest messageof all time The greatest messageof all time The greatest messageof all time', 1, '2022-07-28 08:38:12'),
-(2, NULL, 'andrewadelodun@gmail.com', 'myphptestemail@gmail.com', 'The greatest subject of all time in post web page', 'The greatest messageof all time The greatest messageof all time The greatest messageof all time The greatest messageof all time', 1, '2022-07-28 08:40:01'),
 (5, 122, 'andrewadelodun@gmail.com', 'myphptestemail@gmail.com', 'some random title some random title', 'some random message some random message some random message', 1, '2022-09-08 16:31:34'),
 (6, 127, 'reciever@bwajes-plus.andadel.com', 'myphptestemail@gmail.com', 'perspiciatis iusto accusantium ut', 'perspiciatis iusto accusantium ut perspiciatis iusto accusantium ut perspiciatis iusto accusantium ut', 1, '2022-09-14 16:28:09'),
 (7, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'support support support support', 'support support support support support support support support support support support support support support support support support support support support', 1, '2022-09-14 16:38:20'),
 (8, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'Title Message Title Message', 'Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message Title Message', 1, '2022-09-14 17:07:53'),
 (9, 122, 'andrewadelodun@gmail.com', 'reciever@bwajes-plus.andadel.com', 'Choose Support Department', 'Choose Support Department Choose Support Department Choose Support Department Choose Support Department Choose Support Department', 1, '2022-09-14 17:09:43'),
-(10, NULL, 'samuel@andadel.com', 'support@bwajes-plus.andadel.com', 'history of messiin sport', 'i was trying to create a post but it was saying data not found', 1, '2022-10-05 13:48:07'),
-(11, 122, 'andrewadelodun@gmail.com', 'support@bwajes-plus.andadel.com', 'Some title Some title Some title', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:51:10'),
 (12, 122, 'andrewadelodun@gmail.com', 'sender@bwajes-plus.andadel.com', 'Some Message Some Message', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:55:26'),
 (13, 122, 'andrewadelodun@gmail.com', 'sender@bwajes-plus.andadel.com', 'Some Message Some Message', 'Some Message Some Message Some Message Some Message', 1, '2022-10-05 13:57:09'),
-(14, NULL, 'samuel@andadel.com', 'reciever@bwajes-plus.andadel.com', 'Some title Some title Some title', 'Some title Some title Some title Some title', 1, '2022-10-05 15:10:55');
+(15, 127, 'reciever@bwajes-plus.andadel.com', 'reciever@bwajes-plus.andadel.com', 'perspiciatis iusto accusantium ut', 'perspiciatis iusto accusantium ut  perspiciatis iusto accusantium ut', 1, '2022-10-06 13:39:08');
 
 -- --------------------------------------------------------
 
@@ -1381,10 +1411,9 @@ CREATE TABLE `user_statistics` (
 --
 
 INSERT INTO `user_statistics` (`id`, `user_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
-(6, 109, NULL, '2022-08-06 20:21:57', 'Chrome', 'Windows 10', 'Unknown', '2022-07-18 13:31:58', '2022-08-06 20:21:57'),
-(13, 122, '2022-10-05 13:50:31', '2022-10-05 13:59:14', 'Chrome', 'Windows 10', 'Unknown', '2022-07-31 15:12:36', '2022-10-05 13:59:14'),
-(16, 127, '2022-09-23 09:16:49', '2022-09-23 09:17:34', 'Chrome', 'Windows 10', 'Unknown', '2022-09-14 21:46:26', '2022-09-23 09:17:34'),
-(19, 137, '2022-10-05 20:52:32', '2022-10-05 19:53:23', 'Chrome', 'Windows 10', 'Unknown', '2022-10-05 19:52:32', '2022-10-05 19:53:23');
+(13, 122, '2022-10-10 17:00:00', '2022-10-10 17:14:18', 'Chrome', 'Windows 10', 'Unknown', '2022-07-31 15:12:36', '2022-10-10 17:14:18'),
+(16, 127, '2022-10-11 18:22:10', '2022-10-11 19:33:12', 'Chrome', 'Windows 10', 'Unknown', '2022-09-14 21:46:26', '2022-10-11 19:33:12'),
+(19, 137, '2022-10-11 18:14:53', '2022-10-11 19:32:51', 'Chrome', 'Windows 10', 'Unknown', '2022-10-05 19:52:32', '2022-10-11 19:32:51');
 
 --
 -- Indexes for dumped tables
@@ -1612,25 +1641,25 @@ ALTER TABLE `user_statistics`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `admin_passwords`
 --
 ALTER TABLE `admin_passwords`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `admin_sent_emails`
 --
 ALTER TABLE `admin_sent_emails`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT for table `admin_statistics`
 --
 ALTER TABLE `admin_statistics`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `admin_type`
@@ -1642,7 +1671,7 @@ ALTER TABLE `admin_type`
 -- AUTO_INCREMENT for table `affiliate_programmes`
 --
 ALTER TABLE `affiliate_programmes`
-  MODIFY `id` tinyint(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` tinyint(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -1666,7 +1695,7 @@ ALTER TABLE `deleted_users`
 -- AUTO_INCREMENT for table `email_list`
 --
 ALTER TABLE `email_list`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `email_list_source`
@@ -1678,7 +1707,7 @@ ALTER TABLE `email_list_source`
 -- AUTO_INCREMENT for table `email_tracking`
 --
 ALTER TABLE `email_tracking`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
 
 --
 -- AUTO_INCREMENT for table `faqs`
@@ -1714,13 +1743,13 @@ ALTER TABLE `payment_prices`
 -- AUTO_INCREMENT for table `payment_subscriptions`
 --
 ALTER TABLE `payment_subscriptions`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `post_category`
@@ -1750,7 +1779,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` tinyint(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` tinyint(2) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `subscriber_list`
@@ -1762,19 +1791,19 @@ ALTER TABLE `subscriber_list`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=138;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=145;
 
 --
 -- AUTO_INCREMENT for table `user_passwords`
 --
 ALTER TABLE `user_passwords`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `user_sent_emails`
 --
 ALTER TABLE `user_sent_emails`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user_statistics`

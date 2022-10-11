@@ -11,6 +11,8 @@ function ckeditor($page = '')
     $first_name = $_SESSION['bwajes_plus_user_data']['first_name'];
     $last_name = $_SESSION['bwajes_plus_user_data']['last_name'];
     $user = fetch_single_row($id, 'users');
+
+    $agreement = paypal($id)['agreement'];
 ?>
 <?php
     if($page === 'settings')
@@ -84,7 +86,7 @@ function ckeditor($page = '')
         <div class="delete-account-container">
           <div>
             <?php  $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');if($count > 0){ ?>
-            <?php  $sub = active_subscription($id);if($sub['state'] == 'Cancelled'){ ?>
+            <?php if($agreement->getState() == 'Cancelled'){ ?>
             <div class="delete-account-notification-wrapper">
               <i class="bx bx-alarm-exclamation delete-notification"></i> <span class="delete-account-notification-text">Deleting your account will</span>
             </div>
@@ -135,7 +137,7 @@ function ckeditor($page = '')
                 </div>
                 <button name="send-mail" id="delete_user" class="btn btn-danger">Delete</button>
             </form>
-            <?php }elseif($sub['state'] == 'Active'){ ?>
+            <?php }elseif($agreement->getState() == 'Active'){ ?>
             <div class="card-body" style="display: flex;justify-content:center;align-items:center;">
                 <div class="ad-removal">
                     You need to cancel your subscription before you can delete your account

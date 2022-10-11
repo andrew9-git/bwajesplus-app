@@ -9,15 +9,20 @@ bwajes_plus_header('remove-ads', 'Remove ads');
 <?php 
     $id = $_SESSION['bwajes_plus_user_data']['id'];
 
+    
     $count = db_row_count($id, 'user_id', 'posts', 'int');
     if($count == 0)
     {
         redirect_to('logout');
     }
+
+    $agreement = paypal($id)['agreement'];
+    $agreementDetails = paypal($id)['agreementDetails'];
+    $end_date = paypal($id)['end_date'];
 ?>
     <div class="home-content">
       <div class="post-area">
-        <?php afiliate_programme_codes_wrapper($id); ?>
+        <?php afiliate_programme_codes_wrapper($id, $end_date); ?>
         <?php 
         $user = fetch_single_row($id, 'users');
         if($user['suspended'] != 1)
@@ -31,9 +36,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                     $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
                     if($count > 0)
                     {
-                        $row = fetch_single_row_in_payment($id, 'user_id');
-                        $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
-                        if($_GET['success'] == 'true' && date('Y-m-d H:i:s') < $end_date && $row['state'] != 'Cancelled')
+                        if($_GET['success'] == 'true' && date('Y-m-d H:i:s') < $end_date && $agreement->getState() != 'Cancelled')
                         {
                             echo '<div class="ShowHide" style="background-color: #28a745;" id="Bar-msg">
                             <div id="left">
@@ -63,9 +66,7 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                 <?php
                 if(isset($_GET['cancelled']) && $_GET['cancelled'] == 'true')
                 {
-                    $row = fetch_single_row_in_payment($id, 'user_id');
-                    $state = $row['state'];
-                    if($state == 'Cancelled')
+                    if($agreement->getState() == 'Cancelled')
                     {
                         echo '<div style="background-color: #dc3545;"   class="ShowHide" id="Bar-msg">
                         <div id="left">
@@ -85,15 +86,12 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                 $count = db_row_count($id, 'user_id', 'payment_subscriptions', 'int');
                 if($count > 0)
                 {
-                    $row = fetch_single_row_in_payment($id, 'user_id');
-                    $end_date = date('Y-m-d H:i:s', strtotime($row['end_date']));
-
                     //When subscription is active and unexpired
-                    if($row['state'] == 'Active' && date('Y-m-d H:i:s') < $end_date)
+                    if($agreement->getState() == 'Active' && date('Y-m-d H:i:s') < $end_date)
                     { ?>
                     <div class="ad-removal cancel">
                         <div>
-                            Your subcription to bwajes+ ads removal helps us to make better software for you and your business(es).
+                            Your subcription to bwajes+ ads removal helps us to make better software for you and your business(es). This subscription will be due for renewal on <?php echo date("F jS, Y", strtotime($end_date)); ?>
                         </div>
                         <div>
                             <form id="cancel_subscription_form">
@@ -109,10 +107,10 @@ bwajes_plus_header('remove-ads', 'Remove ads');
                     }
 
                     //When subscription is cancelled and unexpired
-                    elseif($row['state'] == 'Cancelled' && date('Y-m-d H:i:s') < $end_date)
+                    elseif($agreement->getState() == 'Cancelled' && date('Y-m-d H:i:s') < $end_date)
                     { ?>
                     <div class="ad-removal expires">
-                        Your subscription won't be renewed when its expires on <?php echo date("F jS, Y", strtotime($row['end_date'])); ?> 
+                        Your subscription won't be renewed when its expires on <?php echo date("F jS, Y", strtotime($end_date)); ?> 
                     </div>
                     <?php } else { ?>
                     <div class="ad-removal renew">

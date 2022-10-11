@@ -1,18 +1,5 @@
 <?php
 // require __DIR__ . '/../bootstrap.php';
-use PayPal\Api\ChargeModel;
-use PayPal\Api\Currency;
-use PayPal\Api\MerchantPreferences;
-use PayPal\Api\Patch;
-use PayPal\Api\PatchRequest;
-use PayPal\Api\PaymentDefinition;
-use PayPal\Api\Plan;
-use PayPal\Common\PayPalModel;
-use PayPal\Exception\PayPalConnectionException;
-use PayPal\Rest\ApiContext;
-use PayPal\Auth\OAuthTokenCredential;
-use PayPal\Api\Transaction;
-use PayPal\Api\RedirectUrls;
 
     include('./billingFunctions.php');
 
@@ -24,7 +11,7 @@ if(isset($_POST['user-id']))
     $secret = 'EKYM7jeg21Y8Xkj5eF1saUIU_LwHjsTKe1x-1VqJKFEzPvUFDimAJh-7EWx9HOgCaelPIgQonv3S0Tz3';
 
     $apiContext = paypal_context($id, $secret);
-    paypal_config($apiContext);
+    // paypal_config($apiContext);
 
 
     // $user_id = $_SESSION['bwajes_plus_user_data']['id'];
@@ -48,26 +35,18 @@ if(isset($_POST['user-id']))
     {
         // $agreement_id = $agreement->getId();
 
-        // $agreement = new \PayPal\Api\Agreement($agreement_id, $apiContext);
+        // $agreement = new Agreement($agreement_id, $apiContext);
 
         
         $cancelled = $createdAgreement->cancel($agreement_state_descriptor, $apiContext);
         
         if($cancelled)
         {
-            //update payment subscriptions
-            $row = fetch_single_row_in_payment($user_id, 'user_id');
-            $subscription_id = $row['id'];
-            
-            $executed = update_state($subscription_id);
-            if($executed)
-            {
-                //redirect
-                $url = url()[0].'remove-ads?cancelled=true';
+            //redirect
+            $url = url()[0].'remove-ads?cancelled=true';
 
-                // redirect_to($url);
-                echo $url;
-            }
+            // redirect_to($url);
+            echo $url;
         }
 
     }

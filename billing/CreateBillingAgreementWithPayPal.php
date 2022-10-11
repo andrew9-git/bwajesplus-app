@@ -1,13 +1,6 @@
 <?php
 
 
-use PayPal\Api\Agreement;
-use PayPal\Api\Payer;
-use PayPal\Api\Plan;
-// use PayPal\Api\ShippingAddress;
-// use PayPal\Exception\PayPalConnectionException;
-
-
 /* Create a new instance of Agreement object
 {
     "name": "Base Agreement",
@@ -27,7 +20,7 @@ use PayPal\Api\Plan;
         "country_code": "US"
     }
 }*/
-    $agreement = new Agreement();
+    $agreement = new \PayPal\Api\Agreement();
     
     // $startDate = date('Y-m-d H:i:s');
     // $startDate = new DateTime($startDate);
@@ -36,16 +29,16 @@ use PayPal\Api\Plan;
     // $time = time();
     $startDate = date('Y-m-d\\TH:i:s\\Z');
 
-    $agreement->setName('Yearly ad removal agreement')
+    $agreement->setName('Ads removal agreement')
         ->setDescription('Agreement to remove ads on user\'s posts')
         ->setStartDate($startDate);
         // ->setStartDate('2022-09-17T9:45:04Z');
 
-    $plan = new Plan();
+    $plan = new \PayPal\Api\Plan();
     $plan->setId($createdPlan->getId());
     $agreement->setPlan($plan);
 
-    $payer = new Payer();
+    $payer = new \PayPal\Api\Payer();
     $payer->setPaymentMethod('paypal');
     $agreement->setPayer($payer);
 

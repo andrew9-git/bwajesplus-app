@@ -12,10 +12,12 @@ bwajes_plus_header('settings', 'Settings');
 
   $host = url()[0];
   $user = fetch_single_row($id, 'users');
+
+  $end_date = paypal($id)['end_date'];
 ?>
     <div class="home-content">
       <div class="post-area">
-      <?php afiliate_programme_codes_wrapper($id); ?>
+      <?php afiliate_programme_codes_wrapper($id, $end_date); ?>
       <?php 
         $user = fetch_single_row($id, 'users');
         if($user['suspended'] != 1)

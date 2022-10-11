@@ -31,10 +31,12 @@ $host = url()[0];
 
       $post_categories = post_category();
       $post_types = post_type();
+
+      $end_date = paypal($user_id)['end_date'];
     ?>
 <div class="home-content">
       <div class="post-area">
-      <?php afiliate_programme_codes_wrapper($user_id); ?>
+      <?php afiliate_programme_codes_wrapper($user_id, $end_date); ?>
       <?php 
         $user = fetch_single_row($user_id, 'users');
         if($user['suspended'] != 1)
