@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2022 at 09:49 PM
+-- Generation Time: Nov 12, 2022 at 02:29 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -267,7 +267,7 @@ CREATE TABLE `admin_statistics` (
 
 INSERT INTO `admin_statistics` (`id`, `admin_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
 (14, 3, '2022-10-06 12:25:02', '2022-10-06 12:25:27', 'Chrome', 'Windows 10', 'Unknown', '2022-08-27 13:04:46', '2022-10-06 12:25:27'),
-(15, 4, '2022-10-11 17:11:06', '2022-10-11 17:10:36', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-10-11 17:11:06'),
+(15, 4, '2022-11-12 13:21:36', '2022-10-11 17:10:36', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-11-12 13:21:36'),
 (16, 5, '2022-10-07 10:36:22', '2022-10-07 10:37:15', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:35:59', '2022-10-07 10:37:15'),
 (17, 6, '2022-10-06 13:44:36', '2022-10-06 13:44:35', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:37:52', '2022-10-06 13:44:36'),
 (18, 2, '2022-10-06 12:26:04', '2022-10-06 12:26:14', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 12:24:37', '2022-10-06 12:26:14'),
@@ -1059,6 +1059,7 @@ CREATE TABLE `payment_subscriptions` (
   `first_name` varchar(60) NOT NULL,
   `last_name` varchar(60) NOT NULL,
   `start_date` timestamp NULL DEFAULT NULL,
+  `last_date` timestamp NULL DEFAULT NULL,
   `payment_method` varchar(20) NOT NULL,
   `unsubscribed` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `unsubscribed_date` timestamp NULL DEFAULT NULL,
@@ -1070,10 +1071,10 @@ CREATE TABLE `payment_subscriptions` (
 -- Dumping data for table `payment_subscriptions`
 --
 
-INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(14, 122, 'I-6GGNUKSSUNVS', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
-(16, 127, 'I-16X8GHAHSRVF', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
-(26, 137, 'I-YNDUGTF3S680', 3, '39.17', 'USD 39.17', 'PMTGPWSLBTFEL', 'reciever@bwajes-plus.andadel.com', 'John', 'Doe', '2022-10-10 21:03:37', 'paypal', 0, NULL, '2022-10-10 18:04:54', '2022-10-10 18:07:41');
+INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `last_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
+(14, 122, 'I-6GGNUKSSUNVS', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', NULL, 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
+(16, 127, 'I-16X8GHAHSRVF', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', NULL, 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
+(26, 137, 'I-YNDUGTF3S680', 3, '39.17', 'USD 39.17', 'PMTGPWSLBTFEL', 'reciever@bwajes-plus.andadel.com', 'John', 'Doe', '2022-10-10 21:03:37', NULL, 'paypal', 0, NULL, '2022-10-10 18:04:54', '2022-10-10 18:07:41');
 
 -- --------------------------------------------------------
 

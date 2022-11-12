@@ -92,6 +92,7 @@ include('billingFunctions.php');
                         'first_name'     => $first_name,
                         'last_name'      => $last_name,
                         'start_date'     => $start_date,
+                        'last_date'      => $last_date,
                         'payment_method' => $payment_method
                     );
     
@@ -149,6 +150,7 @@ include('billingFunctions.php');
                     'first_name'     => $first_name,
                     'last_name'      => $last_name,
                     'start_date'     => $start_date,
+                    'last_date'      => $last_date,
                     'payment_method' => $payment_method
                 );
     

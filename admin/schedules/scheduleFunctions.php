@@ -4,7 +4,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 session_start();
-require_once('db.php');
+require_once('../includes/db.php');
 require_once('../../includes/email-template.php');
 // require('../../vendor/autoload.php');
 require('../../vendor/phpmailer/phpmailer/src/PHPMailer.php');
@@ -252,6 +252,21 @@ function fetch_users_from_payment_subscriptions()
     $row = $db->fetchMultiple();
 
     return $row;
+}
+
+//update last date
+function update_last_date($value)
+{
+    $db = new dbase();
+    $query = "UPDATE payment_subscriptions SET last_date = :last_date,updated_at = NOW() WHERE id = :id";
+    $db->prep($query);
+
+    $db->bindvalue(':id', $value['id'], 'int');
+    $db->bindvalue(':last_date', $value['last_date'], 'str');
+
+    $execute = $db->execute();
+    
+    return $execute;
 }
 
 ?>
