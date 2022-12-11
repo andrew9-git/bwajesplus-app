@@ -316,6 +316,76 @@ function decryption($encryption)
     return $decryption;
 }
 
+function get_reply_comment($parent_id = 0, $marginleft = 0)
+{
+    $output = '';
+
+    // $results = fetch_all('comments',0,0,1,'parent_id', $parent_id);
+    $results = fetch_comments(1, 'parent_id', $parent_id);
+
+    if($parent_id == 0)
+    {
+        $marginleft = 0;
+    }
+    else
+    {
+        $marginleft = $marginleft + 48;
+    }
+    if($results > 0)
+    {
+        foreach($results as $result)
+        {
+            if($result["author"] == 1)
+            {
+                $color = "blue";
+            }
+            else
+            {
+                $color = "black";
+            }
+            $output .= '
+            <div class="card" style="margin-left:'.$marginleft.'px">
+                <div class="card-header">By <b style="color:'.$color.'">'.ucfirst(strtolower($result["first_name"])).'</b> on <i>'.$result["created_at"].'</i></div>
+                <div class="card-body" style="padding:5%">'.$result["comment"].'</div>
+                <div class="card-footer" align="right"><button class="btn btn-primary reply" id="'.$result["id"].'">Reply</button></div>
+            </div><br>
+            ';
+            $output .= get_reply_comment($result["id"], $marginleft);
+        }
+    }
+    return $output;
+}
+
+function display_comments($post_id)
+{
+    // $results = fetch_all('comments', 0, 0, 1, 'post_id', $post_id, 'int', 'id', 'DESC');
+    $results = fetch_comments(1, 'post_id', $post_id, 'int', 1, 'parent_id', 0);
+
+    $output = '';
+
+    foreach($results as $result)
+    {
+        if($result["author"] == 1)
+        {
+            $color = "blue";
+        }
+        else
+        {
+            $color = "black";
+        }
+        $output .= '
+        <div class="card">
+        <div class="card-header">By <b style="color:'.$color.'">'.ucfirst(strtolower($result["first_name"])).'</b> on <i>'.$result["created_at"].'</i></div>
+        <div class="card-body" style="padding:5%">'.$result["comment"].'</div>
+        <div class="card-footer" align="right"><button class="btn btn-primary reply" id="'.$result["id"].'">Reply</button></div>
+        </div><br>
+        ';
+        $output .= get_reply_comment($result["id"]);
+    }
+
+    echo $output;
+}
+
 // End miscellenious functions
 
 // Form validation functions
@@ -932,7 +1002,7 @@ function deleted_users(array $value)
 function update_unseen_comment($id)
 {
     $db = new dbase();
-    $query = "UPDATE comments SET status = 1 WHERE user_id = :user_id AND status = 0";
+    $query = "UPDATE comments SET status = 1 WHERE author = 0 AND user_id = :user_id AND status = 0";
     $db->prep($query);
 
     $db->bindvalue(':user_id', $id, 'int');
@@ -947,7 +1017,7 @@ function comments_in_notification($id, $limit=5, $by='id')
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM comments WHERE user_id = :user_id ORDER BY $by DESC LIMIT $limit";
+    $query = "SELECT * FROM comments WHERE author = 0 AND user_id = :user_id ORDER BY $by DESC LIMIT $limit";
     $db->prep($query);
     $db->bindvalue(':user_id', $id, 'int');
 
@@ -961,7 +1031,7 @@ function count_unseen_comments($id)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM comments WHERE status = 0 AND user_id = :user_id";
+    $query = "SELECT COUNT(*) FROM comments WHERE author = 0 AND status = 0 AND user_id = :user_id";
 
     $db->prep($query);
 
@@ -1010,6 +1080,58 @@ function delete_from_email_list($email, $source)
     $execute = $db->execute();
 
     return $execute;
+}
+
+//inserting values into comments table
+function insert_into_comments($value)
+{
+    $db = new dbase();
+
+    $query = "INSERT INTO comments(post_id, user_id, parent_id, first_name, email, website, comment, author) VALUES(:post_id, :user_id, :parent_id, :first_name, :email, :website, :comment, :author)";
+    $db->prep($query);
+
+    $db->bindvalue(':post_id', $value['post_id'], 'int');
+    $db->bindvalue(':user_id', $value['user_id'], 'int');
+    $db->bindvalue(':parent_id', $value['parent_id'], 'int');
+    $db->bindvalue(':first_name', $value['first_name'], 'str');
+    $db->bindvalue(':email', $value['email'], 'str');
+    $db->bindvalue(':website', $value['website'], 'str');
+    $db->bindvalue(':comment', $value['comment'], 'str');
+    $db->bindvalue(':author', $value['author'], 'int');
+
+    $execute = $db->execute();
+
+    return $execute;
+}
+
+function fetch_comments($where = 0, $column_name='', $value='', $type='int', $and=0, $column_name_1='', $value_1='', $type_1='int', $by='author', $order='DESC')
+{
+    $db = new dbase();
+
+    $query = "";
+    $query .= "SELECT * FROM comments";
+    if($where == 1)
+    {
+        $query .= " WHERE $column_name = :value";
+    }
+    if($and == 1)
+    {
+        $query .= " AND $column_name_1 = :value_1";
+    }
+    $query .= " ORDER BY $by $order, id";
+
+    $db->prep($query);
+    if($where == 1)
+    {
+        $db->bindvalue(':value', $value, $type);
+    }
+    if($and == 1)
+    {
+        $db->bindvalue(':value_1', $value_1, $type_1);
+    }
+    $rows = $db->fetchMultiple();
+
+    return $rows;
 }
 
 // End database queries

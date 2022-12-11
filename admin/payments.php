@@ -123,8 +123,8 @@ if($admin['admin_type'] != 1)
                 <tr>
                   <th>S/N</th>
                   <th>ID</th>
-                  <th>State</th>
-                  <th>Expires</th>
+                  <!-- <th>State</th>
+                  <th>Expires</th> -->
                   <th>Amount</th>
                   <th>Details & Stats</th>
                 </tr>
@@ -337,8 +337,8 @@ if($admin['admin_type'] != 1)
                   html += '<tr>';
                   html += '<td>' + serial_no + '</td>';
                   html += '<td>' + response.data[count].agreement_id + '</td>';
-                  html += '<td>' + response.data[count].state + '</td>';
-                  html += '<td>' + response.data[count].expires + '</td>';
+                  // html += '<td>' + response.data[count].state + '</td>';
+                  // html += '<td>' + response.data[count].expires + '</td>';
                   html += '<td>' + response.data[count].amount_w_c + '</td>';
                   html += '<td><a href="payment-statistics/'+ response.data[count].payment_id +'"><i class="bx bx-link-external"></i></a></td>';
                   html += '</tr>';

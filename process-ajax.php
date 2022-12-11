@@ -857,4 +857,68 @@ if(isset($_POST["view_notification"]))
     echo json_encode($data);
 }
 
+if(isset($_POST['comment-email']))
+{
+    $first_name  = 'Author';
+    $email       = trim($_POST['comment-email']);
+    $website     = trim($_POST['website']);
+    $comment     = trim($_POST['comments']);
+    $id          = trim($_POST['comment-id']);
+    $post_id     = trim($_POST['post-id']);
+    $user_id     = trim($_POST['user-id']);
+
+    //error array
+    $errors = array();
+
+    if(has_presence($comment) == false)
+    {
+        $errors[] = 'Please comments cannot be empty';
+    }
+    elseif(strlen($comment) < 2)
+    {
+        $name = ucfirst($comment);
+        $errors[] = $name . ' cannot be lesser than 2 characters';
+    }
+    elseif(strlen($comment) > 240)
+    {
+        $name = substr(ucfirst($comment), 0, 8);
+        $errors[] = $name . ' cannot be more than 240 characters';
+    }
+
+    if(empty($errors))
+    {
+        //insert into comments table
+        $values = array(
+            'post_id'    => $post_id,
+            'user_id'    => $user_id,
+            'parent_id'  => $id,
+            'first_name' => $first_name,
+            'email'      => $email,
+            'website'    => $website,
+            'comment'    => $comment,
+            'author'     => 1
+        );
+
+        $executed = insert_into_comments($values);
+
+        if($executed)
+        {
+            $msg = "<div class='card success'><div><b>A comment has been added.</div></div>";
+            echo $msg;
+        }
+        
+    } 
+    else
+    {
+        echo form_errors($errors);
+    }
+}
+
+if(isset($_POST['load-comments']))
+{
+    $post_id = trim($_POST['post-id']);
+
+    display_comments($post_id);
+}
+
 ?>

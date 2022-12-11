@@ -7052,8 +7052,8 @@ if(isset($_POST['payment_query']))
 		$condition = str_replace(" ", "%", $condition);
 
 		$values = array(
-			'state'   =>	'%' . $condition . '%',
-			'expires' =>	'%' . $condition . '%',
+			// 'state'   =>	'%' . $condition . '%',
+			// 'expires' =>	'%' . $condition . '%',
 			'amount'  =>	'%' . $condition . '%'
 		);
 
@@ -7073,8 +7073,8 @@ if(isset($_POST['payment_query']))
 				'payment_id'   =>	$payment["id"],
 				'user_id'	   =>	$payment["user_id"],
 				'agreement_id' =>	$payment["agreement_id"],
-				'state'	       =>	str_ireplace($replace_array_1, $replace_array_2, $payment["state"]),
-				'expires'	   =>	str_ireplace($replace_array_1, $replace_array_2, $payment["end_date"]),
+				// 'state'	       =>	str_ireplace($replace_array_1, $replace_array_2, $payment["state"]),
+				// 'expires'	   =>	str_ireplace($replace_array_1, $replace_array_2, $payment["end_date"]),
 				'amount_w_c'   =>	str_ireplace($replace_array_1, $replace_array_2, $payment["amount_with_currency"]),
 			);
 		}
@@ -7090,8 +7090,8 @@ if(isset($_POST['payment_query']))
 				'payment_id'   =>	$payment["id"],
 				'user_id'	   =>	$payment["user_id"],
 				'agreement_id' =>	$payment["agreement_id"],
-				'state'	       =>	$payment["state"],
-				'expires'	   =>	$payment["end_date"],
+				// 'state'	       =>	$payment["state"],
+				// 'expires'	   =>	$payment["end_date"],
 				'amount_w_c'   =>	$payment["amount_with_currency"],
 			);
 		}

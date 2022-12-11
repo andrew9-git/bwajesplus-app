@@ -175,6 +175,32 @@ else
                         }
                     } ?>
                   </div>
+                  <h4>Number of failed payments:</h4>
+                  <div>
+                    <?php 
+                        $failed_payments = $agreementDetails->getFailedPaymentCount();
+                        echo $failed_payments;
+                     ?> 
+                  </div>
+                  <h4>Number of times subscription cancelled:</h4>
+                  <div>
+                    <?php 
+                        echo count_cancelled_subscriptions($user_id);
+                     ?> 
+                  </div>
+                  <h4>Number of database entries:</h4>
+                  <div>
+                    <?php 
+                        echo db_entries_for_a_user_subscriptions($user_id);
+                     ?> 
+                  </div>
+                  <h4>Last payment date:</h4>
+                  <div>
+                    <?php 
+                        $last_payment_date = $agreementDetails->getLastPaymentDate();
+                        echo date("F jS, Y", strtotime($last_payment_date));
+                     ?> 
+                  </div>
                   <h4>Expires:</h4>
                   <div>
                     <?php 

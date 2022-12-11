@@ -1561,6 +1561,10 @@ function select_distinct_emails($table_name="", $group_to_send_to="")
     {
         $query = "SELECT DISTINCT email FROM $table_name WHERE unsubscribed = 0";
     }
+    elseif($table_name == "comments")
+    {
+        $query = "SELECT DISTINCT email, first_name FROM $table_name WHERE author = 0 AND unsubscribed = 0";
+    }
     elseif($group_to_send_to == "payers" || $group_to_send_to == "payers-1" || $group_to_send_to == "payers-2")
     {
         $query = "SELECT DISTINCT email, user_id FROM payment_subscriptions WHERE user_id IN (SELECT id FROM users) AND unsubscribed = 0";
@@ -2546,12 +2550,14 @@ function count_payment_subscriptions_a($value)
 {
     $db = new dbase();
 
-    $query = "SELECT COUNT(*) FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+    // $query = "SELECT COUNT(*) FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+
+    $query = "SELECT COUNT(*) FROM payment_subscriptions WHERE amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
 
     $db->prep($query);
 
-    $db->bindvalue(':state', $value['state'], 'str');
-    $db->bindvalue(':end_date', $value['expires'], 'str');
+    // $db->bindvalue(':state', $value['state'], 'str');
+    // $db->bindvalue(':end_date', $value['expires'], 'str');
     $db->bindvalue(':amount_with_currency', $value['amount'], 'str');
 
     $total_data = $db->fetchCol();
@@ -2563,14 +2569,16 @@ function search_payment_subscriptions_with_wildcard($value, $offset, $limit)
 {
     $db = new dbase();
 
-    $query = "SELECT * FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+    // $query = "SELECT * FROM payment_subscriptions WHERE state LIKE :state OR end_date LIKE :end_date OR amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
+
+    $query = "SELECT * FROM payment_subscriptions WHERE amount_with_currency LIKE :amount_with_currency ORDER BY id DESC";
 
     $filter_query = $query . " LIMIT " . $offset . ", " . $limit . "";
 
     $db->prep($filter_query);
 
-    $db->bindvalue(':state', $value['state'], 'str');
-    $db->bindvalue(':end_date', $value['expires'], 'str');
+    // $db->bindvalue(':state', $value['state'], 'str');
+    // $db->bindvalue(':end_date', $value['expires'], 'str');
     $db->bindvalue(':amount_with_currency', $value['amount'], 'str');
     
     $rows = $db->fetchMultiple();
@@ -2727,6 +2735,36 @@ function fetch_single_row_in_payment($value, $column_name = 'id', $type='int', $
     $db->bindvalue(':value', $value, $type);
     $row = $db->fetchSingle();
     return $row;
+}
+
+function count_cancelled_subscriptions($user_id)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(DISTINCT(agreement_id)) FROM payment_subscriptions WHERE user_id = :user_id";
+
+    $db->prep($query);
+    $db->bindvalue(':user_id', $user_id, 'int');
+
+    $total_data = $db->fetchCol();
+
+    $count = $total_data - 1;
+
+    return $count;
+}
+
+function db_entries_for_a_user_subscriptions($user_id)
+{
+    $db = new dbase();
+
+    $query = "SELECT COUNT(agreement_id) FROM payment_subscriptions WHERE user_id = :user_id";
+
+    $db->prep($query);
+    $db->bindvalue(':user_id', $user_id, 'int');
+
+    $total_data = $db->fetchCol();
+
+    return $total_data;
 }
 // End database queries
 

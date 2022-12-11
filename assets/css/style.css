@@ -290,6 +290,16 @@ nav .profile-details i{
   position: relative;
   padding-top: 104px;
 }
+.post-form {
+  height: 0;
+  margin: auto;
+  width: 50%;
+  overflow-y: hidden;
+  transform: 0.5;
+}
+.toggle-comments {
+  height: auto;
+}
 .btn {
   display: inline-block;
   font-weight: 400;
@@ -1004,6 +1014,9 @@ td .times{
     width: calc(100% - 220px);
     left: 220px;
   }
+  .post-form {
+    width: 60%;
+  }
   .ad-removal{
     width: 60%;
   }
@@ -1028,6 +1041,9 @@ td .times{
   .card .card-body{
     display: flex;
     flex-direction: column;
+  }
+  .post-form {
+    width: 80%;
   }
   .ad-removal{
     width: 70%;
@@ -1072,6 +1088,9 @@ td .times{
 @media (max-width: 550px) {
   .sidebar.active ~ .home-section nav .profile-details{
     display: none;
+  }
+  .post-form {
+    width: 90%;
   }
   .ad-removal{
     width: 90%;

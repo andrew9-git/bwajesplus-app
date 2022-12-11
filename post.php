@@ -124,6 +124,35 @@ $host = url()[0];
                   <?php echo date("F jS, Y", strtotime($post['created_at'])); ?>  
                   </div>
               </div>
+              <div id="toggle-comments" style="cursor: pointer;color:crimson"><i><b>Toggle comments</b></i></div><br>
+              <div class="post-form" id="post-form">
+                <h4>Leave a comment</h4>
+                <form id="comment_form" style="margin: 0; width: 100%;">
+                    <div id="comment_messages">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form_data_cmt" name="comment-id" id="comment-id" value="0">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form_data_cmt" name="post-id" id="post-id" value="<?php echo $post_id; ?>">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="form_data_cmt" name="user-id" id="user-id" value="<?php echo $user['id']; ?>">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="comment-email" class="form-control form_data_cmt" id="email" value="<?php echo $user['email']; ?>">
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="website" class="form-control form_data_cmt" value="<?php echo url()[1].'post/'.$post_id; ?>" id="website">
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Comments*</label>
+                        <textarea class="form-control form_data_cmt" name="comments" rows="5" id="comments"></textarea>
+                    </div>
+                    <button id="comment-button" style="color: #fff;background-color: #28a745;border-color: #28a745;" class="form-control btn">Comment</button>
+                </form><br>
+                <div id="display_comment"></div>
+              </div>
             </div>
             <div class="card-footer">
               <a href="<?php echo url()[1].'post/'.$post['id'] . '/' . urlencode($post['title']); ?>" target="_blank">Check post on online <i class="bx bx-link-external"></i></a>
@@ -201,6 +230,118 @@ $host = url()[0];
             xhr.send(form_data);
 
         }
+
+        let form_1 = document.getElementById('comment_form');
+        let comment_button = document.getElementById('comment-button');
+        let comment_messages = document.getElementById('comment_messages');
+        form_1.addEventListener('submit', comment);
+
+        function comment(e)
+        {
+            e.preventDefault();
+            comment_button.disabled = true;
+
+            let cmt_btn_bg_col = comment_button.style.backgroundColor;
+            let cmt_btn_border = comment_button.style.border;
+            let cmt_btn_cursor = comment_button.style.cursor;
+
+            if(comment_button.disabled == true)
+            {
+                comment_button.style.backgroundColor = 'grey';
+                comment_button.style.border = 'grey';
+                comment_button.style.cursor = 'not-allowed';
+            }
+
+            let form_element = document.getElementsByClassName('form_data_cmt');
+            let form_data = new FormData();
+
+            for(let i = 0; i < form_element.length; i++)
+            {
+              form_data.append(form_element[i].name, form_element[i].value);                
+            }
+            
+            let xhr = new XMLHttpRequest();
+
+            let url = '<?php echo $host.'process-ajax' ?>';
+            
+            xhr.open('POST', url);
+
+            xhr.onload = function()
+            {
+                if(this.status == 200)
+                {
+                    comment_button.disabled = false;
+
+                    if(comment_button.disabled == false)
+                    {
+                        comment_button.style.backgroundColor = cmt_btn_bg_col;
+                        comment_button.style.border = cmt_btn_border;
+                        comment_button.style.cursor = cmt_btn_cursor;
+                    }
+
+                    let response = xhr.responseText;
+                    const pattern = /comment/;
+                    let regex = pattern.test(response);
+                    if(regex === true)
+                    {
+                        form_1.reset();
+                        load_comment();
+                    }
+                    comment_messages.innerHTML = response;
+                
+                }
+            }
+            
+            xhr.send(form_data);
+        }
+
+        load_comment();
+
+        function load_comment()
+        {
+          let form_data = new FormData();
+          let post_id = <?php echo $post_id ?>;
+
+          form_data.append('load-comments', '');
+          form_data.append('post-id', post_id);
+          
+          let xhr = new XMLHttpRequest();
+
+          let url = '<?php echo $host.'process-ajax' ?>';
+          
+          xhr.open('POST', url);
+
+          xhr.onload = function()
+          {
+              if(this.status == 200)
+              {
+                  let response = xhr.responseText;
+                  document.getElementById('display_comment').innerHTML = response;
+              }
+          }
+          
+          xhr.send(form_data);
+        }
+
+        document.addEventListener('click', (e) => {
+            const pattern = /reply/;
+            let regex = pattern.test(e.target.getAttribute('class'));
+            if(regex === true)
+            {
+                let comment_id = e.target.getAttribute("id");
+                document.getElementById('comment-id').value = comment_id;
+                document.getElementById('comments').focus();
+            }
+        });
+
+        let toggle_comments = document.getElementById('toggle-comments');
+        let post_form = document.getElementById('post-form');
+
+        toggle_comments.addEventListener('click', () => {
+          post_form.classList.toggle('toggle-comments');
+
+        });
+
       // });
     </script>
 <?php
