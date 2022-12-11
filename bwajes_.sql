@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2022 at 02:29 PM
+-- Generation Time: Dec 11, 2022 at 01:43 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.7
 
@@ -241,7 +241,8 @@ INSERT INTO `admin_sent_emails` (`id`, `set_from_name`, `set_from_email`, `subje
 (125, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:56:11'),
 (126, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 12:58:59'),
 (127, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 13:04:03'),
-(128, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 13:05:27');
+(128, 'bwajes+', 'myphptestemail@gmail.com', 'Some subject Some subject Some subject Some subject', '<p>Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-10-11 13:05:27'),
+(129, 'bwajes+', 'myphptestemail@gmail.com', '6 Some subject Some subject Some subject Some subject', '<p>6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;6 Some subject Some subject Some subject Some subject&nbsp;</p>', 4, '2022-12-10 23:12:50');
 
 -- --------------------------------------------------------
 
@@ -267,7 +268,7 @@ CREATE TABLE `admin_statistics` (
 
 INSERT INTO `admin_statistics` (`id`, `admin_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
 (14, 3, '2022-10-06 12:25:02', '2022-10-06 12:25:27', 'Chrome', 'Windows 10', 'Unknown', '2022-08-27 13:04:46', '2022-10-06 12:25:27'),
-(15, 4, '2022-11-12 13:21:36', '2022-10-11 17:10:36', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-11-12 13:21:36'),
+(15, 4, '2022-12-10 23:12:04', '2022-12-10 13:38:28', 'Chrome', 'Windows 10', 'Unknown', '2022-09-17 00:44:12', '2022-12-10 23:12:04'),
 (16, 5, '2022-10-07 10:36:22', '2022-10-07 10:37:15', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:35:59', '2022-10-07 10:37:15'),
 (17, 6, '2022-10-06 13:44:36', '2022-10-06 13:44:35', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 09:37:52', '2022-10-06 13:44:36'),
 (18, 2, '2022-10-06 12:26:04', '2022-10-06 12:26:14', 'Chrome', 'Windows 10', 'Unknown', '2022-10-06 12:24:37', '2022-10-06 12:26:14'),
@@ -335,6 +336,7 @@ CREATE TABLE `comments` (
   `email` varchar(255) NOT NULL,
   `website` varchar(255) DEFAULT NULL,
   `comment` text NOT NULL,
+  `author` tinyint(1) NOT NULL DEFAULT 0,
   `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 0,
   `unsubscribed` tinyint(1) NOT NULL DEFAULT 0,
   `unsubscribed_date` timestamp NULL DEFAULT NULL,
@@ -346,15 +348,17 @@ CREATE TABLE `comments` (
 -- Dumping data for table `comments`
 --
 
-INSERT INTO `comments` (`id`, `post_id`, `user_id`, `parent_id`, `first_name`, `email`, `website`, `comment`, `status`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(1, 32, 122, 0, 'Andrew', 'andrewadelodun@gmail.com', NULL, 'Description Description Description Description comment', 1, 0, NULL, '2022-07-31 17:04:32', '2022-07-31 17:04:32'),
-(9, 32, 122, 1, 'Remi', 'remin8934@gmail.com', NULL, 'Replying Andrew', 1, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
-(10, 32, 122, 9, 'Theresa', 'the033@gmail.com', NULL, 'Replying Remi', 1, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
-(11, 32, 122, 0, 'Emmanuel', 'andreloun@gmail.com', NULL, 'Added a comment', 1, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
-(12, 32, 122, 10, 'Goodness', 'goodness@fmail.com', NULL, 'Replying Theresa', 1, 0, NULL, '2022-09-25 12:10:01', '2022-09-25 12:10:01'),
-(13, 32, 122, 9, 'Bello', 'bello@gmail.com', NULL, 'Is form reset working?', 1, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
-(14, 32, 122, 13, 'Shina', 'shina@gmail.com', NULL, 'Form reset should be working now', 1, 0, NULL, '2022-09-25 12:15:56', '2022-09-25 12:15:56'),
-(15, 32, 122, 12, 'Samuel', 'andrewadelodun@gmail.com', NULL, 'compulsory comment', 0, 0, NULL, '2022-10-05 13:31:54', '2022-10-05 13:31:54');
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `parent_id`, `first_name`, `email`, `website`, `comment`, `author`, `status`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
+(1, 32, 122, 0, 'Andrew', 'andrewadelodun@gmail.com', NULL, 'Description Description Description Description comment', 0, 1, 0, NULL, '2022-07-31 17:04:32', '2022-07-31 17:04:32'),
+(9, 32, 122, 1, 'Remi', 'remin8934@gmail.com', NULL, 'Replying Andrew', 0, 1, 0, NULL, '2022-09-23 14:11:56', '2022-09-23 14:11:56'),
+(10, 32, 122, 9, 'Theresa', 'the033@gmail.com', NULL, 'Replying Remi', 0, 1, 0, NULL, '2022-09-23 14:14:04', '2022-09-23 14:14:04'),
+(11, 32, 122, 0, 'Emmanuel', 'andreloun@gmail.com', NULL, 'Added a comment', 0, 1, 0, NULL, '2022-09-23 14:17:19', '2022-09-23 14:17:19'),
+(12, 32, 122, 10, 'Goodness', 'goodness@fmail.com', NULL, 'Replying Theresa', 0, 1, 0, NULL, '2022-09-25 12:10:01', '2022-09-25 12:10:01'),
+(13, 32, 122, 9, 'Bello', 'bello@gmail.com', NULL, 'Is form reset working?', 0, 1, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
+(14, 32, 122, 13, 'Shina', 'shina@gmail.com', NULL, 'Form reset should be working now', 0, 1, 0, NULL, '2022-09-25 12:15:56', '2022-09-25 12:15:56'),
+(29, 41, 137, 0, 'Andrew', 'new@gmail.com', NULL, 'Ducimus illum officia architecto eligendi delectus nesciunt consectetur, dolorem sunt inventore atque.', 0, 1, 0, NULL, '2022-12-10 23:02:36', '2022-12-10 23:02:36'),
+(30, 41, 137, 29, 'Author', 'samuel@andadel.com', 'http://localhost:9090/bwajes/post/41', 'Ducimus illum officia architecto eligendi delectus nesciunt consectetur, dolorem sunt inventore atque.', 1, 0, 0, NULL, '2022-12-10 23:02:54', '2022-12-10 23:02:54'),
+(31, 41, 137, 0, 'Author', 'samuel@andadel.com', 'http://localhost:9090/bwajes/post/41', 'Ducimus illum officia architecto eligendi delectus nesciunt consectetur, dolorem sunt inventore atque.122', 1, 0, 0, NULL, '2022-12-10 23:21:39', '2022-12-10 23:21:39');
 
 -- --------------------------------------------------------
 
@@ -645,7 +649,18 @@ CREATE TABLE `email_list` (
 INSERT INTO `email_list` (`id`, `first_name`, `email`, `source`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
 (122, 'ADELODUN', 'reciever@bwajes-plus.andadel.com', 1, 0, NULL, '2022-09-12 14:22:09', '2022-09-12 14:22:09'),
 (136, 'Bello', 'bello@gmail.com', 3, 0, NULL, '2022-09-25 12:12:25', '2022-09-25 12:12:25'),
-(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42');
+(143, 'user', 'reciever@andadel.com', 1, 0, NULL, '2022-09-30 13:57:42', '2022-09-30 13:57:42'),
+(156, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 14:17:42', '2022-12-10 14:17:42'),
+(157, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 14:43:18', '2022-12-10 14:43:18'),
+(158, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 14:46:27', '2022-12-10 14:46:27'),
+(159, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 18:52:18', '2022-12-10 18:52:18'),
+(160, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 18:54:05', '2022-12-10 18:54:05'),
+(161, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 18:55:01', '2022-12-10 18:55:01'),
+(162, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 18:55:20', '2022-12-10 18:55:20'),
+(163, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 22:23:41', '2022-12-10 22:23:41'),
+(164, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 22:36:05', '2022-12-10 22:36:05'),
+(165, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 22:43:39', '2022-12-10 22:43:39'),
+(166, 'Andrew', 'new@gmail.com', 3, 0, NULL, '2022-12-10 23:02:36', '2022-12-10 23:02:36');
 
 -- --------------------------------------------------------
 
@@ -927,7 +942,15 @@ INSERT INTO `email_tracking` (`id`, `admin_sent_emails_id`, `sent_to_email`, `em
 (234, 127, 'reciever@bwajes-plus.andadel.com', '934e342edaf7cc975da7bb938709eb8b', 1, '2022-10-11 13:04:18', '2022-10-11 13:48:05'),
 (235, 128, 'reciever@bwajes-plus.andadel.com', '8cb2dc616447e1c16ded1b73d2ca006a', 1, '2022-10-11 13:05:30', '2022-10-11 13:47:52'),
 (236, 128, 'bello@gmail.com', '7d199483f787788e5be4504257f9d6ff', 0, '2022-10-11 13:05:32', NULL),
-(237, 128, 'reciever@andadel.com', '9977ff3cb397c3539079c2cb18db6a1a', 0, '2022-10-11 13:05:34', NULL);
+(237, 128, 'reciever@andadel.com', '9977ff3cb397c3539079c2cb18db6a1a', 1, '2022-10-11 13:05:34', '2022-12-10 12:42:13'),
+(238, 129, 'andrewadelodun@gmail.com', '742a3c388d55782e91fd6415666f95d4', 0, '2022-12-10 23:12:54', NULL),
+(239, 129, 'remin8934@gmail.com', 'e36c282270a0e5ee45f61e34c226f030', 0, '2022-12-10 23:12:57', NULL),
+(240, 129, 'the033@gmail.com', 'a1c7644876a956af639b1e578bb50b06', 0, '2022-12-10 23:12:59', NULL),
+(241, 129, 'andreloun@gmail.com', '12390ed08ca2141a5dd7e4140e49abcc', 0, '2022-12-10 23:13:01', NULL),
+(242, 129, 'goodness@fmail.com', '2e0b11ec86c5d7b0bc7704c470da3270', 0, '2022-12-10 23:13:04', NULL),
+(243, 129, 'bello@gmail.com', '15eee9888ff39c7a724da911135647b1', 0, '2022-12-10 23:13:06', NULL),
+(244, 129, 'shina@gmail.com', '37469d8415d1a1cf5a13db634910fda2', 0, '2022-12-10 23:13:08', NULL),
+(245, 129, 'new@gmail.com', 'e5ab262bb6e4e1794b6d5393699950fb', 0, '2022-12-10 23:13:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -1072,9 +1095,9 @@ CREATE TABLE `payment_subscriptions` (
 --
 
 INSERT INTO `payment_subscriptions` (`id`, `user_id`, `agreement_id`, `interval_value`, `amount`, `amount_with_currency`, `payer_id`, `email`, `first_name`, `last_name`, `start_date`, `last_date`, `payment_method`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
-(14, 122, 'I-6GGNUKSSUNVS', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', NULL, 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-09-16 19:24:13'),
-(16, 127, 'I-16X8GHAHSRVF', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', NULL, 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-09-17 12:57:58'),
-(26, 137, 'I-YNDUGTF3S680', 3, '39.17', 'USD 39.17', 'PMTGPWSLBTFEL', 'reciever@bwajes-plus.andadel.com', 'John', 'Doe', '2022-10-10 21:03:37', NULL, 'paypal', 0, NULL, '2022-10-10 18:04:54', '2022-10-10 18:07:41');
+(14, 122, 'I-6GGNUKSSUNVS', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-16 22:23:38', '2022-11-16 11:32:07', 'paypal', 0, NULL, '2022-09-16 19:24:13', '2022-12-10 12:38:13'),
+(16, 127, 'I-16X8GHAHSRVF', 1, '14.69', 'USD 14.69', 'PMTGPWSLBTFEL', 'sb-u75sf6477041@personal.example.com', 'John', 'Doe', '2022-09-17 15:56:53', '2022-11-17 11:13:50', 'paypal', 0, NULL, '2022-09-17 12:57:58', '2022-12-10 12:38:23'),
+(26, 137, 'I-YNDUGTF3S680', 3, '39.17', 'USD 39.17', 'PMTGPWSLBTFEL', 'reciever@bwajes-plus.andadel.com', 'John', 'Doe', '2022-10-10 21:03:37', '2022-10-10 19:06:29', 'paypal', 0, NULL, '2022-10-10 18:04:54', '2022-12-10 12:38:31');
 
 -- --------------------------------------------------------
 
@@ -1321,7 +1344,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `business_name`, `gender`, `password`, `profile_image`, `phone`, `no_of_private_post_allowed`, `suspended`, `bio`, `website`, `birthdate`, `address`, `city`, `state`, `country`, `active`, `unsubscribed`, `unsubscribed_date`, `created_at`, `updated_at`) VALUES
 (122, 'Andrew', 'Adelodun', 'andrewadelodun@gmail.com', 'Andadel', 'M', '$2y$10$B63crKXdlB64j/Rjv88JTeqpKzRHSqPaPOH2Ao7r8C3bILt30scw6', '1659524388_journal2.jpg', '+234 904 563 452', 17, 0, NULL, NULL, NULL, NULL, NULL, NULL, 20, 0, 0, '2022-09-09 10:10:21', '2022-07-31 15:12:29', '2022-09-05 16:01:20'),
 (127, 'ADELODUN', 'OLUWADAMILARE', 'reciever@bwajes-plus.andadel.com', 'U & E', 'M', '$2y$10$mE8/CPv/eU5Pp1Eq68EnRuwdbwbTDTW9V.zu1bwZatC.z1amZmMIK', '1663670611_lion.jpg', NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-09-12 14:22:10', '2022-09-20 11:43:31'),
-(137, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'Masheyi LTD', 'M', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 20:50:52');
+(137, 'Samuel', 'Masheyi', 'samuel@andadel.com', 'Masheyi LTD', 'M', '$2y$10$fKH7k6WED81wafGH7LPRv.ccOSKhbYdKulJE0rjXFK9PJEY53hGfK', NULL, NULL, 10, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, NULL, '2022-10-05 19:50:52', '2022-10-05 20:50:52');
 
 -- --------------------------------------------------------
 
@@ -1414,7 +1437,7 @@ CREATE TABLE `user_statistics` (
 INSERT INTO `user_statistics` (`id`, `user_id`, `last_login`, `last_logout`, `browser`, `os`, `device_name`, `created_at`, `updated_at`) VALUES
 (13, 122, '2022-10-10 17:00:00', '2022-10-10 17:14:18', 'Chrome', 'Windows 10', 'Unknown', '2022-07-31 15:12:36', '2022-10-10 17:14:18'),
 (16, 127, '2022-10-11 18:22:10', '2022-10-11 19:33:12', 'Chrome', 'Windows 10', 'Unknown', '2022-09-14 21:46:26', '2022-10-11 19:33:12'),
-(19, 137, '2022-10-11 18:14:53', '2022-10-11 19:32:51', 'Chrome', 'Windows 10', 'Unknown', '2022-10-05 19:52:32', '2022-10-11 19:32:51');
+(19, 137, '2022-12-10 23:59:45', '2022-12-10 23:59:41', 'Chrome', 'Windows 10', 'Unknown', '2022-10-05 19:52:32', '2022-12-10 23:59:45');
 
 --
 -- Indexes for dumped tables
@@ -1654,7 +1677,7 @@ ALTER TABLE `admin_passwords`
 -- AUTO_INCREMENT for table `admin_sent_emails`
 --
 ALTER TABLE `admin_sent_emails`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=130;
 
 --
 -- AUTO_INCREMENT for table `admin_statistics`
@@ -1678,7 +1701,7 @@ ALTER TABLE `affiliate_programmes`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -1696,7 +1719,7 @@ ALTER TABLE `deleted_users`
 -- AUTO_INCREMENT for table `email_list`
 --
 ALTER TABLE `email_list`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT for table `email_list_source`
@@ -1708,7 +1731,7 @@ ALTER TABLE `email_list_source`
 -- AUTO_INCREMENT for table `email_tracking`
 --
 ALTER TABLE `email_tracking`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=238;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=246;
 
 --
 -- AUTO_INCREMENT for table `faqs`
